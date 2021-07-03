@@ -1,0 +1,1 @@
+. ~/intel/oneapi/setvars.sh
