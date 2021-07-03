@@ -12,6 +12,7 @@ OBJS = $(addsuffix .o,$(basename $(SRCS)))
 OBJS_ICC = $(addsuffix _icc.o,$(basename $(SRCS)))
 ALL_OBJS=$(shell find -name '*.o')
 LIB_OBJS_ICC=simdjson_icc.o
+#-Wl,-soname,liblevmar.so.2 -o sobj/liblevmar.so.2.2
 HestonExotics: $(OBJS) $(LIB_OBJS) 
 	$(LDD) $(LDFLAGS) -o HestonExotics $^
 	rm $(shell find -name '*.gcda')

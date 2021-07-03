@@ -5,8 +5,7 @@
 #include "../simdjson.h"
 //#include <math.h>
 using namespace WebInterface;
-//using namespace simdjson;
-#define YMD_DATE_LENGTH 10
+
 size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer*userp);
 unsigned int days_to_date(const std::string& expiration_date);
 size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer* buf)
@@ -19,7 +18,6 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_bu
     if (buf->buf) free(buf->buf);
     buf->buf=new_loc;
     buf->size_buf=buf->size_buf+nmemb*size;
-    //std::cout<<buf->buf<< '\n';
     return size * nmemb;
 }
 unsigned int days_to_date(const std::string& expiration_date){
