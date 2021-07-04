@@ -65,20 +65,24 @@ void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to
     //std::cout<<buf.buf<< '\n';
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
+        int64_t vol;
         std::string option_type=std::string(std::string_view(opt["option_type"]));
         if(option_type=="call"
             &&!(opt["bid"].type()==simdjson::ondemand::json_type::null)
             &&!(opt["ask"].type() ==simdjson::ondemand::json_type::null)
-            &&!(opt["strike"].type() ==simdjson::ondemand::json_type::null))
+            &&!(opt["strike"].type() ==simdjson::ondemand::json_type::null)
+            &&!(opt["volume"].type() ==simdjson::ondemand::json_type::null)
+            &&!((vol=opt["volume"].get_int64())==0))
         {
             option * new_opt=new option();
             new_opt->strike=static_cast<ffloat>(opt["strike"].get_double());
             new_opt->days_to_expiry=days_to_expire;
             ffloat bid=static_cast<ffloat>(opt["bid"].get_double());
             ffloat ask=static_cast<ffloat>(opt["ask"].get_double());
+            new_opt->volume=vol;
             new_opt->price=(bid+ask)/2;
             options.push_back(*new_opt);
-            std::cout<<"price: "<<new_opt->price<<"\tstrike: "<<new_opt->strike<<"\tspread: "<<ask-bid<<"\texpiration date: "<<std::string_view(opt["expiration_date"])<<"\tdays to date:  "<<days_to_expire<<'\n';
+            std::cout<<"price: "<<new_opt->price<<"\tstrike: "<<new_opt->strike<<"\tspread: "<<ask-bid<<"\texpiration date: "<<std::string_view(opt["expiration_date"])<<"\tdays to date:  "<<days_to_expire<<"\ttrading volume: "<<new_opt->volume<<'\n';
         }
     }
 }
