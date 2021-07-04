@@ -62,7 +62,7 @@ std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
     return expiries;
 }
 void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to_expire){
-    //std::cout<<buf.buf<< '\n';
+    //
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
         int64_t vol;
@@ -86,6 +86,16 @@ void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to
         }
     }
 }
+ffloat WebAPI::parse_stock_quote(){
+    auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
+    auto obj= doc.get_object()["quotes"]["quote"]; //TODO Exception handling
+    if(!(obj["bid"].type()==simdjson::ondemand::json_type::null)
+            &&!(obj["ask"].type() ==simdjson::ondemand::json_type::null)){
+        ffloat bid=static_cast<ffloat>(obj["bid"].get_double());
+        ffloat ask=static_cast<ffloat>(obj["ask"].get_double());
+        return (bid+ask)/2;
+    } else throw APIError();
+}
 std::unique_ptr<std::list<option>> WebAPI::get_all_option_chains(const std::string& underlying){
     auto options=std::make_unique<std::list<option>>(); 
     download_to_buf(EXP_URL(underlying));
@@ -97,6 +107,10 @@ std::unique_ptr<std::list<option>> WebAPI::get_all_option_chains(const std::stri
         parse_option_chain(*options,days_to_expire);
     }
     return options;
+}
+ffloat WebAPI::get_stock_quote(const std::string& stock){
+    download_to_buf(QUOTE_URL(stock));
+    return parse_stock_quote();
 }
 WebAPI::~WebAPI()
 {

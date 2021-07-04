@@ -16,7 +16,9 @@ int main(int argc, char *argv[]) {
     std::string tmp_token(MY_TOKEN); // initialized on the stack s.t. reference is not temporary and comprimised.
     auto Getter=std::make_unique<WebInterface::WebAPI>(tmp_token); 
     if (argc >=2 && std::string(*(argv+1)) == "quote"){
-        Getter->get_all_option_chains(std::string(*(argv+2)));
+        ffloat S=Getter->get_stock_quote(std::string(*(argv+2)));
+        //std::cout<<std::string(*(argv+2))<<"price: \t"<<S<<'\n';
+        auto options_list=Getter->get_all_option_chains(std::string(*(argv+2)));
     }
     return 0;
 }
