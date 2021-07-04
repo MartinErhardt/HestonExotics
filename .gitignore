@@ -2,7 +2,7 @@ simdjson.h
 simdjson.cpp
 HestonExotics
 HestonExotics_icc
-.seticcvars.sh
+./seticcvars.sh
 *.o
 *.gcno
 *.gcda

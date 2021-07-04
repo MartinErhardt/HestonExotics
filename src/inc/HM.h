@@ -5,6 +5,7 @@
 #define HM_H
 
 #include"SDE.h"
+
 typedef struct {
     double mu;
     double theta;
@@ -33,7 +34,7 @@ class AdaptiveHestonEvo : HestonEvo{
         double step_width(SDE_state<2> * current);
 };
 template<typename SchemeParams,class Scheme> class HestonModel : SDE<2,SchemeParams, Scheme>{
-    static void calibrate(HestonParams * to_calibrate,MarketData * to_calibrate_against);
+    static void calibrate(HestonParams * to_calibrate,const std::list<option>& to_calibrate_against);
     HestonModel(HestonParams * params);
 };
 #endif
