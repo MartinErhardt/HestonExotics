@@ -17,12 +17,7 @@ namespace WebInterface
     #define OPTIONS_CHAIN_URL(SYMB,DATE) (std::string("https://sandbox.tradier.com/v1/markets/options/chains?symbol=") + SYMB + std::string("&expiration=") +DATE+ std::string("&greeks=false")).c_str()
     #define AUTH_HEADER(TOKEN) (std::string("Authorization: Bearer ") + TOKEN).c_str()
     #define JSON_HEADER "Accept: application/json"
-    typedef struct{
-        unsigned int days_to_expiry;
-        ffloat price;
-        ffloat strike;
-        int64_t volume;
-    } option;
+
     typedef struct{
         size_t size_buf;
         char * buf;
