@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
     if (argc >=2 && std::string(*(argv+1)) == "quote"){
         ffloat S=Getter->get_stock_quote(std::string(*(argv+2)));
         //std::cout<<std::string(*(argv+2))<<"price: \t"<<S<<'\n';
-        auto options_list=Getter->get_all_option_chains(std::string(*(argv+2)));
+        std::unique_ptr<std::list<options_chain>> all_chains=Getter->get_all_option_chains(std::string(*(argv+2)));
         std::cout<<"Options data downloaded and parsed\n";
-        calibrate(S,*options_list);
+        calibrate(S,*all_chains);
     }/*
     std::string input;
     std::cout<<"Enter S: ";

@@ -38,11 +38,11 @@ namespace WebInterface
         simdjson::ondemand::parser JSONParser;
         void download_to_buf(const std::string& url);
         std::unique_ptr<std::list<std::string>> parse_expiries();
-        void parse_option_chain(std::list<option>& options, unsigned int days_to_date);
+        void parse_option_chain(options_chain& opt_chain);
         ffloat parse_stock_quote();
         public:
             WebAPI(const std::string& access_code);
-            std::unique_ptr<std::list<option>> get_all_option_chains(const std::string& underlying);
+            std::unique_ptr<std::list<options_chain>> get_all_option_chains(const std::string& underlying);
             ffloat get_stock_quote(const std::string& stock);
             ~WebAPI();
     };

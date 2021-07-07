@@ -5,24 +5,26 @@
 #include<stdint.h>
 #include<vector>
 #include<cstdlib>
+#include <limits>
 
 typedef double ffloat;
 typedef struct{
-    unsigned int days_to_expiry;
+    //unsigned int days_to_expiry;
     ffloat price;
-    ffloat ask;
-    ffloat bid;
+    //ffloat ask;
+    //ffloat bid;
     ffloat strike;
     int64_t volume;
 } option;
 typedef struct OptionsChain{
-    std::vector<ffloat> * strikes;
-    std::vector<unsigned int> * volumes;
+    std::vector<option> options;
     unsigned int days_to_expiry;
     ffloat max_strike;
     ffloat min_strike;
-    ~OptionsChain(){
-        free(strikes);
-        free(volumes);
+    OptionsChain(unsigned int days_until){
+        options=std::vector<option>();
+        min_strike=std::numeric_limits<ffloat>::lowest();
+        max_strike=std::numeric_limits<ffloat>::max();
+        days_to_expiry=days_until;
     }
 }options_chain;
