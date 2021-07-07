@@ -70,27 +70,20 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
         int64_t current_vol;
         std::string option_type=std::string(std::string_view(opt["option_type"]));
         auto strike_obj=opt["strike"];
+        auto price_obj=opt["ask"];
         if(option_type=="call"
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
+            &&(price_obj.type()!=simdjson::ondemand::json_type::null)
             &&((current_vol=opt["volume"].get_int64())!=0))
         {
             option * new_opt =new option();
             new_opt->volume=current_vol;
             new_opt->strike=static_cast<ffloat>(strike_obj.get_double());
-            new_opt->price=0;
-            auto price_obj=opt["ask"];
-            if(price_obj.type()!=simdjson::ondemand::json_type::null) new_opt->price=static_cast<ffloat>(price_obj.get_double());
-            //else if((price_obj=opt["open"]).type()!=simdjson::ondemand::json_type::null) new_opt->price=static_cast<ffloat>(price_obj.get_double());
-            //else if((price_obj=opt["last"]).type()!=simdjson::ondemand::json_type::null){
-                //std::cout<<"WARNING: intraday data\n";
-            //    new_opt->price=static_cast<ffloat>(price_obj.get_double());
-            //} else throw APIError();
-            if(new_opt->price!=0){
-                opt_chain.options.push_back(*new_opt);
-                opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
-                opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
-            }
+            new_opt->price=static_cast<ffloat>(price_obj.get_double());
+            opt_chain.options.push_back(*new_opt);
+            opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
+            opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
         }
     }
     //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';
@@ -98,14 +91,8 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
 ffloat WebAPI::parse_stock_quote(){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     auto obj= doc.get_object()["quotes"]["quote"]; //TODO Exception handling
-    //auto price_obj=obj["close"];
     auto price_obj=obj["bid"];
     if(price_obj.type()!=simdjson::ondemand::json_type::null) return static_cast<ffloat>(price_obj.get_double());
-    //else if((price_obj=obj["open"]).type()!=simdjson::ondemand::json_type::null) return static_cast<ffloat>(price_obj.get_double());
-    //else if((price_obj=obj["last"]).type()!=simdjson::ondemand::json_type::null){
-                //std::cout<<"WARNING: intraday data\n";
-    //            return static_cast<ffloat>(price_obj.get_double());
-    //} 
     else throw APIError();
 }
 std::unique_ptr<std::list<options_chain>> WebAPI::get_all_option_chains(const std::string& underlying){

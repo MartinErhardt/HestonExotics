@@ -3,11 +3,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #pragma once
 #include<stdint.h>
+#include"Types.h"
 class RNG{
-    double * buf_start;
-    double * buf_end;
+    ffloat * buf_start;
+    ffloat * buf_end;
     public:
-        double * buf_cur;
+        ffloat * buf_cur;
         RNG(size_t size);
         void update();
 };
