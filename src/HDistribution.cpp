@@ -3,14 +3,6 @@
 #include <cmath>
 #include<complex.h>
 using namespace std::complex_literals;
-/*
-std::complex<ffloat> std::complex<ffloat>::operator *(const float scalar) {
-    return (this.real()*static_cast<ffloat>(scalar),this.imag()*static_cast<ffloat>(scalar));
-}*/
-/*
-std::complex<ffloat> operator *(const float scalar,const std::complex<ffloat> comp) {
-    return comp*scalar;
-}*/
 
 HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,const ffloat tau){
         xi=p.kappa+p.sigma*p.rho*1i*u;
@@ -26,10 +18,7 @@ HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,co
         exp_kappa_tau=std::exp(p.kappa*tau*.5);
         B=d*exp_kappa_tau/(p.v_0*A_2);
         D=std::log((2.*d)/(d+xi+(d-xi)*std::exp(-d*tau)))+(p.kappa-d)*tau*.5;
-}/*
-std::complex<ffloat> HDistribution::chf2(const std::complex<ffloat> u,const ffloat tau){
-    return chf(u,tau);
-}*/
+}
 std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau){
     HDistribution::helpers hlp(this->p,u,tau);
     return chf(u,tau,hlp);
@@ -37,15 +26,11 @@ std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloa
 std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp){
     return std::exp(-1i*u*risk_free*tau+1i*p.kappa*p.v_m*p.rho*u/p.sigma-hlp.A+2.*hlp.D*p.kappa*p.v_m/(p.sigma*p.sigma));
 }
-
 std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau){
     HDistribution::helpers hlp(this->p,u,tau);
     std::complex<ffloat> chf_val_arg=chf(u,tau,hlp);
     return chf_grad(u,tau,hlp,chf_val_arg);
-}/*
-std::vector<std::complex<ffloat>> chf_grad2(const std::complex<ffloat> u,const ffloat tau){
-    return chf_grad(u,tau);
-}*/
+}
 std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,const std::complex<ffloat>chf_val){
     std::complex<ffloat> d_rho=hlp.xi*p.sigma*1i*u/hlp.d;
     std::complex<ffloat> A_2_rho=p.sigma*1i*u*(2.+hlp.xi*tau)/(2.*hlp.d*p.v_0)*(hlp.xi*hlp.cosh_v+hlp.d*hlp.sinh_v);
@@ -62,14 +47,13 @@ std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffl
     std::complex<ffloat> tiuvmdivs=p.v_m*tau*1i*u/p.sigma;
     std::complex<ffloat> sp2=p.sigma*p.sigma;
     std::complex<ffloat> kvm2divsp2=2.*p.kappa*p.v_m/sp2;
-    //auto lol= {
+    
     return{chf_val*(-hlp.A/p.v_0),
             chf_val*(2.*p.kappa/sp2*hlp.D+p.kappa*p.rho*tau*1i*u/p.sigma),
             chf_val*(-A_rho+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_rho)+tiuvmdivs*p.kappa),
             chf_val*(-A_rho/(p.sigma*1i*u)+2.*p.v_m/sp2*hlp.D+kvm2divsp2/hlp.B*B_kappa+tiuvmdivs*p.rho),
             chf_val*(-A_sigma-2.*kvm2divsp2/p.sigma*hlp.D+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_sigma)-tiuvmdivs/p.sigma*p.rho*p.kappa)};
 }
-
 ffloat HDistribution::first_order_moment()
 {
     return -0.5 * p.v_m * T;
