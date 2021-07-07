@@ -21,12 +21,15 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_bu
     buf->size_buf=buf->size_buf+nmemb*size;
     //std::cout<<buf->buf<< '\n';
     return size * nmemb;
-}
+} //TODO number of workdays excluding holidays
 unsigned int days_to_date(const std::string& expiration_date){
     struct std::tm then={};
     std::istringstream ss(expiration_date.c_str());
     ss>>std::get_time(&then, "%Y-%m-%d");
-    return static_cast<unsigned int>(std::difftime(std::mktime(&then),time(0))/(60*60*24));
+    unsigned int raw_diff=static_cast<unsigned int>(std::difftime(std::mktime(&then),time(0))/(60*60*24));
+    unsigned int work_day_diff=5*static_cast<unsigned int>(raw_diff/7)+raw_diff%7;
+    //std::cout<<"raw_diff"<<raw_diff<<"\t work_day_diff"<<work_day_diff<<'\n';
+    return work_day_diff;
 }
 WebAPI::WebAPI(const std::string& access_code):token(access_code)
 {
@@ -62,7 +65,7 @@ std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
     return expiries;
 }
 void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to_expire){
-    //
+    //std::cout<<buf.buf<< '\n';
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
         int64_t vol;
@@ -72,6 +75,7 @@ void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to
             &&!(opt["ask"].type() ==simdjson::ondemand::json_type::null)
             &&!(opt["strike"].type() ==simdjson::ondemand::json_type::null)
             &&!(opt["volume"].type() ==simdjson::ondemand::json_type::null)
+            &&!(opt["last"].type() ==simdjson::ondemand::json_type::null)
             &&!((vol=opt["volume"].get_int64())==0))
         {
             option * new_opt=new option();
@@ -80,31 +84,43 @@ void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to
             ffloat bid=static_cast<ffloat>(opt["bid"].get_double());
             ffloat ask=static_cast<ffloat>(opt["ask"].get_double());
             new_opt->volume=vol;
-            new_opt->price=(bid+ask)/2;
+            new_opt->price=static_cast<ffloat>(opt["last"].get_double());
+            new_opt->ask=ask;
+            new_opt->bid=bid;
             options.push_back(*new_opt);
-            std::cout<<"price: "<<new_opt->price<<"\tstrike: "<<new_opt->strike<<"\tspread: "<<ask-bid<<"\texpiration date: "<<std::string_view(opt["expiration_date"])<<"\tdays to date:  "<<days_to_expire<<"\ttrading volume: "<<new_opt->volume<<'\n';
+            //std::cout<<"stock price: "<<S_1<<"\tprice: "<<new_opt->price<<"\tstrike: "<<new_opt->strike<<"\trisk free rate: "<<risk_free<<"\ttrading volume: "<<new_opt->volume<<"\tdays to expiry: "<<new_opt->days_to_expiry<<"\t spread: "<<new_opt->ask-new_opt->bid<<'\n';
         }
     }
 }
 ffloat WebAPI::parse_stock_quote(){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
-    auto obj= doc.get_object()["quotes"]["quote"]; //TODO Exception handling
-    if(!(obj["bid"].type()==simdjson::ondemand::json_type::null)
+    auto obj= doc.get_object()["quotes"]["quote"]["last"]; //TODO Exception handling
+    if(!(obj.type()==simdjson::ondemand::json_type::null)) return static_cast<ffloat>(obj.get_double());
+    else throw APIError();
+    /*if(!(obj["bid"].type()==simdjson::ondemand::json_type::null)
             &&!(obj["ask"].type() ==simdjson::ondemand::json_type::null)){
         ffloat bid=static_cast<ffloat>(obj["bid"].get_double());
         ffloat ask=static_cast<ffloat>(obj["ask"].get_double());
         return (bid+ask)/2;
-    } else throw APIError();
+    } else throw APIError();*/
 }
 std::unique_ptr<std::list<option>> WebAPI::get_all_option_chains(const std::string& underlying){
     auto options=std::make_unique<std::list<option>>(); 
+    std::cout<<"Download expiries...";
     download_to_buf(EXP_URL(underlying));
+    std::cout<<"Done\n";
+    std::cout<<"Parse expiries...";
     auto expiries =parse_expiries();
+    std::cout<<"Done\n";
     unsigned int days_to_expire;
     for(const std::string& date : *expiries){
+        std::cout<<"Download all options expiring on "<<date<<"...";
         download_to_buf(OPTIONS_CHAIN_URL(underlying,date));
+        std::cout<<"Done\n";
+        std::cout<<"Parse all options expiring on "<<date<<"...";
         days_to_expire=days_to_date(date);
         parse_option_chain(*options,days_to_expire);
+        std::cout<<"Done\n";
     }
     return options;
 }

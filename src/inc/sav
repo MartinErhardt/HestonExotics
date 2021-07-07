@@ -1,0 +1,850 @@
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1515.95	strike: 2100	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 16	implied volatility: -1	 spread: 762.475
+
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1656	strike: 1960	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 9	implied volatility: -1	 spread: 838.425
+stock price: 3616.16	price: 1517.28	strike: 2100	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 9	implied volatility: 0.0717155	 spread: 763.025
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1416.17	strike: 2200	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 9	implied volatility: -1	 spread: 713.9
+
+
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1655.62	strike: 1960	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 2	implied volatility: -1	 spread: 830.175
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1525.45	strike: 2090	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 2	implied volatility: -1	 spread: 770.225
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1374.75	strike: 2240	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 2	implied volatility: -1	 spread: 694.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1274.82	strike: 2340	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 2	implied volatility: -1	 spread: 644.2
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1165.67	strike: 2450	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 2	implied volatility: -1	 spread: 592.025
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1115.65	strike: 2500	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 2	implied volatility: -1	 spread: 560.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 1075.67	strike: 2540	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 2	implied volatility: -1	 spread: 541.4
+stock price: 3616.16	price: 956.85	strike: 2660	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 2	implied volatility: 0.0857837	 spread: 483.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 915.925	strike: 2700	risk free rate: 1.3113e-06	trading volume: 77	days to expiry: 2	implied volatility: -1	 spread: 459.95
+stock price: 3616.16	price: 767.225	strike: 2850	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 2	implied volatility: 0.0719103	 spread: 388.375
+stock price: 3616.16	price: 706.875	strike: 2910	risk free rate: 1.3113e-06	trading volume: 30	days to expiry: 2	implied volatility: 0.0630886	 spread: 356.4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 696.125	strike: 2920	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 2	implied volatility: -1	 spread: 350.05
+stock price: 3616.16	price: 687.55	strike: 2930	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 2	implied volatility: 0.0667581	 spread: 348.125
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 3616.16	price: 656.1	strike: 2960	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 2	implied volatility: -1	 spread: 330.375
+
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 66.925	strike: 75	risk free rate: 1.3113e-06	trading volume: 77	days to expiry: 2	implied volatility: -1	 spread: 1.65
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 51.925	strike: 90	risk free rate: 1.3113e-06	trading volume: 225	days to expiry: 2	implied volatility: -1	 spread: 2.15
+stock price: 141.975	price: 42	strike: 100	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 2	implied volatility: 0.0958643	 spread: 4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 31.975	strike: 110	risk free rate: 1.3113e-06	trading volume: 188	days to expiry: 2	implied volatility: -1	 spread: 1.55
+stock price: 141.975	price: 29.6	strike: 113	risk free rate: 1.3113e-06	trading volume: 139	days to expiry: 2	implied volatility: 0.110174	 spread: 2.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 27.425	strike: 114	risk free rate: 1.3113e-06	trading volume: 85	days to expiry: 2	implied volatility: -1	 spread: 1.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 26.6	strike: 115	risk free rate: 1.3113e-06	trading volume: 23	days to expiry: 2	implied volatility: -1	 spread: 0.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 23.925	strike: 117	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 2	implied volatility: -1	 spread: 2.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 22.925	strike: 119	risk free rate: 1.3113e-06	trading volume: 406	days to expiry: 2	implied volatility: -1	 spread: 0.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 21.6	strike: 120	risk free rate: 1.3113e-06	trading volume: 116	days to expiry: 2	implied volatility: -1	 spread: 0.8
+stock price: 141.975	price: 21.3	strike: 121	risk free rate: 1.3113e-06	trading volume: 403	days to expiry: 2	implied volatility: 0.0716356	 spread: 0.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 19.6	strike: 122	risk free rate: 1.3113e-06	trading volume: 38	days to expiry: 2	implied volatility: -1	 spread: 0.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 18.6	strike: 123	risk free rate: 1.3113e-06	trading volume: 123	days to expiry: 2	implied volatility: -1	 spread: 0.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 17.6	strike: 124	risk free rate: 1.3113e-06	trading volume: 629	days to expiry: 2	implied volatility: -1	 spread: 0.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 16.275	strike: 125	risk free rate: 1.3113e-06	trading volume: 606	days to expiry: 2	implied volatility: -1	 spread: 2.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 15.4	strike: 126	risk free rate: 1.3113e-06	trading volume: 106	days to expiry: 2	implied volatility: -1	 spread: 2.5
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 14.45	strike: 127	risk free rate: 1.3113e-06	trading volume: 962	days to expiry: 2	implied volatility: -1	 spread: 1.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 13.075	strike: 128	risk free rate: 1.3113e-06	trading volume: 443	days to expiry: 2	implied volatility: -1	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 12.95	strike: 129	risk free rate: 1.3113e-06	trading volume: 687	days to expiry: 2	implied volatility: -1	 spread: 0.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 11.95	strike: 130	risk free rate: 1.3113e-06	trading volume: 1094	days to expiry: 2	implied volatility: -1	 spread: 0.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 10	strike: 131	risk free rate: 1.3113e-06	trading volume: 701	days to expiry: 2	implied volatility: -1	 spread: 2.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 9.6	strike: 132	risk free rate: 1.3113e-06	trading volume: 823	days to expiry: 2	implied volatility: -1	 spread: 1.3
+stock price: 141.975	price: 9.375	strike: 133	risk free rate: 1.3113e-06	trading volume: 2315	days to expiry: 2	implied volatility: 0.0379513	 spread: 0.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 7.975	strike: 134	risk free rate: 1.3113e-06	trading volume: 2434	days to expiry: 2	implied volatility: -1	 spread: 0.15
+stock price: 141.975	price: 7.025	strike: 135	risk free rate: 1.3113e-06	trading volume: 2755	days to expiry: 2	implied volatility: 0.0194125	 spread: 0.15
+stock price: 141.975	price: 6.05	strike: 136	risk free rate: 1.3113e-06	trading volume: 2973	days to expiry: 2	implied volatility: 0.018423	 spread: 0.1
+stock price: 141.975	price: 5.075	strike: 137	risk free rate: 1.3113e-06	trading volume: 23601	days to expiry: 2	implied volatility: 0.0169113	 spread: 0.15
+stock price: 141.975	price: 4.125	strike: 138	risk free rate: 1.3113e-06	trading volume: 8264	days to expiry: 2	implied volatility: 0.0157499	 spread: 0.15
+stock price: 141.975	price: 3.075	strike: 139	risk free rate: 1.3113e-06	trading volume: 21749	days to expiry: 2	implied volatility: 0.0113849	 spread: 0.55
+stock price: 141.975	price: 2.46	strike: 140	risk free rate: 1.3113e-06	trading volume: 63382	days to expiry: 2	implied volatility: 0.0154353	 spread: 0.12
+stock price: 141.975	price: 1.75	strike: 141	risk free rate: 1.3113e-06	trading volume: 104213	days to expiry: 2	implied volatility: 0.0150301	 spread: 0.1
+stock price: 141.975	price: 1.225	strike: 142	risk free rate: 1.3113e-06	trading volume: 169379	days to expiry: 2	implied volatility: 0.0154454	 spread: 0.03
+stock price: 141.975	price: 0.82	strike: 143	risk free rate: 1.3113e-06	trading volume: 208943	days to expiry: 2	implied volatility: 0.0157602	 spread: 0
+stock price: 141.975	price: 0.565	strike: 144	risk free rate: 1.3113e-06	trading volume: 69253	days to expiry: 2	implied volatility: 0.0166259	 spread: 0.03
+stock price: 141.975	price: 0.385	strike: 145	risk free rate: 1.3113e-06	trading volume: 168396	days to expiry: 2	implied volatility: 0.0174245	 spread: 0.01
+stock price: 141.975	price: 0.275	strike: 146	risk free rate: 1.3113e-06	trading volume: 46709	days to expiry: 2	implied volatility: 0.0184998	 spread: 0.03
+stock price: 141.975	price: 0.195	strike: 147	risk free rate: 1.3113e-06	trading volume: 15682	days to expiry: 2	implied volatility: 0.0194489	 spread: 0.01
+stock price: 141.975	price: 0.14	strike: 148	risk free rate: 1.3113e-06	trading volume: 13896	days to expiry: 2	implied volatility: 0.0203945	 spread: 0.02
+stock price: 141.975	price: 0.105	strike: 149	risk free rate: 1.3113e-06	trading volume: 9145	days to expiry: 2	implied volatility: 0.021472	 spread: 0.01
+stock price: 141.975	price: 0.085	strike: 150	risk free rate: 1.3113e-06	trading volume: 50356	days to expiry: 2	implied volatility: 0.0228018	 spread: 0.01
+stock price: 141.975	price: 0.045	strike: 152.5	risk free rate: 1.3113e-06	trading volume: 9937	days to expiry: 2	implied volatility: 0.0253126	 spread: 0.01
+stock price: 141.975	price: 0.025	strike: 155	risk free rate: 1.3113e-06	trading volume: 8020	days to expiry: 2	implied volatility: 0.0276584	 spread: 0.01
+stock price: 141.975	price: 0.015	strike: 160	risk free rate: 1.3113e-06	trading volume: 5589	days to expiry: 2	implied volatility: 0.0339541	 spread: 0.01
+stock price: 141.975	price: 119.575	strike: 22.5	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 9	implied volatility: 0.252518	 spread: 4.75
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 96.15	strike: 45	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 9	implied volatility: -1	 spread: 2.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 81.9	strike: 60	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 9	implied volatility: -1	 spread: 4.2
+stock price: 141.975	price: 67.1	strike: 75	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 9	implied volatility: 0.0946657	 spread: 0.4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 56.9	strike: 85	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 9	implied volatility: -1	 spread: 4.2
+stock price: 141.975	price: 52.1	strike: 90	risk free rate: 1.3113e-06	trading volume: 20	days to expiry: 9	implied volatility: 0.0698786	 spread: 4.2
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 46.375	strike: 95	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 9	implied volatility: -1	 spread: 2.75
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.3	strike: 100	risk free rate: 1.3113e-06	trading volume: 101	days to expiry: 9	implied volatility: -1	 spread: 2.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 36.825	strike: 105	risk free rate: 1.3113e-06	trading volume: 319	days to expiry: 9	implied volatility: -1	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 31.95	strike: 110	risk free rate: 1.3113e-06	trading volume: 328	days to expiry: 9	implied volatility: -1	 spread: 1.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 26.025	strike: 115	risk free rate: 1.3113e-06	trading volume: 115	days to expiry: 9	implied volatility: -1	 spread: 2.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 24.925	strike: 116	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 9	implied volatility: -1	 spread: 2.25
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 23.025	strike: 118	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 9	implied volatility: -1	 spread: 2.15
+stock price: 141.975	price: 22.075	strike: 120	risk free rate: 1.3113e-06	trading volume: 629	days to expiry: 9	implied volatility: 0.0282825	 spread: 0.25
+stock price: 141.975	price: 21.375	strike: 121	risk free rate: 1.3113e-06	trading volume: 33	days to expiry: 9	implied volatility: 0.0353213	 spread: 0.85
+stock price: 141.975	price: 20.025	strike: 122	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 9	implied volatility: 0.0232703	 spread: 0.15
+stock price: 141.975	price: 19.1	strike: 123	risk free rate: 1.3113e-06	trading volume: 27	days to expiry: 9	implied volatility: 0.0256657	 spread: 1.7
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 16.375	strike: 125	risk free rate: 1.3113e-06	trading volume: 2842	days to expiry: 9	implied volatility: -1	 spread: 2.25
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 15.55	strike: 126	risk free rate: 1.3113e-06	trading volume: 139	days to expiry: 9	implied volatility: -1	 spread: 2.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 14.575	strike: 127	risk free rate: 1.3113e-06	trading volume: 52	days to expiry: 9	implied volatility: -1	 spread: 1.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 13.425	strike: 128	risk free rate: 1.3113e-06	trading volume: 34	days to expiry: 9	implied volatility: -1	 spread: 2.85
+stock price: 141.975	price: 13.425	strike: 129	risk free rate: 1.3113e-06	trading volume: 29	days to expiry: 9	implied volatility: 0.0244964	 spread: 0.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 11.8	strike: 130	risk free rate: 1.3113e-06	trading volume: 8766	days to expiry: 9	implied volatility: -1	 spread: 0.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 10.6	strike: 131	risk free rate: 1.3113e-06	trading volume: 78	days to expiry: 9	implied volatility: -1	 spread: 2.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 9.6	strike: 132	risk free rate: 1.3113e-06	trading volume: 282	days to expiry: 9	implied volatility: -1	 spread: 2.7
+stock price: 141.975	price: 9.025	strike: 133	risk free rate: 1.3113e-06	trading volume: 808	days to expiry: 9	implied volatility: 0.0113155	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 7.925	strike: 134	risk free rate: 1.3113e-06	trading volume: 592	days to expiry: 9	implied volatility: -1	 spread: 0.95
+stock price: 141.975	price: 7.225	strike: 135	risk free rate: 1.3113e-06	trading volume: 17222	days to expiry: 9	implied volatility: 0.0129779	 spread: 0.45
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 5.875	strike: 136	risk free rate: 1.3113e-06	trading volume: 1475	days to expiry: 9	implied volatility: -1	 spread: 1.35
+stock price: 141.975	price: 5.575	strike: 137	risk free rate: 1.3113e-06	trading volume: 17992	days to expiry: 9	implied volatility: 0.0135986	 spread: 0.25
+stock price: 141.975	price: 4.725	strike: 138	risk free rate: 1.3113e-06	trading volume: 6240	days to expiry: 9	implied volatility: 0.0130417	 spread: 0.15
+stock price: 141.975	price: 3.9	strike: 139	risk free rate: 1.3113e-06	trading volume: 4570	days to expiry: 9	implied volatility: 0.0123833	 spread: 0.1
+stock price: 141.975	price: 3.225	strike: 140	risk free rate: 1.3113e-06	trading volume: 72767	days to expiry: 9	implied volatility: 0.0123848	 spread: 0.15
+stock price: 141.975	price: 2.615	strike: 141	risk free rate: 1.3113e-06	trading volume: 30733	days to expiry: 9	implied volatility: 0.0123459	 spread: 0.11
+stock price: 141.975	price: 2.095	strike: 142	risk free rate: 1.3113e-06	trading volume: 46767	days to expiry: 9	implied volatility: 0.0123976	 spread: 0.05
+stock price: 141.975	price: 1.655	strike: 143	risk free rate: 1.3113e-06	trading volume: 41667	days to expiry: 9	implied volatility: 0.0124771	 spread: 0.05
+stock price: 141.975	price: 1.31	strike: 144	risk free rate: 1.3113e-06	trading volume: 33892	days to expiry: 9	implied volatility: 0.0127016	 spread: 0.04
+stock price: 141.975	price: 1.03	strike: 145	risk free rate: 1.3113e-06	trading volume: 138039	days to expiry: 9	implied volatility: 0.0129411	 spread: 0.04
+stock price: 141.975	price: 0.815	strike: 146	risk free rate: 1.3113e-06	trading volume: 12846	days to expiry: 9	implied volatility: 0.0132614	 spread: 0.05
+stock price: 141.975	price: 0.65	strike: 147	risk free rate: 1.3113e-06	trading volume: 31961	days to expiry: 9	implied volatility: 0.013637	 spread: 0.04
+stock price: 141.975	price: 0.51	strike: 148	risk free rate: 1.3113e-06	trading volume: 6749	days to expiry: 9	implied volatility: 0.0139282	 spread: 0.04
+stock price: 141.975	price: 0.42	strike: 149	risk free rate: 1.3113e-06	trading volume: 4935	days to expiry: 9	implied volatility: 0.0144404	 spread: 0.02
+stock price: 141.975	price: 0.335	strike: 150	risk free rate: 1.3113e-06	trading volume: 115803	days to expiry: 9	implied volatility: 0.0147886	 spread: 0.01
+stock price: 141.975	price: 0.21	strike: 152.5	risk free rate: 1.3113e-06	trading volume: 3130	days to expiry: 9	implied volatility: 0.0159673	 spread: 0.02
+stock price: 141.975	price: 0.145	strike: 155	risk free rate: 1.3113e-06	trading volume: 5892	days to expiry: 9	implied volatility: 0.0173262	 spread: 0.01
+stock price: 141.975	price: 0.07	strike: 160	risk free rate: 1.3113e-06	trading volume: 4631	days to expiry: 9	implied volatility: 0.0196472	 spread: 0.02
+stock price: 141.975	price: 0.045	strike: 165	risk free rate: 1.3113e-06	trading volume: 1292	days to expiry: 9	implied volatility: 0.0223814	 spread: 0.01
+stock price: 141.975	price: 0.025	strike: 170	risk free rate: 1.3113e-06	trading volume: 1947	days to expiry: 9	implied volatility: 0.0243216	 spread: 0.01
+stock price: 141.975	price: 0.015	strike: 175	risk free rate: 1.3113e-06	trading volume: 400	days to expiry: 9	implied volatility: 0.0262145	 spread: 0.01
+stock price: 141.975	price: 0.015	strike: 180	risk free rate: 1.3113e-06	trading volume: 1183	days to expiry: 9	implied volatility: 0.0293191	 spread: 0.01
+stock price: 141.975	price: 0.015	strike: 185	risk free rate: 1.3113e-06	trading volume: 160	days to expiry: 9	implied volatility: 0.0323018	 spread: 0.01
+stock price: 141.975	price: 0.005	strike: 190	risk free rate: 1.3113e-06	trading volume: 360	days to expiry: 9	implied volatility: 0.0318349	 spread: 0.01
+stock price: 141.975	price: 0.005	strike: 200	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 9	implied volatility: 0.0368621	 spread: 0.01
+stock price: 141.975	price: 0.005	strike: 220	risk free rate: 1.3113e-06	trading volume: 13	days to expiry: 9	implied volatility: 0.046022	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 51.2	strike: 90	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 16	implied volatility: -1	 spread: 3.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 46.95	strike: 95	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 16	implied volatility: -1	 spread: 1.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.575	strike: 100	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 16	implied volatility: -1	 spread: 0.95
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 31.05	strike: 110	risk free rate: 1.3113e-06	trading volume: 66	days to expiry: 16	implied volatility: -1	 spread: 2.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 28.45	strike: 113	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 16	implied volatility: -1	 spread: 3.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 23.025	strike: 118	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 16	implied volatility: -1	 spread: 2.25
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 21.7	strike: 120	risk free rate: 1.3113e-06	trading volume: 111	days to expiry: 16	implied volatility: -1	 spread: 2.4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 20.075	strike: 121	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 16	implied volatility: -1	 spread: 2.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 18.45	strike: 123	risk free rate: 1.3113e-06	trading volume: 146	days to expiry: 16	implied volatility: -1	 spread: 2.9
+stock price: 141.975	price: 18.1	strike: 124	risk free rate: 1.3113e-06	trading volume: 90	days to expiry: 16	implied volatility: 0.0183054	 spread: 1.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 16.775	strike: 125	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 16	implied volatility: -1	 spread: 1.45
+stock price: 141.975	price: 16	strike: 126	risk free rate: 1.3113e-06	trading volume: 30	days to expiry: 16	implied volatility: 0.0127664	 spread: 1.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 14.6	strike: 127	risk free rate: 1.3113e-06	trading volume: 37	days to expiry: 16	implied volatility: -1	 spread: 2.7
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 13.85	strike: 128	risk free rate: 1.3113e-06	trading volume: 673	days to expiry: 16	implied volatility: -1	 spread: 0.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 12.65	strike: 129	risk free rate: 1.3113e-06	trading volume: 43	days to expiry: 16	implied volatility: -1	 spread: 2.7
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 11.9	strike: 130	risk free rate: 1.3113e-06	trading volume: 8914	days to expiry: 16	implied volatility: -1	 spread: 0.9
+stock price: 141.975	price: 11.625	strike: 131	risk free rate: 1.3113e-06	trading volume: 897	days to expiry: 16	implied volatility: 0.0179742	 spread: 0.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 9.4	strike: 132	risk free rate: 1.3113e-06	trading volume: 689	days to expiry: 16	implied volatility: -1	 spread: 2.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 8.375	strike: 133	risk free rate: 1.3113e-06	trading volume: 2156	days to expiry: 16	implied volatility: -1	 spread: 2.25
+stock price: 141.975	price: 8.15	strike: 134	risk free rate: 1.3113e-06	trading volume: 882	days to expiry: 16	implied volatility: 0.00986189	 spread: 0.9
+stock price: 141.975	price: 7.1	strike: 135	risk free rate: 1.3113e-06	trading volume: 3423	days to expiry: 16	implied volatility: 0.00819689	 spread: 1.3
+stock price: 141.975	price: 6.55	strike: 136	risk free rate: 1.3113e-06	trading volume: 614	days to expiry: 16	implied volatility: 0.0112931	 spread: 0.9
+stock price: 141.975	price: 6.175	strike: 137	risk free rate: 1.3113e-06	trading volume: 906	days to expiry: 16	implied volatility: 0.0137692	 spread: 0.65
+stock price: 141.975	price: 5.475	strike: 138	risk free rate: 1.3113e-06	trading volume: 1416	days to expiry: 16	implied volatility: 0.0138213	 spread: 0.75
+stock price: 141.975	price: 3.775	strike: 139	risk free rate: 1.3113e-06	trading volume: 1672	days to expiry: 16	implied volatility: 0.00861794	 spread: 1.55
+stock price: 141.975	price: 3.8	strike: 140	risk free rate: 1.3113e-06	trading volume: 18130	days to expiry: 16	implied volatility: 0.0119863	 spread: 0.1
+stock price: 141.975	price: 3.225	strike: 141	risk free rate: 1.3113e-06	trading volume: 4600	days to expiry: 16	implied volatility: 0.011995	 spread: 0.15
+stock price: 141.975	price: 2.71	strike: 142	risk free rate: 1.3113e-06	trading volume: 7063	days to expiry: 16	implied volatility: 0.0120103	 spread: 0.06
+stock price: 141.975	price: 2.25	strike: 143	risk free rate: 1.3113e-06	trading volume: 7766	days to expiry: 16	implied volatility: 0.0120105	 spread: 0.06
+stock price: 141.975	price: 1.855	strike: 144	risk free rate: 1.3113e-06	trading volume: 5163	days to expiry: 16	implied volatility: 0.0120469	 spread: 0.05
+stock price: 141.975	price: 1.53	strike: 145	risk free rate: 1.3113e-06	trading volume: 16843	days to expiry: 16	implied volatility: 0.0121601	 spread: 0.06
+stock price: 141.975	price: 1.26	strike: 146	risk free rate: 1.3113e-06	trading volume: 4651	days to expiry: 16	implied volatility: 0.0123082	 spread: 0.06
+stock price: 141.975	price: 1.04	strike: 147	risk free rate: 1.3113e-06	trading volume: 4295	days to expiry: 16	implied volatility: 0.0124986	 spread: 0.04
+stock price: 141.975	price: 0.855	strike: 148	risk free rate: 1.3113e-06	trading volume: 2183	days to expiry: 16	implied volatility: 0.0126837	 spread: 0.05
+stock price: 141.975	price: 0.71	strike: 149	risk free rate: 1.3113e-06	trading volume: 2432	days to expiry: 16	implied volatility: 0.0129285	 spread: 0.02
+stock price: 141.975	price: 0.595	strike: 150	risk free rate: 1.3113e-06	trading volume: 13017	days to expiry: 16	implied volatility: 0.0132127	 spread: 0.03
+stock price: 141.975	price: 0.275	strike: 155	risk free rate: 1.3113e-06	trading volume: 17780	days to expiry: 16	implied volatility: 0.0148901	 spread: 0.01
+stock price: 141.975	price: 0.155	strike: 160	risk free rate: 1.3113e-06	trading volume: 3386	days to expiry: 16	implied volatility: 0.0168481	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 66.275	strike: 75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 23	implied volatility: -1	 spread: 2.95
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 56.9	strike: 85	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 23	implied volatility: -1	 spread: 4.2
+stock price: 141.975	price: 52.1	strike: 90	risk free rate: 1.3113e-06	trading volume: 100	days to expiry: 23	implied volatility: 0.0436316	 spread: 4.2
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.05	strike: 100	risk free rate: 1.3113e-06	trading volume: 21	days to expiry: 23	implied volatility: -1	 spread: 2.1
+stock price: 141.975	price: 27.1	strike: 115	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 23	implied volatility: 0.0221898	 spread: 1.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 24.125	strike: 117	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 23	implied volatility: -1	 spread: 2.25
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 23.65	strike: 118	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 23	implied volatility: -1	 spread: 2.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 22.475	strike: 119	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 23	implied volatility: -1	 spread: 2.95
+stock price: 141.975	price: 22.55	strike: 120	risk free rate: 1.3113e-06	trading volume: 31	days to expiry: 23	implied volatility: 0.0250193	 spread: 0.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 20.5	strike: 121	risk free rate: 1.3113e-06	trading volume: 11	days to expiry: 23	implied volatility: -1	 spread: 3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 19.55	strike: 122	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 23	implied volatility: -1	 spread: 2.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 18.4	strike: 123	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 23	implied volatility: -1	 spread: 1.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 17.6	strike: 124	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 23	implied volatility: -1	 spread: 3
+stock price: 141.975	price: 17.7	strike: 125	risk free rate: 1.3113e-06	trading volume: 425	days to expiry: 23	implied volatility: 0.021545	 spread: 0.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 15.9	strike: 126	risk free rate: 1.3113e-06	trading volume: 27	days to expiry: 23	implied volatility: -1	 spread: 1.2
+stock price: 141.975	price: 15.825	strike: 127	risk free rate: 1.3113e-06	trading volume: 19	days to expiry: 23	implied volatility: 0.0205024	 spread: 0.85
+stock price: 141.975	price: 14.875	strike: 128	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 23	implied volatility: 0.0198256	 spread: 0.85
+stock price: 141.975	price: 13.65	strike: 129	risk free rate: 1.3113e-06	trading volume: 37	days to expiry: 23	implied volatility: 0.0171627	 spread: 1.5
+stock price: 141.975	price: 12.425	strike: 130	risk free rate: 1.3113e-06	trading volume: 2632	days to expiry: 23	implied volatility: 0.0143757	 spread: 0.75
+stock price: 141.975	price: 11.275	strike: 131	risk free rate: 1.3113e-06	trading volume: 322	days to expiry: 23	implied volatility: 0.012075	 spread: 2.55
+stock price: 141.975	price: 10.925	strike: 132	risk free rate: 1.3113e-06	trading volume: 492	days to expiry: 23	implied volatility: 0.0159057	 spread: 0.15
+stock price: 141.975	price: 9.55	strike: 133	risk free rate: 1.3113e-06	trading volume: 797	days to expiry: 23	implied volatility: 0.0124615	 spread: 1.2
+stock price: 141.975	price: 8.425	strike: 134	risk free rate: 1.3113e-06	trading volume: 1100	days to expiry: 23	implied volatility: 0.0105986	 spread: 1.95
+stock price: 141.975	price: 8.475	strike: 135	risk free rate: 1.3113e-06	trading volume: 3756	days to expiry: 23	implied volatility: 0.0153609	 spread: 0.15
+stock price: 141.975	price: 7.725	strike: 136	risk free rate: 1.3113e-06	trading volume: 631	days to expiry: 23	implied volatility: 0.015248	 spread: 0.15
+stock price: 141.975	price: 6.525	strike: 137	risk free rate: 1.3113e-06	trading volume: 1276	days to expiry: 23	implied volatility: 0.0130586	 spread: 2.15
+stock price: 141.975	price: 6.5	strike: 138	risk free rate: 1.3113e-06	trading volume: 1046	days to expiry: 23	implied volatility: 0.0157424	 spread: 0.5
+stock price: 141.975	price: 5.7	strike: 139	risk free rate: 1.3113e-06	trading volume: 1137	days to expiry: 23	implied volatility: 0.0150221	 spread: 0.2
+stock price: 141.975	price: 5.1	strike: 140	risk free rate: 1.3113e-06	trading volume: 39317	days to expiry: 23	implied volatility: 0.0149561	 spread: 0.1
+stock price: 141.975	price: 4.55	strike: 141	risk free rate: 1.3113e-06	trading volume: 3180	days to expiry: 23	implied volatility: 0.0149332	 spread: 0.2
+stock price: 141.975	price: 4.025	strike: 142	risk free rate: 1.3113e-06	trading volume: 6406	days to expiry: 23	implied volatility: 0.0148578	 spread: 0.15
+stock price: 141.975	price: 3.575	strike: 143	risk free rate: 1.3113e-06	trading volume: 4441	days to expiry: 23	implied volatility: 0.0149145	 spread: 0.15
+stock price: 141.975	price: 3.15	strike: 144	risk free rate: 1.3113e-06	trading volume: 4506	days to expiry: 23	implied volatility: 0.014921	 spread: 0.1
+stock price: 141.975	price: 2.76	strike: 145	risk free rate: 1.3113e-06	trading volume: 22741	days to expiry: 23	implied volatility: 0.0149177	 spread: 0.08
+stock price: 141.975	price: 2.415	strike: 146	risk free rate: 1.3113e-06	trading volume: 2220	days to expiry: 23	implied volatility: 0.0149478	 spread: 0.07
+stock price: 141.975	price: 2.11	strike: 147	risk free rate: 1.3113e-06	trading volume: 1199	days to expiry: 23	implied volatility: 0.0150014	 spread: 0.08
+stock price: 141.975	price: 1.845	strike: 148	risk free rate: 1.3113e-06	trading volume: 1777	days to expiry: 23	implied volatility: 0.0150896	 spread: 0.07
+stock price: 141.975	price: 1.6	strike: 149	risk free rate: 1.3113e-06	trading volume: 6383	days to expiry: 23	implied volatility: 0.0151379	 spread: 0.04
+stock price: 141.975	price: 1.4	strike: 150	risk free rate: 1.3113e-06	trading volume: 38866	days to expiry: 23	implied volatility: 0.015269	 spread: 0.04
+stock price: 141.975	price: 0.715	strike: 155	risk free rate: 1.3113e-06	trading volume: 17486	days to expiry: 23	implied volatility: 0.015994	 spread: 0.05
+stock price: 141.975	price: 0.395	strike: 160	risk free rate: 1.3113e-06	trading volume: 4527	days to expiry: 23	implied volatility: 0.0170603	 spread: 0.03
+stock price: 141.975	price: 0.255	strike: 165	risk free rate: 1.3113e-06	trading volume: 15090	days to expiry: 23	implied volatility: 0.0185425	 spread: 0.01
+stock price: 141.975	price: 0.175	strike: 170	risk free rate: 1.3113e-06	trading volume: 4959	days to expiry: 23	implied volatility: 0.020014	 spread: 0.01
+stock price: 141.975	price: 67.325	strike: 75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 30	implied volatility: 0.0604292	 spread: 4.25
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 55.95	strike: 85	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 30	implied volatility: -1	 spread: 2.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.425	strike: 100	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 30	implied volatility: -1	 spread: 2.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 36.45	strike: 105	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 30	implied volatility: -1	 spread: 2.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 31.45	strike: 110	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 30	implied volatility: -1	 spread: 2.9
+stock price: 141.975	price: 27.025	strike: 115	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 30	implied volatility: 0.0168607	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 21.75	strike: 120	risk free rate: 1.3113e-06	trading volume: 9	days to expiry: 30	implied volatility: -1	 spread: 1.3
+stock price: 141.975	price: 17.325	strike: 125	risk free rate: 1.3113e-06	trading volume: 108	days to expiry: 30	implied volatility: 0.0156482	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 15.85	strike: 126	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 30	implied volatility: -1	 spread: 2.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 14.55	strike: 127	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 30	implied volatility: -1	 spread: 2.3
+stock price: 141.975	price: 14.175	strike: 128	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 30	implied volatility: 0.0117305	 spread: 2.65
+stock price: 141.975	price: 14.15	strike: 129	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 30	implied volatility: 0.0179986	 spread: 0.9
+stock price: 141.975	price: 12.375	strike: 130	risk free rate: 1.3113e-06	trading volume: 202	days to expiry: 30	implied volatility: 0.0121869	 spread: 1.25
+stock price: 141.975	price: 11.45	strike: 131	risk free rate: 1.3113e-06	trading volume: 188	days to expiry: 30	implied volatility: 0.0119434	 spread: 2.9
+stock price: 141.975	price: 10.175	strike: 132	risk free rate: 1.3113e-06	trading volume: 49	days to expiry: 30	implied volatility: 0.00887066	 spread: 2.15
+stock price: 141.975	price: 10.1	strike: 133	risk free rate: 1.3113e-06	trading volume: 206	days to expiry: 30	implied volatility: 0.013836	 spread: 3.6
+stock price: 141.975	price: 10.05	strike: 134	risk free rate: 1.3113e-06	trading volume: 88	days to expiry: 30	implied volatility: 0.0169144	 spread: 2.6
+stock price: 141.975	price: 8.25	strike: 135	risk free rate: 1.3113e-06	trading volume: 503	days to expiry: 30	implied volatility: 0.0124883	 spread: 1.5
+stock price: 141.975	price: 7.7	strike: 136	risk free rate: 1.3113e-06	trading volume: 370	days to expiry: 30	implied volatility: 0.0132495	 spread: 0.8
+stock price: 141.975	price: 6.65	strike: 137	risk free rate: 1.3113e-06	trading volume: 507	days to expiry: 30	implied volatility: 0.0119104	 spread: 1.6
+stock price: 141.975	price: 6.675	strike: 138	risk free rate: 1.3113e-06	trading volume: 209	days to expiry: 30	implied volatility: 0.014394	 spread: 0.15
+stock price: 141.975	price: 6.05	strike: 139	risk free rate: 1.3113e-06	trading volume: 166	days to expiry: 30	implied volatility: 0.014338	 spread: 0.2
+stock price: 141.975	price: 5.475	strike: 140	risk free rate: 1.3113e-06	trading volume: 1715	days to expiry: 30	implied volatility: 0.0143327	 spread: 0.15
+stock price: 141.975	price: 4.925	strike: 141	risk free rate: 1.3113e-06	trading volume: 1159	days to expiry: 30	implied volatility: 0.0142923	 spread: 0.15
+stock price: 141.975	price: 4.425	strike: 142	risk free rate: 1.3113e-06	trading volume: 2175	days to expiry: 30	implied volatility: 0.0142975	 spread: 0.15
+stock price: 141.975	price: 3.925	strike: 143	risk free rate: 1.3113e-06	trading volume: 690	days to expiry: 30	implied volatility: 0.0141873	 spread: 0.15
+stock price: 141.975	price: 3.5	strike: 144	risk free rate: 1.3113e-06	trading volume: 770	days to expiry: 30	implied volatility: 0.0142043	 spread: 0.1
+stock price: 141.975	price: 3.1	strike: 145	risk free rate: 1.3113e-06	trading volume: 3523	days to expiry: 30	implied volatility: 0.0141895	 spread: 0.1
+stock price: 141.975	price: 2.76	strike: 146	risk free rate: 1.3113e-06	trading volume: 677	days to expiry: 30	implied volatility: 0.0142632	 spread: 0.08
+stock price: 141.975	price: 2.435	strike: 147	risk free rate: 1.3113e-06	trading volume: 482	days to expiry: 30	implied volatility: 0.0142806	 spread: 0.09
+stock price: 141.975	price: 2.155	strike: 148	risk free rate: 1.3113e-06	trading volume: 726	days to expiry: 30	implied volatility: 0.0143506	 spread: 0.07
+stock price: 141.975	price: 1.9	strike: 149	risk free rate: 1.3113e-06	trading volume: 355	days to expiry: 30	implied volatility: 0.0144108	 spread: 0.06
+stock price: 141.975	price: 1.675	strike: 150	risk free rate: 1.3113e-06	trading volume: 2380	days to expiry: 30	implied volatility: 0.0144872	 spread: 0.05
+stock price: 141.975	price: 0.905	strike: 155	risk free rate: 1.3113e-06	trading volume: 1572	days to expiry: 30	implied volatility: 0.0150799	 spread: 0.03
+stock price: 141.975	price: 0.525	strike: 160	risk free rate: 1.3113e-06	trading volume: 948	days to expiry: 30	implied volatility: 0.0160051	 spread: 0.03
+stock price: 141.975	price: 0.335	strike: 165	risk free rate: 1.3113e-06	trading volume: 975	days to expiry: 30	implied volatility: 0.0171584	 spread: 0.01
+stock price: 141.975	price: 0.235	strike: 170	risk free rate: 1.3113e-06	trading volume: 2393	days to expiry: 30	implied volatility: 0.0184633	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 18.95	strike: 123	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 37	implied volatility: -1	 spread: 2.6
+stock price: 141.975	price: 17.425	strike: 125	risk free rate: 1.3113e-06	trading volume: 77	days to expiry: 37	implied volatility: 0.014957	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 13.95	strike: 128	risk free rate: 1.3113e-06	trading volume: 13	days to expiry: 37	implied volatility: -1	 spread: 2
+stock price: 141.975	price: 14.85	strike: 129	risk free rate: 1.3113e-06	trading volume: 20	days to expiry: 37	implied volatility: 0.019371	 spread: 2
+stock price: 141.975	price: 14.175	strike: 130	risk free rate: 1.3113e-06	trading volume: 37	days to expiry: 37	implied volatility: 0.0197302	 spread: 2.45
+stock price: 141.975	price: 13.1	strike: 131	risk free rate: 1.3113e-06	trading volume: 14	days to expiry: 37	implied volatility: 0.0184391	 spread: 2
+stock price: 141.975	price: 11.4	strike: 132	risk free rate: 1.3113e-06	trading volume: 31	days to expiry: 37	implied volatility: 0.0146461	 spread: 0.2
+stock price: 141.975	price: 10.55	strike: 133	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 37	implied volatility: 0.0143204	 spread: 4
+stock price: 141.975	price: 8.85	strike: 134	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 37	implied volatility: 0.0104712	 spread: 2.1
+stock price: 141.975	price: 9.05	strike: 135	risk free rate: 1.3113e-06	trading volume: 213	days to expiry: 37	implied volatility: 0.0141959	 spread: 3.7
+stock price: 141.975	price: 8.35	strike: 136	risk free rate: 1.3113e-06	trading volume: 81	days to expiry: 37	implied volatility: 0.0141645	 spread: 0.2
+stock price: 141.975	price: 7.65	strike: 137	risk free rate: 1.3113e-06	trading volume: 170	days to expiry: 37	implied volatility: 0.014037	 spread: 0.2
+stock price: 141.975	price: 6.975	strike: 138	risk free rate: 1.3113e-06	trading volume: 182	days to expiry: 37	implied volatility: 0.0138978	 spread: 0.15
+stock price: 141.975	price: 6.35	strike: 139	risk free rate: 1.3113e-06	trading volume: 320	days to expiry: 37	implied volatility: 0.0138198	 spread: 0.2
+stock price: 141.975	price: 5.775	strike: 140	risk free rate: 1.3113e-06	trading volume: 800	days to expiry: 37	implied volatility: 0.0137947	 spread: 0.15
+stock price: 141.975	price: 5.225	strike: 141	risk free rate: 1.3113e-06	trading volume: 276	days to expiry: 37	implied volatility: 0.0137452	 spread: 0.15
+stock price: 141.975	price: 4.725	strike: 142	risk free rate: 1.3113e-06	trading volume: 915	days to expiry: 37	implied volatility: 0.0137438	 spread: 0.15
+stock price: 141.975	price: 4.25	strike: 143	risk free rate: 1.3113e-06	trading volume: 396	days to expiry: 37	implied volatility: 0.0137177	 spread: 0.1
+stock price: 141.975	price: 3.825	strike: 144	risk free rate: 1.3113e-06	trading volume: 92	days to expiry: 37	implied volatility: 0.0137406	 spread: 0.15
+stock price: 141.975	price: 3.425	strike: 145	risk free rate: 1.3113e-06	trading volume: 745	days to expiry: 37	implied volatility: 0.013742	 spread: 0.15
+stock price: 141.975	price: 3.05	strike: 146	risk free rate: 1.3113e-06	trading volume: 263	days to expiry: 37	implied volatility: 0.0137238	 spread: 0.1
+stock price: 141.975	price: 2.73	strike: 147	risk free rate: 1.3113e-06	trading volume: 367	days to expiry: 37	implied volatility: 0.013781	 spread: 0.1
+stock price: 141.975	price: 2.43	strike: 148	risk free rate: 1.3113e-06	trading volume: 102	days to expiry: 37	implied volatility: 0.0138122	 spread: 0.1
+stock price: 141.975	price: 2.17	strike: 149	risk free rate: 1.3113e-06	trading volume: 32	days to expiry: 37	implied volatility: 0.0138866	 spread: 0.08
+stock price: 141.975	price: 1.92	strike: 150	risk free rate: 1.3113e-06	trading volume: 1037	days to expiry: 37	implied volatility: 0.0139107	 spread: 0.06
+stock price: 141.975	price: 1.095	strike: 155	risk free rate: 1.3113e-06	trading volume: 277	days to expiry: 37	implied volatility: 0.0144745	 spread: 0.05
+stock price: 141.975	price: 0.29	strike: 170	risk free rate: 1.3113e-06	trading volume: 1108	days to expiry: 37	implied volatility: 0.0172951	 spread: 0.02
+stock price: 141.975	price: 0.215	strike: 175	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 37	implied volatility: 0.0184521	 spread: 0.03
+stock price: 141.975	price: 0.165	strike: 180	risk free rate: 1.3113e-06	trading volume: 31	days to expiry: 37	implied volatility: 0.0195821	 spread: 0.03
+stock price: 141.975	price: 0.135	strike: 185	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 37	implied volatility: 0.0207898	 spread: 0.03
+stock price: 141.975	price: 0.105	strike: 190	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 37	implied volatility: 0.0217386	 spread: 0.03
+stock price: 141.975	price: 0.07	strike: 205	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 37	implied volatility: 0.0251234	 spread: 0.02
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 91.975	strike: 50	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 44	implied volatility: -1	 spread: 0.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 86.975	strike: 55	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 44	implied volatility: -1	 spread: 0.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 81.975	strike: 60	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 44	implied volatility: -1	 spread: 0.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 71.025	strike: 70	risk free rate: 1.3113e-06	trading volume: 9	days to expiry: 44	implied volatility: -1	 spread: 2.05
+stock price: 141.975	price: 67.975	strike: 75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 44	implied volatility: 0.0608359	 spread: 2.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 61.525	strike: 80	risk free rate: 1.3113e-06	trading volume: 51	days to expiry: 44	implied volatility: -1	 spread: 1.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 55.95	strike: 85	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 44	implied volatility: -1	 spread: 2.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 51.625	strike: 90	risk free rate: 1.3113e-06	trading volume: 40	days to expiry: 44	implied volatility: -1	 spread: 2.45
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 46.925	strike: 95	risk free rate: 1.3113e-06	trading volume: 9	days to expiry: 44	implied volatility: -1	 spread: 1.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.35	strike: 100	risk free rate: 1.3113e-06	trading volume: 33	days to expiry: 44	implied volatility: -1	 spread: 1.7
+stock price: 141.975	price: 37.15	strike: 105	risk free rate: 1.3113e-06	trading volume: 120	days to expiry: 44	implied volatility: 0.0230334	 spread: 0.2
+stock price: 141.975	price: 32.2	strike: 110	risk free rate: 1.3113e-06	trading volume: 476	days to expiry: 44	implied volatility: 0.0208362	 spread: 0.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 26.925	strike: 115	risk free rate: 1.3113e-06	trading volume: 103	days to expiry: 44	implied volatility: -1	 spread: 0.85
+stock price: 141.975	price: 22.425	strike: 120	risk free rate: 1.3113e-06	trading volume: 1850	days to expiry: 44	implied volatility: 0.0170357	 spread: 0.15
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 16.675	strike: 125	risk free rate: 1.3113e-06	trading volume: 2005	days to expiry: 44	implied volatility: -1	 spread: 2.35
+stock price: 141.975	price: 13.325	strike: 130	risk free rate: 1.3113e-06	trading volume: 4971	days to expiry: 44	implied volatility: 0.0147981	 spread: 0.35
+stock price: 141.975	price: 9.35	strike: 135	risk free rate: 1.3113e-06	trading volume: 9798	days to expiry: 44	implied volatility: 0.0139758	 spread: 0.2
+stock price: 141.975	price: 6.075	strike: 140	risk free rate: 1.3113e-06	trading volume: 28809	days to expiry: 44	implied volatility: 0.0134636	 spread: 0.15
+stock price: 141.975	price: 3.725	strike: 145	risk free rate: 1.3113e-06	trading volume: 24884	days to expiry: 44	implied volatility: 0.0134149	 spread: 0.15
+stock price: 141.975	price: 2.165	strike: 150	risk free rate: 1.3113e-06	trading volume: 19399	days to expiry: 44	implied volatility: 0.0135298	 spread: 0.03
+stock price: 141.975	price: 1.26	strike: 155	risk free rate: 1.3113e-06	trading volume: 11788	days to expiry: 44	implied volatility: 0.0139471	 spread: 0.02
+stock price: 141.975	price: 0.77	strike: 160	risk free rate: 1.3113e-06	trading volume: 3983	days to expiry: 44	implied volatility: 0.014635	 spread: 0.02
+stock price: 141.975	price: 0.505	strike: 165	risk free rate: 1.3113e-06	trading volume: 2807	days to expiry: 44	implied volatility: 0.0155143	 spread: 0.03
+stock price: 141.975	price: 0.365	strike: 170	risk free rate: 1.3113e-06	trading volume: 1434	days to expiry: 44	implied volatility: 0.0165995	 spread: 0.01
+stock price: 141.975	price: 0.27	strike: 175	risk free rate: 1.3113e-06	trading volume: 778	days to expiry: 44	implied volatility: 0.0176187	 spread: 0.02
+stock price: 141.975	price: 0.215	strike: 180	risk free rate: 1.3113e-06	trading volume: 907	days to expiry: 44	implied volatility: 0.0187473	 spread: 0.01
+stock price: 141.975	price: 0.175	strike: 185	risk free rate: 1.3113e-06	trading volume: 646	days to expiry: 44	implied volatility: 0.0198303	 spread: 0.01
+stock price: 141.975	price: 0.145	strike: 190	risk free rate: 1.3113e-06	trading volume: 556	days to expiry: 44	implied volatility: 0.0208692	 spread: 0.01
+stock price: 141.975	price: 0.115	strike: 195	risk free rate: 1.3113e-06	trading volume: 427	days to expiry: 44	implied volatility: 0.0216903	 spread: 0.01
+stock price: 141.975	price: 0.095	strike: 200	risk free rate: 1.3113e-06	trading volume: 1705	days to expiry: 44	implied volatility: 0.0225599	 spread: 0.01
+stock price: 141.975	price: 0.075	strike: 205	risk free rate: 1.3113e-06	trading volume: 269	days to expiry: 44	implied volatility: 0.0232328	 spread: 0.01
+stock price: 141.975	price: 0.07	strike: 210	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 44	implied volatility: 0.0243278	 spread: 0.02
+stock price: 141.975	price: 0.06	strike: 215	risk free rate: 1.3113e-06	trading volume: 75	days to expiry: 44	implied volatility: 0.0251214	 spread: 0.02
+stock price: 141.975	price: 0.055	strike: 220	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 44	implied volatility: 0.026059	 spread: 0.01
+stock price: 141.975	price: 0.04	strike: 225	risk free rate: 1.3113e-06	trading volume: 13	days to expiry: 44	implied volatility: 0.0262894	 spread: 0.02
+stock price: 141.975	price: 0.035	strike: 230	risk free rate: 1.3113e-06	trading volume: 164	days to expiry: 44	implied volatility: 0.0270044	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 109.75	strike: 31.25	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 72	implied volatility: -1	 spread: 2.5
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 107.325	strike: 33.75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 72	implied volatility: -1	 spread: 2.45
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 97.2	strike: 43.75	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 72	implied volatility: -1	 spread: 2.2
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 92.15	strike: 48.75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 72	implied volatility: -1	 spread: 2.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 81.25	strike: 60	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 72	implied volatility: -1	 spread: 3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 78.425	strike: 62.5	risk free rate: 1.3113e-06	trading volume: 20	days to expiry: 72	implied volatility: -1	 spread: 2.35
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 76.05	strike: 65	risk free rate: 1.3113e-06	trading volume: 31	days to expiry: 72	implied volatility: -1	 spread: 2.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 73.425	strike: 67.5	risk free rate: 1.3113e-06	trading volume: 245	days to expiry: 72	implied volatility: -1	 spread: 2.35
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 71.275	strike: 70	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 72	implied volatility: -1	 spread: 3.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 63.975	strike: 77.5	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 72	implied volatility: -1	 spread: 2.65
+stock price: 141.975	price: 62.75	strike: 80	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 72	implied volatility: 0.0411012	 spread: 3.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 58.95	strike: 82.5	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 72	implied volatility: -1	 spread: 2.8
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 53.85	strike: 87.5	risk free rate: 1.3113e-06	trading volume: 40	days to expiry: 72	implied volatility: -1	 spread: 3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 51.675	strike: 90	risk free rate: 1.3113e-06	trading volume: 19	days to expiry: 72	implied volatility: -1	 spread: 1.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 48.825	strike: 92.5	risk free rate: 1.3113e-06	trading volume: 20	days to expiry: 72	implied volatility: -1	 spread: 2.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 46.475	strike: 95	risk free rate: 1.3113e-06	trading volume: 35	days to expiry: 72	implied volatility: -1	 spread: 2.95
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.8	strike: 100	risk free rate: 1.3113e-06	trading volume: 149	days to expiry: 72	implied volatility: -1	 spread: 1.4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 38.875	strike: 102.5	risk free rate: 1.3113e-06	trading volume: 60	days to expiry: 72	implied volatility: -1	 spread: 1.95
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 36.8	strike: 105	risk free rate: 1.3113e-06	trading volume: 156	days to expiry: 72	implied volatility: -1	 spread: 1.1
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 33.975	strike: 107.5	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 72	implied volatility: -1	 spread: 1.95
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 31.225	strike: 110	risk free rate: 1.3113e-06	trading volume: 401	days to expiry: 72	implied volatility: -1	 spread: 2.45
+stock price: 141.975	price: 29.625	strike: 112.5	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 72	implied volatility: 0.0139621	 spread: 2.95
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 26.975	strike: 115	risk free rate: 1.3113e-06	trading volume: 84	days to expiry: 72	implied volatility: -1	 spread: 3.25
+stock price: 141.975	price: 24.875	strike: 117.5	risk free rate: 1.3113e-06	trading volume: 191	days to expiry: 72	implied volatility: 0.0142187	 spread: 0.95
+stock price: 141.975	price: 22.675	strike: 120	risk free rate: 1.3113e-06	trading volume: 826	days to expiry: 72	implied volatility: 0.014824	 spread: 1.85
+stock price: 141.975	price: 20.675	strike: 122.5	risk free rate: 1.3113e-06	trading volume: 211	days to expiry: 72	implied volatility: 0.015717	 spread: 0.65
+stock price: 141.975	price: 18.65	strike: 125	risk free rate: 1.3113e-06	trading volume: 2924	days to expiry: 72	implied volatility: 0.015911	 spread: 0.7
+stock price: 141.975	price: 14.3	strike: 130	risk free rate: 1.3113e-06	trading volume: 2919	days to expiry: 72	implied volatility: 0.0144855	 spread: 0.4
+stock price: 141.975	price: 10.525	strike: 135	risk free rate: 1.3113e-06	trading volume: 4528	days to expiry: 72	implied volatility: 0.0137416	 spread: 0.25
+stock price: 141.975	price: 7.35	strike: 140	risk free rate: 1.3113e-06	trading volume: 8517	days to expiry: 72	implied volatility: 0.0132208	 spread: 0.1
+stock price: 141.975	price: 5	strike: 145	risk free rate: 1.3113e-06	trading volume: 6807	days to expiry: 72	implied volatility: 0.0131699	 spread: 0.1
+stock price: 141.975	price: 3.275	strike: 150	risk free rate: 1.3113e-06	trading volume: 15112	days to expiry: 72	implied volatility: 0.013187	 spread: 0.15
+stock price: 141.975	price: 2.12	strike: 155	risk free rate: 1.3113e-06	trading volume: 5232	days to expiry: 72	implied volatility: 0.0133714	 spread: 0.08
+stock price: 141.975	price: 1.375	strike: 160	risk free rate: 1.3113e-06	trading volume: 6571	days to expiry: 72	implied volatility: 0.013671	 spread: 0.07
+stock price: 141.975	price: 0.925	strike: 165	risk free rate: 1.3113e-06	trading volume: 1967	days to expiry: 72	implied volatility: 0.0141434	 spread: 0.03
+stock price: 141.975	price: 0.66	strike: 170	risk free rate: 1.3113e-06	trading volume: 1357	days to expiry: 72	implied volatility: 0.0147845	 spread: 0.04
+stock price: 141.975	price: 0.495	strike: 175	risk free rate: 1.3113e-06	trading volume: 2665	days to expiry: 72	implied volatility: 0.0155119	 spread: 0.03
+stock price: 141.975	price: 0.385	strike: 180	risk free rate: 1.3113e-06	trading volume: 1441	days to expiry: 72	implied volatility: 0.0162675	 spread: 0.01
+stock price: 141.975	price: 0.32	strike: 185	risk free rate: 1.3113e-06	trading volume: 204	days to expiry: 72	implied volatility: 0.0171426	 spread: 0.02
+stock price: 141.975	price: 0.27	strike: 190	risk free rate: 1.3113e-06	trading volume: 538	days to expiry: 72	implied volatility: 0.0179821	 spread: 0.02
+stock price: 141.975	price: 0.225	strike: 195	risk free rate: 1.3113e-06	trading volume: 71	days to expiry: 72	implied volatility: 0.0187137	 spread: 0.03
+stock price: 141.975	price: 0.195	strike: 200	risk free rate: 1.3113e-06	trading volume: 1490	days to expiry: 72	implied volatility: 0.0194984	 spread: 0.03
+stock price: 141.975	price: 0.14	strike: 210	risk free rate: 1.3113e-06	trading volume: 348	days to expiry: 72	implied volatility: 0.0207747	 spread: 0.04
+stock price: 141.975	price: 0.1	strike: 225	risk free rate: 1.3113e-06	trading volume: 504	days to expiry: 72	implied volatility: 0.02281	 spread: 0.02
+stock price: 141.975	price: 0.055	strike: 250	risk free rate: 1.3113e-06	trading volume: 1376	days to expiry: 72	implied volatility: 0.0254177	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 105.975	strike: 35	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 100	implied volatility: -1	 spread: 2.65
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 71.2	strike: 70	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 100	implied volatility: -1	 spread: 2.4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 66.425	strike: 75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 100	implied volatility: -1	 spread: 2.85
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 61.45	strike: 80	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 100	implied volatility: -1	 spread: 2.9
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 46.675	strike: 95	risk free rate: 1.3113e-06	trading volume: 51	days to expiry: 100	implied volatility: -1	 spread: 1.45
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 41.375	strike: 100	risk free rate: 1.3113e-06	trading volume: 127	days to expiry: 100	implied volatility: -1	 spread: 2.45
+stock price: 141.975	price: 37.525	strike: 105	risk free rate: 1.3113e-06	trading volume: 25	days to expiry: 100	implied volatility: 0.018884	 spread: 2.25
+stock price: 141.975	price: 32.625	strike: 110	risk free rate: 1.3113e-06	trading volume: 39	days to expiry: 100	implied volatility: 0.0171058	 spread: 2.15
+stock price: 141.975	price: 27.975	strike: 115	risk free rate: 1.3113e-06	trading volume: 56	days to expiry: 100	implied volatility: 0.0164168	 spread: 2.35
+stock price: 141.975	price: 23.65	strike: 120	risk free rate: 1.3113e-06	trading volume: 620	days to expiry: 100	implied volatility: 0.0162908	 spread: 0.7
+stock price: 141.975	price: 19.075	strike: 125	risk free rate: 1.3113e-06	trading volume: 2141	days to expiry: 100	implied volatility: 0.0146975	 spread: 0.15
+stock price: 141.975	price: 15.075	strike: 130	risk free rate: 1.3113e-06	trading volume: 1547	days to expiry: 100	implied volatility: 0.0140777	 spread: 0.15
+stock price: 141.975	price: 11.525	strike: 135	risk free rate: 1.3113e-06	trading volume: 1950	days to expiry: 100	implied volatility: 0.0136198	 spread: 0.15
+stock price: 141.975	price: 8.525	strike: 140	risk free rate: 1.3113e-06	trading volume: 3387	days to expiry: 100	implied volatility: 0.0133206	 spread: 0.15
+stock price: 141.975	price: 6.15	strike: 145	risk free rate: 1.3113e-06	trading volume: 3823	days to expiry: 100	implied volatility: 0.0132144	 spread: 0.1
+stock price: 141.975	price: 4.3	strike: 150	risk free rate: 1.3113e-06	trading volume: 4002	days to expiry: 100	implied volatility: 0.0131405	 spread: 0.1
+stock price: 141.975	price: 2.955	strike: 155	risk free rate: 1.3113e-06	trading volume: 1430	days to expiry: 100	implied volatility: 0.0131709	 spread: 0.05
+stock price: 141.975	price: 2.04	strike: 160	risk free rate: 1.3113e-06	trading volume: 1559	days to expiry: 100	implied volatility: 0.0133526	 spread: 0.06
+stock price: 141.975	price: 1.43	strike: 165	risk free rate: 1.3113e-06	trading volume: 668	days to expiry: 100	implied volatility: 0.0136469	 spread: 0.04
+stock price: 141.975	price: 1.04	strike: 170	risk free rate: 1.3113e-06	trading volume: 1019	days to expiry: 100	implied volatility: 0.0140786	 spread: 0.06
+stock price: 141.975	price: 0.78	strike: 175	risk free rate: 1.3113e-06	trading volume: 422	days to expiry: 100	implied volatility: 0.014576	 spread: 0.02
+stock price: 141.975	price: 0.605	strike: 180	risk free rate: 1.3113e-06	trading volume: 875	days to expiry: 100	implied volatility: 0.0151287	 spread: 0.03
+stock price: 141.975	price: 0.485	strike: 185	risk free rate: 1.3113e-06	trading volume: 197	days to expiry: 100	implied volatility: 0.015724	 spread: 0.03
+stock price: 141.975	price: 0.4	strike: 190	risk free rate: 1.3113e-06	trading volume: 617	days to expiry: 100	implied volatility: 0.0163446	 spread: 0.02
+stock price: 141.975	price: 0.345	strike: 195	risk free rate: 1.3113e-06	trading volume: 38	days to expiry: 100	implied volatility: 0.0170391	 spread: 0.03
+stock price: 141.975	price: 0.305	strike: 200	risk free rate: 1.3113e-06	trading volume: 362	days to expiry: 100	implied volatility: 0.0177504	 spread: 0.01
+stock price: 141.975	price: 0.265	strike: 205	risk free rate: 1.3113e-06	trading volume: 17	days to expiry: 100	implied volatility: 0.0183606	 spread: 0.03
+stock price: 141.975	price: 0.235	strike: 210	risk free rate: 1.3113e-06	trading volume: 24	days to expiry: 100	implied volatility: 0.018985	 spread: 0.03
+stock price: 141.975	price: 0.22	strike: 215	risk free rate: 1.3113e-06	trading volume: 22	days to expiry: 100	implied volatility: 0.019724	 spread: 0.02
+stock price: 141.975	price: 0.185	strike: 220	risk free rate: 1.3113e-06	trading volume: 56	days to expiry: 100	implied volatility: 0.0201177	 spread: 0.03
+stock price: 141.975	price: 0.155	strike: 230	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 100	implied volatility: 0.0212881	 spread: 0.03
+stock price: 141.975	price: 0.145	strike: 235	risk free rate: 1.3113e-06	trading volume: 2602	days to expiry: 100	implied volatility: 0.0218894	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 71.575	strike: 70	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 135	implied volatility: -1	 spread: 1.35
+stock price: 141.975	price: 57	strike: 85	risk free rate: 1.3113e-06	trading volume: 50	days to expiry: 135	implied volatility: 0.0151574	 spread: 3.1
+stock price: 141.975	price: 42.725	strike: 100	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 135	implied volatility: 0.0196591	 spread: 2.15
+stock price: 141.975	price: 32.675	strike: 110	risk free rate: 1.3113e-06	trading volume: 15	days to expiry: 135	implied volatility: 0.0149576	 spread: 1.35
+stock price: 141.975	price: 28.3	strike: 115	risk free rate: 1.3113e-06	trading volume: 25	days to expiry: 135	implied volatility: 0.0152922	 spread: 1
+stock price: 141.975	price: 24.3	strike: 120	risk free rate: 1.3113e-06	trading volume: 4198	days to expiry: 135	implied volatility: 0.0157428	 spread: 0.2
+stock price: 141.975	price: 20.175	strike: 125	risk free rate: 1.3113e-06	trading volume: 107	days to expiry: 135	implied volatility: 0.0150887	 spread: 1.65
+stock price: 141.975	price: 16.725	strike: 130	risk free rate: 1.3113e-06	trading volume: 278	days to expiry: 135	implied volatility: 0.015183	 spread: 1.75
+stock price: 141.975	price: 13.925	strike: 135	risk free rate: 1.3113e-06	trading volume: 940	days to expiry: 135	implied volatility: 0.0156663	 spread: 1.85
+stock price: 141.975	price: 10.025	strike: 140	risk free rate: 1.3113e-06	trading volume: 1909	days to expiry: 135	implied volatility: 0.0137721	 spread: 2.35
+stock price: 141.975	price: 7.8	strike: 145	risk free rate: 1.3113e-06	trading volume: 896	days to expiry: 135	implied volatility: 0.0138825	 spread: 0.2
+stock price: 141.975	price: 5.85	strike: 150	risk free rate: 1.3113e-06	trading volume: 1227	days to expiry: 135	implied volatility: 0.0137739	 spread: 0.1
+stock price: 141.975	price: 4.35	strike: 155	risk free rate: 1.3113e-06	trading volume: 267	days to expiry: 135	implied volatility: 0.0137729	 spread: 0.1
+stock price: 141.975	price: 3.2	strike: 160	risk free rate: 1.3113e-06	trading volume: 861	days to expiry: 135	implied volatility: 0.0138097	 spread: 0.1
+stock price: 141.975	price: 2.39	strike: 165	risk free rate: 1.3113e-06	trading volume: 590	days to expiry: 135	implied volatility: 0.0139951	 spread: 0.06
+stock price: 141.975	price: 1.785	strike: 170	risk free rate: 1.3113e-06	trading volume: 720	days to expiry: 135	implied volatility: 0.014195	 spread: 0.09
+stock price: 141.975	price: 1.375	strike: 175	risk free rate: 1.3113e-06	trading volume: 273	days to expiry: 135	implied volatility: 0.0145225	 spread: 0.05
+stock price: 141.975	price: 1.075	strike: 180	risk free rate: 1.3113e-06	trading volume: 291	days to expiry: 135	implied volatility: 0.0148776	 spread: 0.05
+stock price: 141.975	price: 0.865	strike: 185	risk free rate: 1.3113e-06	trading volume: 24	days to expiry: 135	implied volatility: 0.0152996	 spread: 0.05
+stock price: 141.975	price: 0.71	strike: 190	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 135	implied volatility: 0.0157461	 spread: 0.04
+stock price: 141.975	price: 0.595	strike: 195	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 135	implied volatility: 0.0162165	 spread: 0.03
+stock price: 141.975	price: 0.51	strike: 200	risk free rate: 1.3113e-06	trading volume: 84	days to expiry: 135	implied volatility: 0.016715	 spread: 0.04
+stock price: 141.975	price: 72.1	strike: 70	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 163	implied volatility: 0.0240573	 spread: 4.2
+stock price: 141.975	price: 62.75	strike: 80	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 163	implied volatility: 0.0272523	 spread: 3.3
+stock price: 141.975	price: 52.35	strike: 90	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 163	implied volatility: 0.0193803	 spread: 1.9
+stock price: 141.975	price: 47.15	strike: 95	risk free rate: 1.3113e-06	trading volume: 10	days to expiry: 163	implied volatility: 0.0151653	 spread: 2.6
+stock price: 141.975	price: 42.15	strike: 100	risk free rate: 1.3113e-06	trading volume: 11	days to expiry: 163	implied volatility: 0.0134378	 spread: 3
+stock price: 141.975	price: 38.675	strike: 105	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 163	implied volatility: 0.0195839	 spread: 1.25
+stock price: 141.975	price: 34.025	strike: 110	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 163	implied volatility: 0.0183133	 spread: 1.15
+stock price: 141.975	price: 29.025	strike: 115	risk free rate: 1.3113e-06	trading volume: 15	days to expiry: 163	implied volatility: 0.0159722	 spread: 4.05
+stock price: 141.975	price: 24.175	strike: 120	risk free rate: 1.3113e-06	trading volume: 25	days to expiry: 163	implied volatility: 0.0140278	 spread: 2.95
+stock price: 141.975	price: 21.125	strike: 125	risk free rate: 1.3113e-06	trading volume: 41	days to expiry: 163	implied volatility: 0.0155031	 spread: 0.75
+stock price: 141.975	price: 17.7	strike: 130	risk free rate: 1.3113e-06	trading volume: 112	days to expiry: 163	implied volatility: 0.0153963	 spread: 1.2
+stock price: 141.975	price: 13.275	strike: 135	risk free rate: 1.3113e-06	trading volume: 179	days to expiry: 163	implied volatility: 0.0132884	 spread: 1.55
+stock price: 141.975	price: 10.45	strike: 140	risk free rate: 1.3113e-06	trading volume: 690	days to expiry: 163	implied volatility: 0.013126	 spread: 1.5
+stock price: 141.975	price: 8.675	strike: 145	risk free rate: 1.3113e-06	trading volume: 1778	days to expiry: 163	implied volatility: 0.0138418	 spread: 0.15
+stock price: 141.975	price: 6.75	strike: 150	risk free rate: 1.3113e-06	trading volume: 4040	days to expiry: 163	implied volatility: 0.013814	 spread: 0.1
+stock price: 141.975	price: 5.15	strike: 155	risk free rate: 1.3113e-06	trading volume: 923	days to expiry: 163	implied volatility: 0.0137499	 spread: 0.1
+stock price: 141.975	price: 3.925	strike: 160	risk free rate: 1.3113e-06	trading volume: 1301	days to expiry: 163	implied volatility: 0.0137853	 spread: 0.15
+stock price: 141.975	price: 2.99	strike: 165	risk free rate: 1.3113e-06	trading volume: 542	days to expiry: 163	implied volatility: 0.0138765	 spread: 0.12
+stock price: 141.975	price: 2.31	strike: 170	risk free rate: 1.3113e-06	trading volume: 1821	days to expiry: 163	implied volatility: 0.0140668	 spread: 0.08
+stock price: 141.975	price: 1.81	strike: 175	risk free rate: 1.3113e-06	trading volume: 339	days to expiry: 163	implied volatility: 0.014318	 spread: 0.04
+stock price: 141.975	price: 1.435	strike: 180	risk free rate: 1.3113e-06	trading volume: 157	days to expiry: 163	implied volatility: 0.0145996	 spread: 0.07
+stock price: 141.975	price: 1.16	strike: 185	risk free rate: 1.3113e-06	trading volume: 32	days to expiry: 163	implied volatility: 0.0149292	 spread: 0.06
+stock price: 141.975	price: 0.95	strike: 190	risk free rate: 1.3113e-06	trading volume: 176	days to expiry: 163	implied volatility: 0.0152734	 spread: 0.06
+stock price: 141.975	price: 0.795	strike: 195	risk free rate: 1.3113e-06	trading volume: 64	days to expiry: 163	implied volatility: 0.0156571	 spread: 0.05
+stock price: 141.975	price: 0.665	strike: 200	risk free rate: 1.3113e-06	trading volume: 76	days to expiry: 163	implied volatility: 0.0160052	 spread: 0.03
+stock price: 141.975	price: 92.025	strike: 50	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 198	implied volatility: 0.0277186	 spread: 0.35
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 88.675	strike: 52.5	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 198	implied volatility: -1	 spread: 3.25
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 86.7	strike: 55	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 198	implied volatility: -1	 spread: 2.5
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 83.425	strike: 57.5	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 198	implied volatility: -1	 spread: 2.65
+stock price: 141.975	price: 82.1	strike: 60	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 198	implied volatility: 0.0261771	 spread: 0.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 78.5	strike: 62.5	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 198	implied volatility: -1	 spread: 2.6
+stock price: 141.975	price: 78.4	strike: 63.75	risk free rate: 1.3113e-06	trading volume: 10	days to expiry: 198	implied volatility: 0.0256867	 spread: 0.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 75.575	strike: 66.25	risk free rate: 1.3113e-06	trading volume: 25	days to expiry: 198	implied volatility: -1	 spread: 1.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 73.675	strike: 67.5	risk free rate: 1.3113e-06	trading volume: 59	days to expiry: 198	implied volatility: -1	 spread: 2.35
+stock price: 141.975	price: 72.25	strike: 70	risk free rate: 1.3113e-06	trading volume: 258	days to expiry: 198	implied volatility: 0.0245923	 spread: 0.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 66.325	strike: 75	risk free rate: 1.3113e-06	trading volume: 134	days to expiry: 198	implied volatility: -1	 spread: 2.25
+stock price: 141.975	price: 64.575	strike: 77.5	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 198	implied volatility: 0.0181785	 spread: 2.15
+stock price: 141.975	price: 62.75	strike: 80	risk free rate: 1.3113e-06	trading volume: 34	days to expiry: 198	implied volatility: 0.0247039	 spread: 0.9
+stock price: 141.975	price: 60.25	strike: 82.5	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 198	implied volatility: 0.0235592	 spread: 4.3
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 56.75	strike: 85	risk free rate: 1.3113e-06	trading volume: 11	days to expiry: 198	implied volatility: -1	 spread: 1.9
+stock price: 141.975	price: 54.6	strike: 87.5	risk free rate: 1.3113e-06	trading volume: 28	days to expiry: 198	implied volatility: 0.0153198	 spread: 1.3
+stock price: 141.975	price: 52.725	strike: 90	risk free rate: 1.3113e-06	trading volume: 62	days to expiry: 198	implied volatility: 0.0201629	 spread: 0.25
+stock price: 141.975	price: 50.25	strike: 92.5	risk free rate: 1.3113e-06	trading volume: 31	days to expiry: 198	implied volatility: 0.0192756	 spread: 3.8
+stock price: 141.975	price: 47.95	strike: 95	risk free rate: 1.3113e-06	trading volume: 30	days to expiry: 198	implied volatility: 0.0192553	 spread: 0.2
+stock price: 141.975	price: 45.325	strike: 97.5	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 198	implied volatility: 0.0176517	 spread: 3.05
+stock price: 141.975	price: 43.225	strike: 100	risk free rate: 1.3113e-06	trading volume: 3832	days to expiry: 198	implied volatility: 0.0183339	 spread: 0.25
+stock price: 141.975	price: 40.575	strike: 102.5	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 198	implied volatility: 0.01674	 spread: 2.65
+stock price: 141.975	price: 39.725	strike: 103.75	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 198	implied volatility: 0.017651	 spread: 3.25
+stock price: 141.975	price: 38.025	strike: 105	risk free rate: 1.3113e-06	trading volume: 289	days to expiry: 198	implied volatility: 0.0155635	 spread: 3.45
+stock price: 141.975	price: 37.425	strike: 106.25	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 198	implied volatility: 0.0172262	 spread: 0.25
+stock price: 141.975	price: 36.325	strike: 107.5	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 198	implied volatility: 0.0171317	 spread: 0.25
+stock price: 141.975	price: 33.1	strike: 110	risk free rate: 1.3113e-06	trading volume: 1419	days to expiry: 198	implied volatility: 0.0139046	 spread: 2.2
+stock price: 141.975	price: 32.975	strike: 111.25	risk free rate: 1.3113e-06	trading volume: 21	days to expiry: 198	implied volatility: 0.0165719	 spread: 0.25
+stock price: 141.975	price: 30.95	strike: 112.5	risk free rate: 1.3113e-06	trading volume: 47	days to expiry: 198	implied volatility: 0.0140089	 spread: 2.1
+stock price: 141.975	price: 30.8	strike: 113.75	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 198	implied volatility: 0.0162413	 spread: 0.2
+stock price: 141.975	price: 29.375	strike: 115	risk free rate: 1.3113e-06	trading volume: 173	days to expiry: 198	implied volatility: 0.0152964	 spread: 0.95
+stock price: 141.975	price: 28.75	strike: 116.25	risk free rate: 1.3113e-06	trading volume: 36	days to expiry: 198	implied volatility: 0.0160894	 spread: 1.6
+stock price: 141.975	price: 27.65	strike: 117.5	risk free rate: 1.3113e-06	trading volume: 38	days to expiry: 198	implied volatility: 0.0158226	 spread: 0.2
+stock price: 141.975	price: 26.6	strike: 118.75	risk free rate: 1.3113e-06	trading volume: 45	days to expiry: 198	implied volatility: 0.0156378	 spread: 0.2
+stock price: 141.975	price: 25.6	strike: 120	risk free rate: 1.3113e-06	trading volume: 1051	days to expiry: 198	implied volatility: 0.0155254	 spread: 0.2
+stock price: 141.975	price: 24.6	strike: 121.25	risk free rate: 1.3113e-06	trading volume: 45	days to expiry: 198	implied volatility: 0.0153876	 spread: 0.2
+stock price: 141.975	price: 23.925	strike: 122.5	risk free rate: 1.3113e-06	trading volume: 155	days to expiry: 198	implied volatility: 0.0157818	 spread: 0.85
+stock price: 141.975	price: 21.75	strike: 125	risk free rate: 1.3113e-06	trading volume: 1215	days to expiry: 198	implied volatility: 0.0150796	 spread: 0.3
+stock price: 141.975	price: 20.8	strike: 126.25	risk free rate: 1.3113e-06	trading volume: 198	days to expiry: 198	implied volatility: 0.0149258	 spread: 0.2
+stock price: 141.975	price: 19.9	strike: 127.5	risk free rate: 1.3113e-06	trading volume: 156	days to expiry: 198	implied volatility: 0.0148247	 spread: 0.2
+stock price: 141.975	price: 18.15	strike: 128.75	risk free rate: 1.3113e-06	trading volume: 205	days to expiry: 198	implied volatility: 0.0134245	 spread: 1.9
+stock price: 141.975	price: 18.2	strike: 130	risk free rate: 1.3113e-06	trading volume: 2492	days to expiry: 198	implied volatility: 0.0146894	 spread: 0.1
+stock price: 141.975	price: 14.975	strike: 135	risk free rate: 1.3113e-06	trading volume: 1388	days to expiry: 198	implied volatility: 0.0143332	 spread: 0.25
+stock price: 141.975	price: 12.175	strike: 140	risk free rate: 1.3113e-06	trading volume: 3490	days to expiry: 198	implied volatility: 0.0141012	 spread: 0.15
+stock price: 141.975	price: 9.8	strike: 145	risk free rate: 1.3113e-06	trading volume: 3569	days to expiry: 198	implied volatility: 0.0139673	 spread: 0.2
+stock price: 141.975	price: 7.775	strike: 150	risk free rate: 1.3113e-06	trading volume: 8578	days to expiry: 198	implied volatility: 0.0138435	 spread: 0.15
+stock price: 141.975	price: 6.15	strike: 155	risk free rate: 1.3113e-06	trading volume: 1467	days to expiry: 198	implied volatility: 0.0138221	 spread: 0.2
+stock price: 141.975	price: 4.85	strike: 160	risk free rate: 1.3113e-06	trading volume: 2295	days to expiry: 198	implied volatility: 0.0138562	 spread: 0.1
+stock price: 141.975	price: 3.775	strike: 165	risk free rate: 1.3113e-06	trading volume: 894	days to expiry: 198	implied volatility: 0.0138592	 spread: 0.15
+stock price: 141.975	price: 2.99	strike: 170	risk free rate: 1.3113e-06	trading volume: 939	days to expiry: 198	implied volatility: 0.0139983	 spread: 0.12
+stock price: 141.975	price: 2.36	strike: 175	risk free rate: 1.3113e-06	trading volume: 1284	days to expiry: 198	implied volatility: 0.0141271	 spread: 0.08
+stock price: 141.975	price: 1.915	strike: 180	risk free rate: 1.3113e-06	trading volume: 1027	days to expiry: 198	implied volatility: 0.0143765	 spread: 0.09
+stock price: 141.975	price: 1.565	strike: 185	risk free rate: 1.3113e-06	trading volume: 476	days to expiry: 198	implied volatility: 0.0146336	 spread: 0.09
+stock price: 141.975	price: 1.275	strike: 190	risk free rate: 1.3113e-06	trading volume: 209	days to expiry: 198	implied volatility: 0.0148575	 spread: 0.05
+stock price: 141.975	price: 1.075	strike: 195	risk free rate: 1.3113e-06	trading volume: 237	days to expiry: 198	implied volatility: 0.015182	 spread: 0.05
+stock price: 141.975	price: 0.925	strike: 200	risk free rate: 1.3113e-06	trading volume: 1690	days to expiry: 198	implied volatility: 0.0155453	 spread: 0.03
+stock price: 141.975	price: 0.825	strike: 205	risk free rate: 1.3113e-06	trading volume: 73	days to expiry: 198	implied volatility: 0.0159945	 spread: 0.09
+stock price: 141.975	price: 0.69	strike: 210	risk free rate: 1.3113e-06	trading volume: 108	days to expiry: 198	implied volatility: 0.0162066	 spread: 0.02
+stock price: 141.975	price: 0.625	strike: 215	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 198	implied volatility: 0.0166436	 spread: 0.05
+stock price: 141.975	price: 0.56	strike: 220	risk free rate: 1.3113e-06	trading volume: 136	days to expiry: 198	implied volatility: 0.0170187	 spread: 0.04
+stock price: 141.975	price: 0.495	strike: 225	risk free rate: 1.3113e-06	trading volume: 26	days to expiry: 198	implied volatility: 0.0173288	 spread: 0.01
+stock price: 141.975	price: 0.455	strike: 230	risk free rate: 1.3113e-06	trading volume: 206	days to expiry: 198	implied volatility: 0.0177314	 spread: 0.01
+stock price: 141.975	price: 0.38	strike: 240	risk free rate: 1.3113e-06	trading volume: 25	days to expiry: 198	implied volatility: 0.0184366	 spread: 0.02
+stock price: 141.975	price: 0.33	strike: 250	risk free rate: 1.3113e-06	trading volume: 687	days to expiry: 198	implied volatility: 0.0191754	 spread: 0.02
+stock price: 141.975	price: 0.295	strike: 260	risk free rate: 1.3113e-06	trading volume: 557	days to expiry: 198	implied volatility: 0.0199262	 spread: 0.01
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 111.6	strike: 30	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: -1	 spread: 2.9
+stock price: 141.975	price: 108.25	strike: 33.75	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 345	implied volatility: 0.025272	 spread: 0.4
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 95.95	strike: 45	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: -1	 spread: 2.9
+stock price: 141.975	price: 92.125	strike: 50	risk free rate: 1.3113e-06	trading volume: 43	days to expiry: 345	implied volatility: 0.0242091	 spread: 0.35
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 83.525	strike: 57.5	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 345	implied volatility: -1	 spread: 3.05
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 81.25	strike: 60	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: -1	 spread: 2.5
+stock price: 141.975	price: 79.875	strike: 62.5	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 345	implied volatility: 0.0226045	 spread: 0.35
+stock price: 141.975	price: 77.5	strike: 65	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: 0.0227011	 spread: 5
+stock price: 141.975	price: 72.55	strike: 70	risk free rate: 1.3113e-06	trading volume: 11	days to expiry: 345	implied volatility: 0.02111	 spread: 0.7
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 69.475	strike: 72.5	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 345	implied volatility: -1	 spread: 1.75
+stock price: 141.975	price: 67.9	strike: 75	risk free rate: 1.3113e-06	trading volume: 58	days to expiry: 345	implied volatility: 0.0212353	 spread: 0.5
+stock price: 141.975	price: 65.55	strike: 77.5	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: 0.0209727	 spread: 4.5
+stock price: 141.975	price: 63	strike: 80	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 345	implied volatility: 0.0198137	 spread: 0.6
+stock price: 141.975	price: 60.25	strike: 82.5	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 345	implied volatility: 0.0177758	 spread: 4.5
+stock price: 141.975	price: 58.675	strike: 85	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 345	implied volatility: 0.0203974	 spread: 3.65
+stock price: 141.975	price: 55.8	strike: 87.5	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 345	implied volatility: 0.0182508	 spread: 2.4
+stock price: 141.975	price: 53.775	strike: 90	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 345	implied volatility: 0.0188189	 spread: 2.95
+stock price: 141.975	price: 51.475	strike: 92.5	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 345	implied volatility: 0.018445	 spread: 0.35
+stock price: 141.975	price: 48.675	strike: 95	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 345	implied volatility: 0.0167529	 spread: 1.55
+stock price: 141.975	price: 47	strike: 97.5	risk free rate: 1.3113e-06	trading volume: 10	days to expiry: 345	implied volatility: 0.0178645	 spread: 0.3
+stock price: 141.975	price: 44.475	strike: 100	risk free rate: 1.3113e-06	trading volume: 115	days to expiry: 345	implied volatility: 0.016897	 spread: 0.95
+stock price: 141.975	price: 41.4	strike: 102.5	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 345	implied volatility: 0.0147534	 spread: 2.8
+stock price: 141.975	price: 40.375	strike: 103.75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: 0.0148301	 spread: 2.75
+stock price: 141.975	price: 40.55	strike: 105	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 345	implied volatility: 0.0171246	 spread: 0.3
+stock price: 141.975	price: 39.5	strike: 106.25	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 345	implied volatility: 0.0169969	 spread: 0.3
+stock price: 141.975	price: 38.45	strike: 107.5	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 345	implied volatility: 0.0168555	 spread: 0.3
+stock price: 141.975	price: 36.425	strike: 110	risk free rate: 1.3113e-06	trading volume: 431	days to expiry: 345	implied volatility: 0.0166509	 spread: 0.25
+stock price: 141.975	price: 34.45	strike: 112.5	risk free rate: 1.3113e-06	trading volume: 27	days to expiry: 345	implied volatility: 0.0164601	 spread: 0.3
+stock price: 141.975	price: 33.45	strike: 113.75	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 345	implied volatility: 0.0163245	 spread: 0.3
+stock price: 141.975	price: 32.5	strike: 115	risk free rate: 1.3113e-06	trading volume: 64	days to expiry: 345	implied volatility: 0.0162441	 spread: 0.3
+stock price: 141.975	price: 31.55	strike: 116.25	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 345	implied volatility: 0.0161479	 spread: 0.3
+stock price: 141.975	price: 30.625	strike: 117.5	risk free rate: 1.3113e-06	trading volume: 24	days to expiry: 345	implied volatility: 0.0160691	 spread: 0.25
+stock price: 141.975	price: 29.7	strike: 118.75	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 345	implied volatility: 0.0159746	 spread: 0.3
+stock price: 141.975	price: 28.8	strike: 120	risk free rate: 1.3113e-06	trading volume: 231	days to expiry: 345	implied volatility: 0.0158959	 spread: 0.3
+stock price: 141.975	price: 27.925	strike: 121.25	risk free rate: 1.3113e-06	trading volume: 210	days to expiry: 345	implied volatility: 0.0158318	 spread: 0.25
+stock price: 141.975	price: 27.05	strike: 122.5	risk free rate: 1.3113e-06	trading volume: 35	days to expiry: 345	implied volatility: 0.0157515	 spread: 0.3
+stock price: 141.975	price: 25.375	strike: 125	risk free rate: 1.3113e-06	trading volume: 242	days to expiry: 345	implied volatility: 0.0156305	 spread: 0.25
+stock price: 141.975	price: 22.175	strike: 130	risk free rate: 1.3113e-06	trading volume: 585	days to expiry: 345	implied volatility: 0.0153645	 spread: 0.25
+stock price: 141.975	price: 19.2	strike: 135	risk free rate: 1.3113e-06	trading volume: 966	days to expiry: 345	implied volatility: 0.0150893	 spread: 0.4
+stock price: 141.975	price: 16.7	strike: 140	risk free rate: 1.3113e-06	trading volume: 1014	days to expiry: 345	implied volatility: 0.0150418	 spread: 0.2
+stock price: 141.975	price: 14.4	strike: 145	risk free rate: 1.3113e-06	trading volume: 1201	days to expiry: 345	implied volatility: 0.0149456	 spread: 0.2
+stock price: 141.975	price: 12.35	strike: 150	risk free rate: 1.3113e-06	trading volume: 4831	days to expiry: 345	implied volatility: 0.0148585	 spread: 0.2
+stock price: 141.975	price: 10.575	strike: 155	risk free rate: 1.3113e-06	trading volume: 439	days to expiry: 345	implied volatility: 0.0148162	 spread: 0.25
+stock price: 141.975	price: 9.05	strike: 160	risk free rate: 1.3113e-06	trading volume: 206	days to expiry: 345	implied volatility: 0.0148111	 spread: 0.2
+stock price: 141.975	price: 7.725	strike: 165	risk free rate: 1.3113e-06	trading volume: 217	days to expiry: 345	implied volatility: 0.0148135	 spread: 0.15
+stock price: 141.975	price: 6.575	strike: 170	risk free rate: 1.3113e-06	trading volume: 4275	days to expiry: 345	implied volatility: 0.0148171	 spread: 0.25
+stock price: 141.975	price: 5.625	strike: 175	risk free rate: 1.3113e-06	trading volume: 130	days to expiry: 345	implied volatility: 0.0148718	 spread: 0.15
+stock price: 141.975	price: 4.825	strike: 180	risk free rate: 1.3113e-06	trading volume: 1025	days to expiry: 345	implied volatility: 0.0149481	 spread: 0.15
+stock price: 141.975	price: 4.175	strike: 185	risk free rate: 1.3113e-06	trading volume: 723	days to expiry: 345	implied volatility: 0.0150723	 spread: 0.15
+stock price: 141.975	price: 3.6	strike: 190	risk free rate: 1.3113e-06	trading volume: 44	days to expiry: 345	implied volatility: 0.015171	 spread: 0.1
+stock price: 141.975	price: 3.125	strike: 195	risk free rate: 1.3113e-06	trading volume: 58	days to expiry: 345	implied volatility: 0.0152963	 spread: 0.15
+stock price: 141.975	price: 2.725	strike: 200	risk free rate: 1.3113e-06	trading volume: 412	days to expiry: 345	implied volatility: 0.015433	 spread: 0.11
+stock price: 141.975	price: 2.12	strike: 210	risk free rate: 1.3113e-06	trading volume: 38	days to expiry: 345	implied volatility: 0.0157686	 spread: 0.1
+stock price: 141.975	price: 1.705	strike: 220	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 345	implied volatility: 0.016178	 spread: 0.09
+stock price: 141.975	price: 1.555	strike: 225	risk free rate: 1.3113e-06	trading volume: 27	days to expiry: 345	implied volatility: 0.0164219	 spread: 0.11
+stock price: 141.975	price: 1.41	strike: 230	risk free rate: 1.3113e-06	trading volume: 82	days to expiry: 345	implied volatility: 0.0166278	 spread: 0.08
+stock price: 141.975	price: 1.2	strike: 240	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 345	implied volatility: 0.0171168	 spread: 0.06
+stock price: 141.975	price: 1.025	strike: 250	risk free rate: 1.3113e-06	trading volume: 147	days to expiry: 345	implied volatility: 0.0175601	 spread: 0.05
+stock price: 141.975	price: 0.91	strike: 260	risk free rate: 1.3113e-06	trading volume: 363	days to expiry: 345	implied volatility: 0.0180789	 spread: 0.08
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 101.925	strike: 40	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 436	implied volatility: -1	 spread: 0.65
+stock price: 141.975	price: 95.8	strike: 46.25	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 436	implied volatility: 0.0205966	 spread: 0.7
+stock price: 141.975	price: 94.625	strike: 47.5	risk free rate: 1.3113e-06	trading volume: 19	days to expiry: 436	implied volatility: 0.0224332	 spread: 0.35
+stock price: 141.975	price: 92.175	strike: 50	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 436	implied volatility: 0.0223967	 spread: 0.35
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 79.275	strike: 62.5	risk free rate: 1.3113e-06	trading volume: 38	days to expiry: 436	implied volatility: -1	 spread: 1.85
+stock price: 141.975	price: 75.1	strike: 67.5	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 436	implied volatility: 0.0199119	 spread: 0.6
+stock price: 141.975	price: 72.825	strike: 70	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 436	implied volatility: 0.0202615	 spread: 0.35
+stock price: 141.975	price: 68.125	strike: 75	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 436	implied volatility: 0.0197892	 spread: 0.35
+stock price: 141.975	price: 63.5	strike: 80	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 436	implied volatility: 0.0193327	 spread: 5
+stock price: 141.975	price: 57	strike: 86.25	risk free rate: 1.3113e-06	trading volume: 32	days to expiry: 436	implied volatility: 0.0164478	 spread: 1.7
+stock price: 141.975	price: 55.375	strike: 87.5	risk free rate: 1.3113e-06	trading volume: 34	days to expiry: 436	implied volatility: 0.0147811	 spread: 2.75
+stock price: 141.975	price: 53.25	strike: 90	risk free rate: 1.3113e-06	trading volume: 19	days to expiry: 436	implied volatility: 0.015277	 spread: 2.5
+stock price: 141.975	price: 52.825	strike: 92.5	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 436	implied volatility: 0.0191961	 spread: 1.75
+stock price: 141.975	price: 49.35	strike: 95	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 436	implied volatility: 0.0163915	 spread: 1.5
+stock price: 141.975	price: 45.125	strike: 100	risk free rate: 1.3113e-06	trading volume: 33	days to expiry: 436	implied volatility: 0.0161983	 spread: 1.45
+stock price: 141.975	price: 42.375	strike: 102.5	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 436	implied volatility: 0.014932	 spread: 2.75
+stock price: 141.975	price: 39.65	strike: 107.5	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 436	implied volatility: 0.0166684	 spread: 2.6
+stock price: 141.975	price: 37.65	strike: 110	risk free rate: 1.3113e-06	trading volume: 69	days to expiry: 436	implied volatility: 0.016422	 spread: 0.3
+stock price: 141.975	price: 35.75	strike: 112.5	risk free rate: 1.3113e-06	trading volume: 66	days to expiry: 436	implied volatility: 0.0162559	 spread: 0.3
+stock price: 141.975	price: 33.9	strike: 115	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 436	implied volatility: 0.0160987	 spread: 0.3
+stock price: 141.975	price: 33.025	strike: 117.5	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 436	implied volatility: 0.0169643	 spread: 2.15
+stock price: 141.975	price: 31.325	strike: 120	risk free rate: 1.3113e-06	trading volume: 230	days to expiry: 436	implied volatility: 0.0168294	 spread: 2.15
+stock price: 141.975	price: 28.75	strike: 122.5	risk free rate: 1.3113e-06	trading volume: 14	days to expiry: 436	implied volatility: 0.0157577	 spread: 0.3
+stock price: 141.975	price: 27.125	strike: 125	risk free rate: 1.3113e-06	trading volume: 77	days to expiry: 436	implied volatility: 0.0156351	 spread: 0.35
+stock price: 141.975	price: 24.125	strike: 130	risk free rate: 1.3113e-06	trading volume: 82	days to expiry: 436	implied volatility: 0.0154788	 spread: 0.25
+stock price: 141.975	price: 21.525	strike: 135	risk free rate: 1.3113e-06	trading volume: 211	days to expiry: 436	implied volatility: 0.0154843	 spread: 0.45
+stock price: 141.975	price: 18.95	strike: 140	risk free rate: 1.3113e-06	trading volume: 459	days to expiry: 436	implied volatility: 0.0153139	 spread: 0.5
+stock price: 141.975	price: 16.725	strike: 145	risk free rate: 1.3113e-06	trading volume: 132	days to expiry: 436	implied volatility: 0.0152609	 spread: 0.55
+stock price: 141.975	price: 14.675	strike: 150	risk free rate: 1.3113e-06	trading volume: 160	days to expiry: 436	implied volatility: 0.015179	 spread: 0.45
+stock price: 141.975	price: 11.725	strike: 155	risk free rate: 1.3113e-06	trading volume: 85	days to expiry: 436	implied volatility: 0.0141599	 spread: 2.45
+stock price: 141.975	price: 11.2	strike: 160	risk free rate: 1.3113e-06	trading volume: 85	days to expiry: 436	implied volatility: 0.0150496	 spread: 0.2
+stock price: 141.975	price: 9.825	strike: 165	risk free rate: 1.3113e-06	trading volume: 28	days to expiry: 436	implied volatility: 0.0150686	 spread: 0.25
+stock price: 141.975	price: 8.6	strike: 170	risk free rate: 1.3113e-06	trading volume: 239	days to expiry: 436	implied volatility: 0.0150819	 spread: 0.2
+stock price: 141.975	price: 7.5	strike: 175	risk free rate: 1.3113e-06	trading volume: 339	days to expiry: 436	implied volatility: 0.0150793	 spread: 0.2
+stock price: 141.975	price: 6.575	strike: 180	risk free rate: 1.3113e-06	trading volume: 71	days to expiry: 436	implied volatility: 0.0151225	 spread: 0.25
+stock price: 141.975	price: 5.775	strike: 185	risk free rate: 1.3113e-06	trading volume: 26	days to expiry: 436	implied volatility: 0.0151795	 spread: 0.25
+stock price: 141.975	price: 5.15	strike: 190	risk free rate: 1.3113e-06	trading volume: 19	days to expiry: 436	implied volatility: 0.015323	 spread: 0.2
+stock price: 141.975	price: 5.725	strike: 195	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 436	implied volatility: 0.0167469	 spread: 2.55
+stock price: 141.975	price: 4	strike: 200	risk free rate: 1.3113e-06	trading volume: 125	days to expiry: 436	implied volatility: 0.0154541	 spread: 0.1
+stock price: 141.975	price: 3.225	strike: 210	risk free rate: 1.3113e-06	trading volume: 185	days to expiry: 436	implied volatility: 0.0157416	 spread: 0.15
+stock price: 141.975	price: 2.605	strike: 220	risk free rate: 1.3113e-06	trading volume: 141	days to expiry: 436	implied volatility: 0.0159923	 spread: 0.13
+stock price: 141.975	price: 2.375	strike: 225	risk free rate: 1.3113e-06	trading volume: 36	days to expiry: 436	implied volatility: 0.0161617	 spread: 0.15
+stock price: 141.975	price: 1.55	strike: 250	risk free rate: 1.3113e-06	trading volume: 296	days to expiry: 436	implied volatility: 0.016968	 spread: 0.1
+stock price: 141.975	price: 1.41	strike: 260	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 436	implied volatility: 0.0174845	 spread: 0.14
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 110.825	strike: 30	risk free rate: 1.3113e-06	trading volume: 21	days to expiry: 562	implied volatility: -1	 spread: 2.65
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 91.25	strike: 50	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 562	implied volatility: -1	 spread: 2.6
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 86.425	strike: 55	risk free rate: 1.3113e-06	trading volume: 6	days to expiry: 562	implied volatility: -1	 spread: 2.65
+stock price: 141.975	price: 82.575	strike: 60	risk free rate: 1.3113e-06	trading volume: 2	days to expiry: 562	implied volatility: 0.0198252	 spread: 4.85
+stock price: 141.975	price: 77.975	strike: 65	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 562	implied volatility: 0.0201333	 spread: 4.95
+stock price: 141.975	price: 73	strike: 70	risk free rate: 1.3113e-06	trading volume: 64	days to expiry: 562	implied volatility: 0.0185327	 spread: 5
+stock price: 141.975	price: 68.575	strike: 75	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 562	implied volatility: 0.0188209	 spread: 4.85
+stock price: 141.975	price: 64	strike: 80	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 562	implied volatility: 0.0182979	 spread: 5
+stock price: 141.975	price: 59.5	strike: 85	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 562	implied volatility: 0.0177831	 spread: 5
+stock price: 141.975	price: 54.15	strike: 90	risk free rate: 1.3113e-06	trading volume: 47	days to expiry: 562	implied volatility: 0.0154995	 spread: 3.3
+stock price: 141.975	price: 50.9	strike: 95	risk free rate: 1.3113e-06	trading volume: 17	days to expiry: 562	implied volatility: 0.0169964	 spread: 0.4
+stock price: 141.975	price: 46.825	strike: 100	risk free rate: 1.3113e-06	trading volume: 668	days to expiry: 562	implied volatility: 0.0166804	 spread: 0.35
+stock price: 141.975	price: 42.25	strike: 105	risk free rate: 1.3113e-06	trading volume: 11	days to expiry: 562	implied volatility: 0.0155911	 spread: 3.5
+stock price: 141.975	price: 39.5	strike: 110	risk free rate: 1.3113e-06	trading volume: 81	days to expiry: 562	implied volatility: 0.0164831	 spread: 1
+stock price: 141.975	price: 34.75	strike: 115	risk free rate: 1.3113e-06	trading volume: 118	days to expiry: 562	implied volatility: 0.0150275	 spread: 3.5
+stock price: 141.975	price: 32.6	strike: 120	risk free rate: 1.3113e-06	trading volume: 1080	days to expiry: 562	implied volatility: 0.0159814	 spread: 0.8
+stock price: 141.975	price: 28.2	strike: 125	risk free rate: 1.3113e-06	trading volume: 211	days to expiry: 562	implied volatility: 0.0146913	 spread: 2.4
+stock price: 141.975	price: 26.35	strike: 130	risk free rate: 1.3113e-06	trading volume: 587	days to expiry: 562	implied volatility: 0.0154421	 spread: 0.3
+stock price: 141.975	price: 23.925	strike: 135	risk free rate: 1.3113e-06	trading volume: 376	days to expiry: 562	implied volatility: 0.0155117	 spread: 0.75
+stock price: 141.975	price: 21.3	strike: 140	risk free rate: 1.3113e-06	trading volume: 3396	days to expiry: 562	implied volatility: 0.0152711	 spread: 0.3
+stock price: 141.975	price: 19.3	strike: 145	risk free rate: 1.3113e-06	trading volume: 264	days to expiry: 562	implied volatility: 0.015364	 spread: 0.7
+stock price: 141.975	price: 16.95	strike: 150	risk free rate: 1.3113e-06	trading volume: 300	days to expiry: 562	implied volatility: 0.0150573	 spread: 0.7
+stock price: 141.975	price: 15.325	strike: 155	risk free rate: 1.3113e-06	trading volume: 39	days to expiry: 562	implied volatility: 0.0151618	 spread: 1.05
+stock price: 141.975	price: 12.425	strike: 160	risk free rate: 1.3113e-06	trading volume: 182	days to expiry: 562	implied volatility: 0.0141811	 spread: 2.85
+stock price: 141.975	price: 11.4	strike: 165	risk free rate: 1.3113e-06	trading volume: 145	days to expiry: 562	implied volatility: 0.0144903	 spread: 2.8
+stock price: 141.975	price: 9.775	strike: 170	risk free rate: 1.3113e-06	trading volume: 882	days to expiry: 562	implied volatility: 0.0142223	 spread: 2.55
+stock price: 141.975	price: 8.725	strike: 175	risk free rate: 1.3113e-06	trading volume: 132	days to expiry: 562	implied volatility: 0.0142979	 spread: 2.45
+stock price: 141.975	price: 8.8	strike: 180	risk free rate: 1.3113e-06	trading volume: 67	days to expiry: 562	implied volatility: 0.0152239	 spread: 0.3
+stock price: 141.975	price: 8.25	strike: 185	risk free rate: 1.3113e-06	trading volume: 78	days to expiry: 562	implied volatility: 0.0155728	 spread: 4.5
+stock price: 141.975	price: 7.075	strike: 190	risk free rate: 1.3113e-06	trading volume: 81	days to expiry: 562	implied volatility: 0.0153016	 spread: 0.25
+stock price: 141.975	price: 6.375	strike: 195	risk free rate: 1.3113e-06	trading volume: 51	days to expiry: 562	implied volatility: 0.0153685	 spread: 0.25
+stock price: 141.975	price: 5.75	strike: 200	risk free rate: 1.3113e-06	trading volume: 511	days to expiry: 562	implied volatility: 0.0154361	 spread: 0.2
+stock price: 141.975	price: 4.675	strike: 210	risk free rate: 1.3113e-06	trading volume: 31	days to expiry: 562	implied volatility: 0.0155533	 spread: 0.25
+stock price: 141.975	price: 3.85	strike: 220	risk free rate: 1.3113e-06	trading volume: 517	days to expiry: 562	implied volatility: 0.015713	 spread: 0.2
+stock price: 141.975	price: 3.25	strike: 230	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 562	implied volatility: 0.0159552	 spread: 0.3
+stock price: 141.975	price: 2.77	strike: 240	risk free rate: 1.3113e-06	trading volume: 5	days to expiry: 562	implied volatility: 0.0162017	 spread: 0.22
+stock price: 141.975	price: 2.36	strike: 250	risk free rate: 1.3113e-06	trading volume: 10	days to expiry: 562	implied volatility: 0.0164129	 spread: 0.18
+stock price: 141.975	price: 2.03	strike: 260	risk free rate: 1.3113e-06	trading volume: 64	days to expiry: 562	implied volatility: 0.0166312	 spread: 0.04
+stock price: 141.975	price: 82.675	strike: 60	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 618	implied volatility: 0.019458	 spread: 0.45
+stock price: 141.975	price: 77.225	strike: 65	risk free rate: 1.3113e-06	trading volume: 4	days to expiry: 618	implied volatility: 0.0146682	 spread: 3.45
+stock price: 141.975	price: 73.3	strike: 70	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 618	implied volatility: 0.0187168	 spread: 0.4
+stock price: 141.975	price: 63	strike: 80	risk free rate: 1.3113e-06	trading volume: 9	days to expiry: 618	implied volatility: 0.0147181	 spread: 3
+stock price: 141.975	price: 59.5	strike: 85	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 618	implied volatility: 0.0169479	 spread: 5
+stock price: 141.975	price: 55.5	strike: 90	risk free rate: 1.3113e-06	trading volume: 14	days to expiry: 618	implied volatility: 0.0171569	 spread: 5
+stock price: 141.975	price: 47.325	strike: 100	risk free rate: 1.3113e-06	trading volume: 266	days to expiry: 618	implied volatility: 0.0165312	 spread: 0.35
+stock price: 141.975	price: 43.625	strike: 105	risk free rate: 1.3113e-06	trading volume: 36	days to expiry: 618	implied volatility: 0.0164289	 spread: 0.75
+stock price: 141.975	price: 39.1	strike: 110	risk free rate: 1.3113e-06	trading volume: 191	days to expiry: 618	implied volatility: 0.015303	 spread: 3.2
+stock price: 141.975	price: 36.075	strike: 115	risk free rate: 1.3113e-06	trading volume: 15	days to expiry: 618	implied volatility: 0.0155768	 spread: 4.15
+stock price: 141.975	price: 33.025	strike: 120	risk free rate: 1.3113e-06	trading volume: 145	days to expiry: 618	implied volatility: 0.0156042	 spread: 1.65
+stock price: 141.975	price: 28.925	strike: 125	risk free rate: 1.3113e-06	trading volume: 128	days to expiry: 618	implied volatility: 0.0146007	 spread: 2.85
+stock price: 141.975	price: 27.625	strike: 130	risk free rate: 1.3113e-06	trading volume: 227	days to expiry: 618	implied volatility: 0.0157127	 spread: 0.95
+stock price: 141.975	price: 24.775	strike: 135	risk free rate: 1.3113e-06	trading volume: 130	days to expiry: 618	implied volatility: 0.0154248	 spread: 0.45
+stock price: 141.975	price: 22.225	strike: 140	risk free rate: 1.3113e-06	trading volume: 224	days to expiry: 618	implied volatility: 0.0152332	 spread: 0.65
+stock price: 141.975	price: 19.925	strike: 145	risk free rate: 1.3113e-06	trading volume: 56	days to expiry: 618	implied volatility: 0.0150959	 spread: 0.95
+stock price: 141.975	price: 17.6	strike: 150	risk free rate: 1.3113e-06	trading volume: 201	days to expiry: 618	implied volatility: 0.0148178	 spread: 1.6
+stock price: 141.975	price: 16.5	strike: 155	risk free rate: 1.3113e-06	trading volume: 34	days to expiry: 618	implied volatility: 0.0152914	 spread: 5
+stock price: 141.975	price: 14.6	strike: 160	risk free rate: 1.3113e-06	trading volume: 15	days to expiry: 618	implied volatility: 0.0150847	 spread: 0.8
+stock price: 141.975	price: 13.425	strike: 165	risk free rate: 1.3113e-06	trading volume: 69	days to expiry: 618	implied volatility: 0.0152935	 spread: 4.15
+stock price: 141.975	price: 11.125	strike: 170	risk free rate: 1.3113e-06	trading volume: 70	days to expiry: 618	implied volatility: 0.0145755	 spread: 2.15
+stock price: 141.975	price: 10.775	strike: 175	risk free rate: 1.3113e-06	trading volume: 100	days to expiry: 618	implied volatility: 0.0152116	 spread: 0.45
+stock price: 141.975	price: 8.95	strike: 180	risk free rate: 1.3113e-06	trading volume: 104	days to expiry: 618	implied volatility: 0.0146348	 spread: 2
+stock price: 141.975	price: 8.05	strike: 185	risk free rate: 1.3113e-06	trading volume: 8	days to expiry: 618	implied volatility: 0.0146845	 spread: 1.9
+stock price: 141.975	price: 7.2	strike: 190	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 618	implied volatility: 0.0146974	 spread: 1.8
+stock price: 141.975	price: 6.45	strike: 195	risk free rate: 1.3113e-06	trading volume: 3	days to expiry: 618	implied volatility: 0.0147211	 spread: 1.8
+stock price: 141.975	price: 5.9	strike: 200	risk free rate: 1.3113e-06	trading volume: 4322	days to expiry: 618	implied volatility: 0.014859	 spread: 1.8
+stock price: 141.975	price: 5.375	strike: 210	risk free rate: 1.3113e-06	trading volume: 1810	days to expiry: 618	implied volatility: 0.0155414	 spread: 0.25
+stock price: 141.975	price: 4.5	strike: 220	risk free rate: 1.3113e-06	trading volume: 12	days to expiry: 618	implied volatility: 0.0157111	 spread: 0.3
+stock price: 141.975	price: 4.325	strike: 240	risk free rate: 1.3113e-06	trading volume: 10	days to expiry: 618	implied volatility: 0.0174269	 spread: 2.35
+stock price: 141.975	price: 2.205	strike: 250	risk free rate: 1.3113e-06	trading volume: 1	days to expiry: 618	implied volatility: 0.0154033	 spread: 1.41
+stock price: 141.975	price: 2.625	strike: 260	risk free rate: 1.3113e-06	trading volume: 25	days to expiry: 618	implied volatility: 0.0168226	 spread: 0.75
+stock price: 141.975	price: 82.5	strike: 60	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 709	implied volatility: 0.0171414	 spread: 5
+Can't calculate implied volatility (price below lower arbitrage-bound)
+stock price: 141.975	price: 76.9	strike: 65	risk free rate: 1.3113e-06	trading volume: 43	days to expiry: 709	implied volatility: -1	 spread: 2.8
+stock price: 141.975	price: 73.5	strike: 70	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 709	implied volatility: 0.018048	 spread: 5
+stock price: 141.975	price: 69	strike: 75	risk free rate: 1.3113e-06	trading volume: 47	days to expiry: 709	implied volatility: 0.0177723	 spread: 5
+stock price: 141.975	price: 64.75	strike: 80	risk free rate: 1.3113e-06	trading volume: 37	days to expiry: 709	implied volatility: 0.0177818	 spread: 4.5
+stock price: 141.975	price: 60	strike: 85	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 709	implied volatility: 0.0166958	 spread: 5
+stock price: 141.975	price: 57.125	strike: 90	risk free rate: 1.3113e-06	trading volume: 16	days to expiry: 709	implied volatility: 0.0183001	 spread: 2.75
+stock price: 141.975	price: 52	strike: 95	risk free rate: 1.3113e-06	trading volume: 11	days to expiry: 709	implied volatility: 0.016553	 spread: 5
+stock price: 141.975	price: 47.1	strike: 100	risk free rate: 1.3113e-06	trading volume: 156	days to expiry: 709	implied volatility: 0.01516	 spread: 2.2
+stock price: 141.975	price: 45.525	strike: 105	risk free rate: 1.3113e-06	trading volume: 18	days to expiry: 709	implied volatility: 0.0172448	 spread: 2.95
+stock price: 141.975	price: 40.725	strike: 110	risk free rate: 1.3113e-06	trading volume: 29	days to expiry: 709	implied volatility: 0.015812	 spread: 0.45
+stock price: 141.975	price: 38.6	strike: 115	risk free rate: 1.3113e-06	trading volume: 95	days to expiry: 709	implied volatility: 0.0167013	 spread: 2.8
+stock price: 141.975	price: 34.325	strike: 120	risk free rate: 1.3113e-06	trading volume: 314	days to expiry: 709	implied volatility: 0.0156074	 spread: 0.45
+stock price: 141.975	price: 30.25	strike: 125	risk free rate: 1.3113e-06	trading volume: 64	days to expiry: 709	implied volatility: 0.0146356	 spread: 2.5
+stock price: 141.975	price: 29.225	strike: 130	risk free rate: 1.3113e-06	trading volume: 130	days to expiry: 709	implied volatility: 0.0158239	 spread: 1.55
+stock price: 141.975	price: 25.2	strike: 135	risk free rate: 1.3113e-06	trading volume: 126	days to expiry: 709	implied volatility: 0.0146927	 spread: 2.4
+stock price: 141.975	price: 23.85	strike: 140	risk free rate: 1.3113e-06	trading volume: 356	days to expiry: 709	implied volatility: 0.0153247	 spread: 0.3
+stock price: 141.975	price: 20.95	strike: 145	risk free rate: 1.3113e-06	trading volume: 402	days to expiry: 709	implied volatility: 0.0147755	 spread: 1.9
+stock price: 141.975	price: 19.725	strike: 150	risk free rate: 1.3113e-06	trading volume: 300	days to expiry: 709	implied volatility: 0.015241	 spread: 0.45
+stock price: 141.975	price: 17.95	strike: 155	risk free rate: 1.3113e-06	trading volume: 2742	days to expiry: 709	implied volatility: 0.0152339	 spread: 0.4
+stock price: 141.975	price: 17.05	strike: 160	risk free rate: 1.3113e-06	trading volume: 149	days to expiry: 709	implied volatility: 0.0157124	 spread: 1.9
+stock price: 141.975	price: 15	strike: 165	risk free rate: 1.3113e-06	trading volume: 286	days to expiry: 709	implied volatility: 0.0153366	 spread: 5
+stock price: 141.975	price: 13.475	strike: 170	risk free rate: 1.3113e-06	trading volume: 70	days to expiry: 709	implied volatility: 0.0152234	 spread: 0.35
+stock price: 141.975	price: 12.225	strike: 175	risk free rate: 1.3113e-06	trading volume: 502	days to expiry: 709	implied volatility: 0.0152158	 spread: 0.45
+stock price: 141.975	price: 11.025	strike: 180	risk free rate: 1.3113e-06	trading volume: 142	days to expiry: 709	implied volatility: 0.0151661	 spread: 0.95
+stock price: 141.975	price: 10.175	strike: 185	risk free rate: 1.3113e-06	trading volume: 77	days to expiry: 709	implied volatility: 0.0152965	 spread: 0.35
+stock price: 141.975	price: 9.1	strike: 190	risk free rate: 1.3113e-06	trading volume: 112	days to expiry: 709	implied volatility: 0.0151951	 spread: 2.2
+stock price: 141.975	price: 8.625	strike: 195	risk free rate: 1.3113e-06	trading volume: 454	days to expiry: 709	implied volatility: 0.0154889	 spread: 0.75
+stock price: 141.975	price: 7.675	strike: 200	risk free rate: 1.3113e-06	trading volume: 230	days to expiry: 709	implied volatility: 0.0153579	 spread: 0.35
+stock price: 141.975	price: 6.475	strike: 210	risk free rate: 1.3113e-06	trading volume: 13	days to expiry: 709	implied volatility: 0.0154946	 spread: 0.45
+stock price: 141.975	price: 5.45	strike: 220	risk free rate: 1.3113e-06	trading volume: 7	days to expiry: 709	implied volatility: 0.0155966	 spread: 0.4
+stock price: 141.975	price: 4.7	strike: 230	risk free rate: 1.3113e-06	trading volume: 109	days to expiry: 709	implied volatility: 0.0157977	 spread: 0.4
+stock price: 141.975	price: 3.925	strike: 240	risk free rate: 1.3113e-06	trading volume: 73	days to expiry: 709	implied volatility: 0.0158247	 spread: 0.25
+stock price: 141.975	price: 3.5	strike: 250	risk free rate: 1.3113e-06	trading volume: 126	days to expiry: 709	implied volatility: 0.0161201	 spread: 0.3
+stock price: 141.975	price: 3.025	strike: 260	risk free rate: 1.3113e-06	trading volume: 422	days to expiry: 709	implied volatility: 0.0162534	 spread: 0.15
+
+

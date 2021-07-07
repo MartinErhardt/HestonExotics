@@ -1,8 +1,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-#ifndef WEB_API_H
-#define WEB_API_H
+#pragma once 
 #ifndef WIN32
 #include <unistd.h>
 #endif
@@ -10,6 +9,7 @@
 #include "../../simdjson.h"
 #include <list>
 #include "Types.h"
+
 namespace WebInterface
 {
     #define EXP_URL(SYMB) std::string("https://sandbox.tradier.com/v1/markets/options/expirations?symbol=")+SYMB+std::string("&includeAllRoots=false&strikes=false")
@@ -47,5 +47,3 @@ namespace WebInterface
             ~WebAPI();
     };
 }
-
-#endif

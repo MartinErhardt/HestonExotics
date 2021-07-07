@@ -1,9 +1,7 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-#ifndef SDE_H
-#define SDE_H
-
+#pragma once 
 #include "RNG.h"
 template<const unsigned int d> struct SDE_state {
     double cur_state[d];
@@ -31,4 +29,3 @@ template<const unsigned int d,typename SchemeEvoParams, class SchemeEvoPolicy> c
         using reference = const SDE_state<d> *;
         using iterator_category = std::output_iterator_tag;
     };
-#endif

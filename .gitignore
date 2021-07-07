@@ -3,6 +3,7 @@ simdjson.cpp
 HestonExotics
 HestonExotics_icc
 ./seticcvars.sh
+./src/inc/sav
 *.o
 *.gcno
 *.gcda
