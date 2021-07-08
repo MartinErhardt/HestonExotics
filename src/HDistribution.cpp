@@ -17,7 +17,7 @@ HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,co
         A=A_1/A_2;
         exp_kappa_tau=std::exp(p.kappa*tau*.5);
         B=d*exp_kappa_tau/(p.v_0*A_2);
-        D=std::log((2.*d)/(d+xi+(d-xi)*std::exp(-d*tau)))+(p.kappa-d)*tau*.5;
+        D=std::log((2.*d)/(d+xi+(d-xi)/(exp_1*exp_1)))+(p.kappa-d)*tau*.5;
 }
 std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau){
     HDistribution::helpers hlp(this->p,u,tau);
@@ -48,11 +48,13 @@ std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffl
     std::complex<ffloat> sp2=p.sigma*p.sigma;
     std::complex<ffloat> kvm2divsp2=2.*p.kappa*p.v_m/sp2;
     
-    return{chf_val*(-hlp.A/p.v_0),
+    return { 
+            chf_val*(-hlp.A/p.v_0),
             chf_val*(2.*p.kappa/sp2*hlp.D+p.kappa*p.rho*tau*1i*u/p.sigma),
             chf_val*(-A_rho+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_rho)+tiuvmdivs*p.kappa),
             chf_val*(-A_rho/(p.sigma*1i*u)+2.*p.v_m/sp2*hlp.D+kvm2divsp2/hlp.B*B_kappa+tiuvmdivs*p.rho),
-            chf_val*(-A_sigma-2.*kvm2divsp2/p.sigma*hlp.D+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_sigma)-tiuvmdivs/p.sigma*p.rho*p.kappa)};
+            chf_val*(-A_sigma-2.*kvm2divsp2/p.sigma*hlp.D+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_sigma)-tiuvmdivs/p.sigma*p.rho*p.kappa)
+           };
 }
 ffloat HDistribution::first_order_moment()
 {
