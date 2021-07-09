@@ -46,77 +46,10 @@ SWIFT::SWIFT(const HDistribution& distr, const ffloat stock_price, const options
     ffloat iota_density=ceil(std::log2(M_PI*std::abs(k_1-k_2)))-1;
     this->J=std::exp2(iota_density-1);
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    int cas;
-    for(i=1;i<=k_s||(cas=(i<=k_1));i++) payoffs[-k_1+(cas*2-1)*(i-(1-cas)*k_2)]=(out[i]+(cas*2-1)*out2[i-1])*0.5;
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    //int cas;
+    //for(i=1;(i<=k_2-k_1)||(cas=(i<=-k_1));i++) payoffs[-k_1+cas*i-(1-cas)*(i+k_1))]=(out[i]+(cas*2-1)*out2[i-1])*0.5;
     
 }
+//void SWIFT::get_payoff(){
+//    
+//}
