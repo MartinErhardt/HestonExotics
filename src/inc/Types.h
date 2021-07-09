@@ -7,6 +7,8 @@
 #include<cstdlib>
 #include <limits>
 
+#define PRECISION 0.0000001
+
 typedef double ffloat;
 typedef struct{
     //unsigned int days_to_expiry;

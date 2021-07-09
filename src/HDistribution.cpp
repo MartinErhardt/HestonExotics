@@ -19,19 +19,23 @@ HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,co
         B=d*exp_kappa_tau/(p.v_0*A_2);
         D=std::log((2.*d)/(d+xi+(d-xi)/(exp_1*exp_1)))+(p.kappa-d)*tau*.5;
 }
-std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau){
+ffloat HDistribution::int_error(const unsigned int trunc_m, const ffloat tau)const {
+    ffloat exp2_m=std::exp2(trunc_m);
+    return std::fabs(chf(exp2_m*M_PI,tau)+chf(-exp2_m*M_PI,tau))/(4*exp2_m*M_PI*M_PI*tau);
+}
+std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau) const{
     HDistribution::helpers hlp(this->p,u,tau);
     return chf(u,tau,hlp);
 }
-std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp){
+std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp) const{
     return std::exp(-1i*u*risk_free*tau+1i*p.kappa*p.v_m*p.rho*u/p.sigma-hlp.A+2.*hlp.D*p.kappa*p.v_m/(p.sigma*p.sigma));
 }
-std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau){
+std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau) const{
     HDistribution::helpers hlp(this->p,u,tau);
     std::complex<ffloat> chf_val_arg=chf(u,tau,hlp);
     return chf_grad(u,tau,hlp,chf_val_arg);
 }
-std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,const std::complex<ffloat>chf_val){
+std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,const std::complex<ffloat>chf_val) const{
     std::complex<ffloat> d_rho=hlp.xi*p.sigma*1i*u/hlp.d;
     std::complex<ffloat> A_2_rho=p.sigma*1i*u*(2.+hlp.xi*tau)/(2.*hlp.d*p.v_0)*(hlp.xi*hlp.cosh_v+hlp.d*hlp.sinh_v);
     std::complex<ffloat> B_rho=hlp.exp_kappa_tau/p.v_0*(d_rho/hlp.A_2-hlp.d/(hlp.A_2*hlp.A_2)*A_2_rho);
@@ -56,21 +60,33 @@ std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffl
             chf_val*(-A_sigma-2.*kvm2divsp2/p.sigma*hlp.D+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_sigma)-tiuvmdivs/p.sigma*p.rho*p.kappa)
            };
 }
-ffloat HDistribution::first_order_moment()
+ffloat HDistribution::first_order_moment(ffloat T) const
 {
-    return -0.5 * p.v_m * T;
+    return -.5 * p.v_m * T;
 }
-ffloat HDistribution::second_order_moment()
+/*
+	double m_kappa;     // mean reversion rate
+	double m_v_bar;     // long term variance
+	double m_sigma;     // variance of volatility
+	double m_rho;       // correlation between spot and volatility
+	double m_v0;        // initial variance
+    ffloat v_0; // inital varince
+    ffloat v_m; // long term variance
+    ffloat rho; // correlation between spot and volatility
+    ffloat kappa; // mean reversion rate
+    ffloat sigma; // variance of volatility [kappa, s2, k, r, v]
+*/
+ffloat HDistribution::second_order_moment(ffloat T) const
 {
-    auto const& [kappa, s2, k, r, v] = p;
+    auto const& [v,s2,r,kappa,k] = p;
     ffloat kappa2 = kappa * kappa, kappa3 = kappa2 * kappa;
     ffloat k2 = k * k;
     ffloat t = T;
     return s2 / (8 * kappa3) * (-k2 * std::exp(-2 * kappa * t) + 4 * k * std::exp(- kappa * t) * (k - 2 * kappa * r) + 2 * kappa * t * (4 * kappa2 + k2 - 4 * kappa * k * r) + k * (8 * kappa * r - 3 * k));
 }
-ffloat HDistribution::fourth_order_moment()
+ffloat HDistribution::fourth_order_moment(ffloat T) const
 {
-    auto const& [a, s2, k, r, v] = p;
+    auto const& [v,s2,r,a,k] = p;
     ffloat a2 = a * a, a3 = a2 * a, a4 = a3 * a;
     ffloat k2 = k * k, k3 = k2 * k, k4 = k3 * k;
     ffloat t = T, t2 = t * t;

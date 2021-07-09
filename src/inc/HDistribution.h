@@ -12,8 +12,6 @@ typedef struct {
 } HParams;
 
 class HDistribution{
-    HParams p;
-    ffloat T;
     struct Helpers{
         std::complex<ffloat> xi;
         std::complex<ffloat> d;
@@ -29,13 +27,15 @@ class HDistribution{
         Helpers(const HParams& p,const std::complex<ffloat> u,const ffloat tau);
     };
     typedef Helpers helpers;
-    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,std::complex<ffloat>chf_val);
-    std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp);
+    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,std::complex<ffloat>chf_val) const;
+    std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp) const;
 public:
+    HParams p;
     HDistribution(HParams params);
-    std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau);
-    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau);
-    ffloat first_order_moment();
-    ffloat second_order_moment();
-    ffloat fourth_order_moment();
+    std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau) const;
+    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau) const;
+    ffloat int_error(const unsigned int trunc_m, const ffloat tau) const;
+    ffloat first_order_moment(ffloat T) const;
+    ffloat second_order_moment(ffloat T) const;
+    ffloat fourth_order_moment(ffloat T) const;
 };

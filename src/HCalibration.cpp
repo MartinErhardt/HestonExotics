@@ -12,6 +12,7 @@
     ffloat rho;
 } HestonParams;
 */
+
 std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
     auto to_calib=std::make_unique<HParams>();
     ffloat avg_iv=avg_imp_vol(S, market_data);
