@@ -1,6 +1,6 @@
 CXX = g++ 
 LDD = g++ 
-CXXFLAGS= -I src/inc -Wpedantic -Wall -Werror -Wextra -oFast -fopenmp -fprofile-generate -flto -march=native -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules -std=c++17 #-fsingle-precision-constant
+CXXFLAGS= -I src/inc -Wpedantic -Wall -Werror -Wextra -std=c++17 -oFast -fopenmp -fprofile-generate -flto -march=native -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant
 CLANGFLAGS = -Wpedantic -Wall -Werror -oFast -fopenmp -march=native -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -I src/inc
 LDFLAGS = -lgcov --coverage  -lcurl -llevmar -lfftw3
 CLANGLDFLAGS = -lstdc++  -lcurl

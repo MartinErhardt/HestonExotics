@@ -31,7 +31,7 @@ class HDistribution{
     std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp) const;
 public:
     HParams p;
-    HDistribution(HParams params);
+    HDistribution(HParams params){p=params;}
     std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau) const;
     std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau) const;
     ffloat int_error(const unsigned int trunc_m, const ffloat tau) const;
@@ -39,3 +39,4 @@ public:
     ffloat second_order_moment(ffloat T) const;
     ffloat fourth_order_moment(ffloat T) const;
 };
+void distr_test();

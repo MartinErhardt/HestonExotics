@@ -8,11 +8,10 @@
 #include <curl/curl.h>
 #include<list>
 #include "HCalibration.h"
+#include "HDistribution.h"
 #include "WebAPI.h"
-//#include "TWS.h"
 #define MY_TOKEN "RVjzAiRnplMr78OblRHnVOvmb2SA"
 //ffloat call_price(const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
-//price: 11.5	strike: 52.5	spread: 6.95	days to date:  11	trading volume: 30 63.89
 int main(int argc, char *argv[]) {
     std::string tmp_token(MY_TOKEN); // initialized on the stack s.t. reference is not temporary and comprimised.
     auto Getter=std::make_unique<WebInterface::WebAPI>(tmp_token);
@@ -22,6 +21,9 @@ int main(int argc, char *argv[]) {
         std::unique_ptr<std::list<options_chain>> all_chains=Getter->get_all_option_chains(std::string(*(argv+2)));
         std::cout<<"Options data downloaded and parsed\n";
         calibrate(S,*all_chains);
+    }
+    if (argc ==2 && std::string(*(argv+1)) == "test"){
+        distr_test();
     }/*
     std::string input;
     std::cout<<"Enter S: ";

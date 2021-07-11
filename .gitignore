@@ -4,6 +4,7 @@ HestonExotics
 HestonExotics_icc
 ./seticcvars.sh
 ./src/inc/sav
+*.kate-swp
 *.o
 *.gcno
 *.gcda
