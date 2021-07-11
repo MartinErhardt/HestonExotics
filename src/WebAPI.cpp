@@ -84,6 +84,8 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             opt_chain.options.push_back(*new_opt);
             opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
             opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
+            //std::cout<<"min_strike"<<opt_chain.min_strike;
+            //std::cout<<"max_strike"<<opt_chain.max_strike;
         }
     }
     //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';

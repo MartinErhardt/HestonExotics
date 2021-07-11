@@ -25,8 +25,8 @@ typedef struct OptionsChain{
     ffloat min_strike;
     OptionsChain(unsigned int days_until){
         options=std::vector<option>();
-        min_strike=std::numeric_limits<ffloat>::lowest();
-        max_strike=std::numeric_limits<ffloat>::max();
+        min_strike=std::numeric_limits<ffloat>::max();
+        max_strike=std::numeric_limits<ffloat>::lowest();
         days_to_expiry=days_until;
     }
 }options_chain;
