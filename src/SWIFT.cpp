@@ -13,20 +13,21 @@ using namespace std::complex_literals;
 
 SWIFT::SWIFT(const HDistribution& distr, const ffloat stock_price, const options_chain& opts,const unsigned int m_d) : distr(distr), S(stock_price), m(m_d){
     ffloat tau=static_cast<ffloat>(opts.days_to_expiry)/trading_days;
+    std::cout<<"min_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
     ffloat max=yearly_risk_free*tau+std::log(stock_price/opts.min_strike);
     ffloat min=yearly_risk_free*tau+std::log(stock_price/opts.max_strike);
     ffloat c=std::abs(distr.first_order_moment(tau))+10.*std::sqrt(std::fabs(distr.second_order_moment(tau))+std::sqrt(std::abs(distr.fourth_order_moment(tau))));
     this->exp2_m=std::exp2(m);
+    this->sqrt_exp2_m=std::sqrt(static_cast<ffloat>(exp2_m));
     this->lower=min-c;
     this->upper=max+c;
-    this->k_1=ceil(exp2_m*(min - c));
-    this->k_2=floor(exp2_m*(max + c));
+    this->k_1=ceil(exp2_m*lower);
+    this->k_2=floor(exp2_m*upper);
     ffloat iota_density=ceil(std::log2(M_PI*std::abs(k_1-k_2)))-1;
     this->J=std::exp2(iota_density-1);
+    density_coeffs=new std::vector<std::complex<ffloat>>(J);
     std::cout<<"m: "<<m<<"\texp2_m: "<<exp2_m<<"\tc:"<<c<<"\tLower integral bound: "<<k_1<<"\tUpper integral bound: "<<k_2<<"\tJ: "<<J<<'\n';
-    //int cas;
-    //for(i=1;(i<=k_2-k_1)||(cas=(i<=-k_1));i++) payoffs[-k_1+cas*i-(1-cas)*(i+k_1))]=(out[i]+(cas*2-1)*out2[i-1])*0.5;
-    
+    this->get_FFT_coeffs();
 }
 unsigned int SWIFT::get_m(const HDistribution& distr,ffloat tau){
     unsigned int i=0;
@@ -34,92 +35,56 @@ unsigned int SWIFT::get_m(const HDistribution& distr,ffloat tau){
     return i;
 }
 std::complex<ffloat> SWIFT::H(ffloat y, int j){
-    ffloat u_j=M_PI*(2*static_cast<ffloat>(j)+1)/(4.*J)*exp2_m;
+    ffloat u_j=M_PI*(2*static_cast<ffloat>(j)+1)/(2.*static_cast<ffloat>(J))*static_cast<ffloat>(exp2_m);
     //std::cout<<"u_j"<<u_j<<'\n';
     return 1i*std::exp(1i*u_j*y)*(1/u_j-std::exp(y)/(-1i+u_j));
 }
 void SWIFT::get_FFT_coeffs(){
-    int i,j;
-    double *in,*out,*in2,*out2;
-    fftw_plan plan1;
-    fftw_plan plan2;
-    
-    double ea = 1.;
-    double eb = exp(upper);
-    
-    double * d = (double*) fftw_malloc(sizeof(double)*J*2.);
-    double * e = (double*) fftw_malloc(sizeof(double)*J*2.);
-    
-    double * real_input = (double*) fftw_malloc(sizeof(double)*J*2.);
-    double * complex_input = (double*) fftw_malloc(sizeof(double)*J*2.);
-
-    in = (double*) fftw_malloc(sizeof(double)*J*2.);
-    out = (double*) fftw_malloc(sizeof(double)*J*2.);
-    in2 = (double*) fftw_malloc(sizeof(double)*J*2.);
-    out2 = (double*) fftw_malloc(sizeof(double)*J*2.);
-
-    for(j=0;j<J;j++)
+    int i;
+    fftw_complex * payoff_in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) *2*J);
+    fftw_complex * payoff_out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) *2*J);
+    ffloat * density_in=(ffloat*) fftw_malloc(sizeof(ffloat)*2*J);
+    fftw_complex* density_out=(fftw_complex*) fftw_malloc(sizeof(fftw_complex)*(J+1));
+    if(!payoff_in||!payoff_out||!density_in||!density_out) std::runtime_error("Wrong FFT params");
+    fftw_plan payoff_plan = fftw_plan_dft_1d(2*J, payoff_in, payoff_out, FFTW_BACKWARD, FFTW_ESTIMATE);
+    fftw_plan density_plan = fftw_plan_dft_r2c_1d(2*J, density_in, density_out, FFTW_ESTIMATE);
+    std::vector<std::complex<ffloat>>& density_coeff_ref=*density_coeffs; //FIXME
+    for (i = 0; i < J; ++i)
     {
-        double Co=((2*j+1.)/(2.*J*2.))*M_PI;
-        //std::cout<<"2u_j"<<Co<<'\n';
-        double B=(1./(Co*exp2_m));
-        double A=(Co*exp2_m)/(1.+pow(Co*exp2_m,2));
-        double sb=std::sin(Co*exp2_m*upper);
-        double sa=std::sin(Co*exp2_m*0.);
-        double cb=std::cos(Co*exp2_m*upper);
-        double ca=std::cos(Co*exp2_m*0.);
-        double I11=eb*sb-ea*sa+B*eb*cb-B*ea*ca;
-        double I12=-eb*cb+ea*ca+B*eb*sb-B*ea*sa;
-        double I21=sb-sa;
-        double I22=ca-cb;
-        d[j]=A*I11-B*I21;
-        e[j]=A*I12-B*I22;
-        std::complex<ffloat> current=H(upper,j)-H(0,j);// pricing of call options
-        real_input[j]=current.real();
-        complex_input[j]=current.imag();
-        //std::cout<<"eb"<<eb<<"real_input: "<<real_input[j]<<"\tcomplex_input: "<<complex_input[j]<<"\tERinput real: "<<d[j]<<"\tERinput compl: "<<e[j]<<"\tdiff real: "<<std::fabs(real_input[j]-d[j])<<"\tdiff compl: "<<std::fabs(complex_input[j]-e[j])<<'\n';
+        std::complex<ffloat> current=H(upper,i)-H(std::max(lower,0.),i);
+        payoff_in[i][0] = current.real();
+        payoff_in[i][1] = current.imag();
     }
-    //std::cout<<"Start test\n";
-
-    //Calculem amb FFT
-
-    plan1 = fftw_plan_r2r_1d(2.*J, d, out, FFTW_REDFT10, FFTW_ESTIMATE);       //Here we set which kind of transformation we want to perform
-    fftw_execute(plan1);                                                             //Execution of FFT
-
-    plan2 = fftw_plan_r2r_1d(2.*J, e, out2, FFTW_RODFT10, FFTW_ESTIMATE);       //Here we set which kind of transformation we want to perform
-    fftw_execute(plan2);                                                             //Execution of FFT
-
-
-    std::vector<double> payoffs(k_2-k_1 + 1);
-
-    //Para k=0
-    payoffs[-k_1]=(1./J)*(out[0]/2.);
-    //printf("res[%d]=%lf\n",-k_1,payoffs[-k_1]);
-
-    //Para k>0
-    
-    for(i=1;i<=k_2;i++)
+    for (i = J; i < 2*J; ++i)
     {
-        payoffs[-k_1+i]=(1./J)*((out[i]+out2[i-1])/2.); //out viene multiplicado por 2 !!!
-        printf("res[%d]=%lf\n",-k_1+i,payoffs[-k_1+i]);
+        payoff_in[i][0] = 0.;
+        payoff_in[i][1] = 0.;
     }
-
-    //Para k<0
-
-    for(i=1;i<=-k_1;i++)
-    {
-        payoffs[-k_1-i]=(1./J)*((out[i]-out2[i-1])/2.); //out viene multiplicado por 2 !!!
-        printf("res[%d]=%lf\n",-k_1-i,payoffs[-k_1-i]);
+    fftw_execute(payoff_plan);
+    std::cout<<"First plan executed\n";
+    for(i=0;i<2*J;i++) density_in[i]=0.;
+    for(i=k_1;i<=k_2;i++){
+        //std::cout<<"i mod 2J: "<<i%(2*J)<<"\ti: "<<i<<"\t2J: "<<2*J<<'\n';
+        unsigned int i_m_2J=i<0 ? 2*J+i :i;
+        std::complex<ffloat> current(payoff_out[i_m_2J][0],payoff_out[i_m_2J][1]);
+        //std::cout <<"current: "<<current<<'\n';
+        density_in[i_m_2J]=(std::exp(1i*static_cast<ffloat>(i)*M_PI/static_cast<ffloat>(2*J))*current).real()*sqrt_exp2_m/static_cast<ffloat>(J);
     }
-
-    fftw_destroy_plan(plan1);                                            //Destroy plan
-    fftw_destroy_plan(plan2);
-    free(real_input);
-    free(complex_input);
-    free(d);
-    free(e);
-    free(in);                                                            //Free memory
-    free(out);                                                           //Free memory
-    free(in2);                                                           //Free memory
-    free(out2);
+    fftw_execute(density_plan);
+    std::cout<<"Second plan executed\n";
+    for(i=0;i<J/2-1;i++){
+        std::complex<ffloat> current(density_out[2*i+1][0],density_out[2*i+1][1]);
+        std::cout <<"current: "<<current<<'\n';
+        density_coeff_ref[i]=current;
+    }
+    for(i=J/2-1;i<J;i++){
+        std::complex<ffloat> current(density_out[2*J-(2*i+1)][0],density_out[2*J-(2*i+1)][1]);
+        std::cout <<"current: "<<current<<'\n';
+        density_coeff_ref[i]=current;
+    }
+    fftw_destroy_plan(payoff_plan);
+    fftw_destroy_plan(density_plan);
+}
+SWIFT::~SWIFT(){
+    delete density_coeffs;
 }

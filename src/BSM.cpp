@@ -30,17 +30,16 @@ ffloat imp_vol(const ffloat S, const option& opt,unsigned int days_to_expiry){
     double lower_bound=S-std::exp(-risk_free*expi)*opt.strike;
     if(opt.price<=lower_bound) return -1.0;
     if(opt.price>=S) return -2.0;
-    if (call_price(S,opt.strike,i_val, expi)<opt.price){
+    ffloat c;
+    if ((c=call_price(S,opt.strike,i_val, expi))<opt.price){
         l_val=i_val;
         do i_val*=2;
-        while (call_price(S,opt.strike, i_val, expi)<opt.price);
-        while(i_val==0);
+        while ((c=call_price(S,opt.strike, i_val, expi))<opt.price);
         u_val=i_val;
     } else{
         u_val=i_val;
         do i_val*=0.5;
         while (call_price(S,opt.strike, i_val, expi)>=opt.price);
-        while(i_val==0);
         l_val=i_val;
     }
     while(std::fabs(u_val-l_val)>=PRECISION){
@@ -56,6 +55,7 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
     ffloat denom=0;
     double imp_v;
     for(std::list<options_chain>::const_iterator cur_chain = all_chains.begin(); cur_chain != all_chains.end(); cur_chain++){
+        if(!cur_chain->days_to_expiry) continue;
         for(const option& opt: cur_chain->options){
             if((imp_v=imp_vol(S,opt,cur_chain->days_to_expiry))>=0){
                 avg_vol+=opt.volume*imp_v;
