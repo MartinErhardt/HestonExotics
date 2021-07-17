@@ -22,8 +22,8 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++){
         if(!opts->days_to_expiry) continue;
         if(opts->options.size()){
-            auto current_distribution=std::make_unique<HDistribution>(*to_calib);
-            auto current_SWIFT=std::make_unique<SWIFT>(*current_distribution,*SWIFT::get_parameters(*current_distribution,S,*opts));
+            auto current_distribution=std::make_unique<HDistribution>(*to_calib,static_cast<ffloat>(opts->days_to_expiry)/trading_days);
+            auto current_SWIFT=std::make_unique<SWIFT>(*SWIFT::get_parameters(*current_distribution,S,*opts));
         }
     }
     return to_calib;

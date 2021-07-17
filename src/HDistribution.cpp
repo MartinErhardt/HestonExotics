@@ -5,9 +5,9 @@
 #include<cstdlib>
 #include<iostream>
 using namespace std::complex_literals;
-ffloat HDistribution::int_error(const unsigned int trunc_m, const ffloat tau)const {
+ffloat HDistribution::int_error(const unsigned int trunc_m)const {
     ffloat exp2_m=std::exp2(trunc_m);
-    return std::fabs(chf(exp2_m*M_PI,tau)+chf(-exp2_m*M_PI,tau))/(4*exp2_m*M_PI*M_PI*tau);
+    return std::fabs(chf(exp2_m*M_PI)+chf(-exp2_m*M_PI))/(4*exp2_m*M_PI*M_PI*tau);
 }/*
 HelperVariables GetHelperVariables(std::complex<double> u, double tau) const
 	{
@@ -58,13 +58,11 @@ HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,co
         //std::complex<ffloat> D2=std::log(d/p.v_0)+(p.kappa-d)*tau*.5-std::log((d+xi)/(2*p.v_0)+(d-xi)/(2*p.v_0)*std::exp(-d*tau));
         
 }
-#define UNUSED(x) (void)(x)
-std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau) const{
+std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u) const{
     HDistribution::helpers hlp(this->p,u,tau);
-    return chf(u,tau,hlp);
+    return chf(u,hlp);
 }
-std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp) const{
-    UNUSED(tau);
+std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const helpers& hlp) const{
     std::complex<ffloat> res=std::exp((p.kappa*p.v_m*p.rho*tau*u*1i)/p.sigma-hlp.A+(2.*hlp.D*p.kappa*p.v_m)/(p.sigma*p.sigma)); //FIXME?
     //std::cout<<"1xi: "<<hlp.xi<<"\td: "<<hlp.d<<"\tA_1: "<<hlp.A_1<<"\tA_2: "<<hlp.A_2<<"\tA: "<<hlp.A<<"\tB: "<<hlp.B<<"\tD: "<<hlp.D<<"\tchf: "<<res<<'\n';
     //std::cout<<"res: "<<res<<'\n';
@@ -72,12 +70,21 @@ std::complex<ffloat> HDistribution::chf(const std::complex<ffloat> u,const ffloa
     return res;
 }
 
-std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau) const{
+std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u) const{
     HDistribution::helpers hlp(this->p,u,tau);
-    std::complex<ffloat> chf_val_arg=chf(u,tau,hlp);
-    return chf_grad(u,tau,hlp,chf_val_arg);
+    std::complex<ffloat> chf_val_arg=chf(u,hlp);
+    return chf_grad(u,hlp,chf_val_arg);
 }
-std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,const std::complex<ffloat>chf_val) const{
+std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffloat> u,const helpers& hlp,const std::complex<ffloat>chf_val) const{
+    std::vector<std::complex<ffloat>> chf_and_chf_grad = chf_chf_grad(u,hlp,chf_val);
+    return {chf_and_chf_grad[1],chf_and_chf_grad[2],chf_and_chf_grad[3],chf_and_chf_grad[4],chf_and_chf_grad[5]};
+}
+std::vector<std::complex<ffloat>> HDistribution::chf_chf_grad(const std::complex<ffloat> u) const{
+    HDistribution::helpers hlp(this->p,u,tau);
+    std::complex<ffloat> chf_val_arg=chf(u,hlp);
+    return chf_chf_grad(u,hlp,chf_val_arg);
+}
+std::vector<std::complex<ffloat>> HDistribution::chf_chf_grad(const std::complex<ffloat> u,const helpers& hlp,const std::complex<ffloat>chf_val) const{
     std::complex<ffloat> d_rho=hlp.xi*p.sigma*1i*u/hlp.d;
     std::complex<ffloat> A_2_rho=p.sigma*1i*u*(2.+hlp.xi*tau)/(2.*hlp.d*p.v_0)*(hlp.xi*hlp.cosh_v+hlp.d*hlp.sinh_v);
     std::complex<ffloat> B_rho=hlp.exp_kappa_tau/p.v_0*(d_rho/hlp.A_2-hlp.d/(hlp.A_2*hlp.A_2)*A_2_rho);
@@ -103,7 +110,7 @@ std::vector<std::complex<ffloat>> HDistribution::chf_grad(const std::complex<ffl
     //"d_rho: "<<d_rho<<"\tA2_rho: "<<A_2_rho<<"\tB_rho: "<<B_rho<<"\tA1_rho: "<<A_1_rho<<"\tA_rho: "<<A_rho<<
     //"\td_sigma: "<<d_sigma<<"\tA_1_sigma: "<<A_1_sigma<<"\tA_2_sigma: "<<A_2_sigma<<"\tA_sigma: "<<A_sigma<<'\n';
     //std::cout<<"MY char_u: "<<chf_val<<"\th_v_0: "<<h_v_0<<"\th_v_bar: "<< h_v_m<<"\th_rho: "<<h_rho<<"\th_kappa: "<<h_kappa<<"\th_sigma: "<<h_sigma<<'\n';
-    return { 
+    return { chf_val,
             chf_val*h_v_0,
             chf_val*h_v_m,
             chf_val*h_rho,
@@ -200,25 +207,25 @@ std::vector<std::complex<double>> GetCuiGradient(HParams p, std::complex<double>
     return { -A_over_v0 * char_u, char_u * h_v_bar, char_u * h_rho, char_u * h_kappa,  char_u * h_sigma};
 }
 
-ffloat HDistribution::first_order_moment(ffloat T) const
+ffloat HDistribution::first_order_moment() const
 {
-    return -.5 * p.v_m * T;
+    return -.5 * p.v_m * tau;
 }
 
-ffloat HDistribution::second_order_moment(ffloat T) const
+ffloat HDistribution::second_order_moment() const
 {
     auto const& [v,s2,r,kappa,k] = p;
     ffloat kappa2 = kappa * kappa, kappa3 = kappa2 * kappa;
     ffloat k2 = k * k;
-    ffloat t = T;
+    ffloat t = tau;
     return s2 / (8 * kappa3) * (-k2 * std::exp(-2 * kappa * t) + 4 * k * std::exp(- kappa * t) * (k - 2 * kappa * r) + 2 * kappa * t * (4 * kappa2 + k2 - 4 * kappa * k * r) + k * (8 * kappa * r - 3 * k));
 }
-ffloat HDistribution::fourth_order_moment(ffloat T) const
+ffloat HDistribution::fourth_order_moment() const
 {
     auto const& [v,s2,r,a,k] = p;
     ffloat a2 = a * a, a3 = a2 * a, a4 = a3 * a;
     ffloat k2 = k * k, k3 = k2 * k, k4 = k3 * k;
-    ffloat t = T, t2 = t * t;
+    ffloat t = tau, t2 = t * t;
     ffloat r2 = r * r;
     return (3 * k2 * s2) / (64 * std::pow(a, 7)) * (
         -3 * k4 * std::exp(-4 * a * t)
@@ -261,7 +268,7 @@ void distr_test(){
         double rho = 0.04;            // |  correlation between spot and volatility
         double v0 = 0.09;             // |  initial variance
 
-    HDistribution test({0,0,0,0,0});/*
+    /*
     for(int i=1;i<1000; i++){
         test.p.v_0=v0 * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
         test.p.v_m=v_bar * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
@@ -275,16 +282,17 @@ void distr_test(){
         std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<tau<<"\tx: "<<x<<"\tmy_chf: "<<wrong<<"\tEudald Romo chf: "<< correct<<"\tdiff: "<<std::fabs(correct-wrong)<<'\n';
     }*/
      for(int i=1;i<1000; i++){
-        test.p.v_0=v0 * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
-        test.p.v_m=v_bar * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
-        test.p.rho=rho * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
-        test.p.kappa=kappa * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
-        test.p.sigma=sigma * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
-        double tau=(((double) rand() / (RAND_MAX)));
+         HDistribution test(
+             {      v0 * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
+                    v_bar * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
+                    rho * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
+                    kappa * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
+                    sigma * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5)
+            }, (((double) rand() / (RAND_MAX))));
         double x=(((double) rand() / (RAND_MAX)) - 0.5)*100;
-        std::vector<std::complex<double>> correct =GetCuiGradient(test.p,-x,tau);
-        std::vector<std::complex<double>> wrong = test.chf_grad(x,tau);
-        std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<tau<<"\tx: "<<x<<"\tdiff: "<<std::sqrt((correct[0]-wrong[0])*std::conj((correct[0]-wrong[0]))+
+        std::vector<std::complex<double>> correct =GetCuiGradient(test.p,-x,test.tau);
+        std::vector<std::complex<double>> wrong = test.chf_grad(x);
+        std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<test.tau<<"\tx: "<<x<<"\tdiff: "<<std::sqrt((correct[0]-wrong[0])*std::conj((correct[0]-wrong[0]))+
                     (correct[1]-wrong[1])*std::conj((correct[1]-wrong[1]))+
                     (correct[2]-wrong[2])*std::conj((correct[2]-wrong[2]))+
                     (correct[3]-wrong[3])*std::conj((correct[3]-wrong[3]))+

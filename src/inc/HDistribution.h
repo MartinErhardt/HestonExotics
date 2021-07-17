@@ -27,16 +27,19 @@ class HDistribution{
         Helpers(const HParams& p,const std::complex<ffloat> u,const ffloat tau);
     };
     typedef Helpers helpers;
-    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp,std::complex<ffloat>chf_val) const;
-    std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau,const helpers& hlp) const;
+    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const helpers& hlp,std::complex<ffloat>chf_val) const;
+    std::vector<std::complex<ffloat>> chf_chf_grad(const std::complex<ffloat> ,const helpers& hlp,std::complex<ffloat>chf_val) const;
+    std::complex<ffloat> chf(const std::complex<ffloat> u,const helpers& hlp) const;
 public:
-    HParams p;
-    HDistribution(HParams params){p=params;}
-    std::complex<ffloat> chf(const std::complex<ffloat> u,const ffloat tau) const;
-    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u,const ffloat tau) const;
-    ffloat int_error(const unsigned int trunc_m, const ffloat tau) const;
-    ffloat first_order_moment(ffloat T) const;
-    ffloat second_order_moment(ffloat T) const;
-    ffloat fourth_order_moment(ffloat T) const;
+    const HParams p;
+    const ffloat tau;
+    HDistribution(HParams params,const ffloat init_tau): p(params),tau(init_tau){};
+    std::complex<ffloat> chf(const std::complex<ffloat> u) const;
+    std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u) const;
+    std::vector<std::complex<ffloat>> chf_chf_grad(const std::complex<ffloat> u) const;
+    ffloat int_error(const unsigned int trunc_m) const;
+    ffloat first_order_moment() const;
+    ffloat second_order_moment() const;
+    ffloat fourth_order_moment() const;
 };
 void distr_test();
