@@ -37,9 +37,9 @@ void SWIFT::get_FFT_coeffs(){
     auto const& [m, exp2_m,sqrt_exp2_m, lower,upper, k_1,k_2,J] = my_params;
     int i;
     unsigned int j;
-    auto H = [J,exp2_m](ffloat y, ffloat exp_y, int j)
+    auto H = [this](ffloat y, ffloat exp_y, int j)
     {
-            ffloat u_j=M_PI*(2*static_cast<ffloat>(j)+1)/(2.*static_cast<ffloat>(J))*static_cast<ffloat>(exp2_m);
+            ffloat u_j=M_PI*(2*static_cast<ffloat>(j)+1)/(2.*static_cast<ffloat>(my_params.J))*static_cast<ffloat>(my_params.exp2_m);
             //std::cout<<"u_j"<<u_j<<'\n';
             return 1i*std::exp(1i*u_j*y)*(1/u_j-exp_y/(-1i+u_j));
     };

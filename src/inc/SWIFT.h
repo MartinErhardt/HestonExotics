@@ -2,7 +2,7 @@
 #include"HDistribution.h"
 #include<memory>
 #include<list>
-
+#include <eigen3/Eigen/Dense>
 typedef struct{
     const unsigned int m;
     const unsigned int exp2_m;
@@ -18,9 +18,11 @@ class SWIFT{
     const swift_parameters my_params;
     std::vector<std::complex<ffloat>>& density_coeffs;
     typedef struct CacheEntry{
+        const Eigen::MatrixXd& results;
         const options_chain& to_price;
     } cache_entry;
     std::list<cache_entry> results_cache;
+    Eigen::MatrixXd * pricing_matrix;
     void get_FFT_coeffs();
 public:
     SWIFT(HDistribution& init_distr, const swift_parameters& init_params);
