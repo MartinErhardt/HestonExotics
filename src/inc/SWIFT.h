@@ -1,24 +1,31 @@
 #pragma once
 #include"HDistribution.h"
+#include<memory>
+#include<list>
 
-class SWIFT{
-    const HDistribution& distr;
-    const ffloat S;
+typedef struct{
     const unsigned int m;
-    int exp2_m;
-    ffloat sqrt_exp2_m;
-    ffloat lower;
-    ffloat upper;
-    int k_1;
-    int k_2;
-    int J;
-    std::vector<std::complex<ffloat>>*density_coeffs;
-    std::complex<ffloat> H(ffloat y, int j);
+    const unsigned int exp2_m;
+    const ffloat sqrt_exp2_m;
+    const ffloat lower;
+    const ffloat upper;
+    const int k_1;
+    const int k_2;
+    const unsigned int J;
+} swift_parameters;
+class SWIFT{
+    HDistribution& distr;
+    const swift_parameters my_params;
+    std::vector<std::complex<ffloat>>& density_coeffs;
+    typedef struct CacheEntry{
+        const options_chain& to_price;
+    } cache_entry;
+    std::list<cache_entry> results_cache;
+    void get_FFT_coeffs();
 public:
-    SWIFT(const HDistribution& new_distr, const ffloat stock_price, const options_chain& opts,const unsigned int m_d);
+    SWIFT(HDistribution& init_distr, const swift_parameters& init_params);
     std::vector<ffloat> price_opts(ffloat S, std::vector<double> const& Ks);
     std::vector<std::vector<ffloat>> price_opts_grad(std::vector<double> const& Ks);
-    void get_FFT_coeffs();
-    static unsigned int get_m(const HDistribution& distr,ffloat tau);
+    static std::unique_ptr<swift_parameters> get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts);
     ~SWIFT();
 };
