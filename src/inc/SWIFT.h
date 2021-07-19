@@ -1,3 +1,6 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #pragma once
 #include"HDistribution.h"
 #include<memory>
@@ -31,9 +34,9 @@ private:
     void get_FFT_coeffs();
 public:
     SWIFT(const swift_parameters& init_params);
-    void update_distribution(HDistribution& new_distr);
-    void price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out_array);
-    void price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out_array);
+    void flush_cache();
+    void price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out_array,ffloat*end);
+    void price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out_array,ffloat*end);
     static std::unique_ptr<swift_parameters> get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts);
     ~SWIFT();
 };

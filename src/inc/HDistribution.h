@@ -2,13 +2,18 @@
 #include"Types.h"
 #include<complex>
 #include<vector>
+#include<iostream>
 
-typedef struct {
+typedef struct HP{
     ffloat v_0; // inital varince
     ffloat v_m; // long term variance
     ffloat rho; // correlation between spot and volatility
     ffloat kappa; // mean reversion rate
     ffloat sigma; // variance of volatility
+    friend bool operator==(const HP& l, const HP& r){
+        std::cout<<"== overload successful\n";
+        return (l.v_0==r.v_0) && (l.v_m==r.v_m) && (l.rho==r.rho) && (l.kappa==r.kappa) && (l.sigma==r.sigma);
+    };
 } HParams;
 
 class HDistribution{

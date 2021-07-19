@@ -7,10 +7,9 @@
 using namespace WebInterface;
 //using namespace simdjson;
 #define YMD_DATE_LENGTH 10
-size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer*userp);
+size_t write_data(void* buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer* userp);
 unsigned int days_to_date(const std::string& expiration_date);
-size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer* buf)
-{
+size_t write_data(void* buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer* buf){
     char* new_loc=NULL;
     if (!(new_loc= (char*)malloc(buf->size_buf+nmemb*size+1+simdjson::SIMDJSON_PADDING))) return 0;
     if (buf->buf) memcpy(new_loc,buf->buf,buf->size_buf);
@@ -31,8 +30,7 @@ unsigned int days_to_date(const std::string& expiration_date){
     //std::cout<<"raw_diff"<<raw_diff<<"\t work_day_diff"<<work_day_diff<<'\n';
     return work_day_diff;
 }
-WebAPI::WebAPI(const std::string& access_code):token(access_code)
-{
+WebAPI::WebAPI(const std::string& access_code):token(access_code){
     std::cout << token << '\n';
     buf.size_buf=0;
     buf.buf=NULL;
@@ -46,8 +44,7 @@ WebAPI::WebAPI(const std::string& access_code):token(access_code)
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buf);
 }
 
-void WebAPI::download_to_buf(const std::string& url)
-{
+void WebAPI::download_to_buf(const std::string& url){
     CURLcode res;
     free(buf.buf);
     buf.size_buf=0;

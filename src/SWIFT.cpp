@@ -8,7 +8,7 @@
 #include<complex>
 
 using namespace std::complex_literals;
-using Eigen::MatrixXcd;
+using Eigen::MatrixXcd; // TODO typedef depending on ffloat type
 //typedef Matrix<std::complex<ffloat>, 6, Eigen::Dynamic> MatrixXdcf6;
 //typedef Matrix<std::complex<ffloat>, Eigen::Dynamic, Eigen::Dynamic> MatrixXdcf;
 #define TRUNCATION_PRECISION 0.0005
@@ -90,13 +90,21 @@ SWIFT::cache_entry * SWIFT::get_precached(const HDistribution& distr,const ffloa
         precached=&results_cache.emplace_back(distr,*this,opts,S);
     return precached;
 }
-void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out){
+void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out,ffloat* end){
+    unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(unsigned int i=0;i<my_params.J;i++) *(*out++)=precached->results(0,i).real();
+    for(i=0;i<my_params.J&&(*out)<end;i++) *(*out)++=precached->results(0,i).real();
+    if(i<my_params.J) throw std::runtime_error((std::string("Pricing buffer too small i: ")+ std::to_string(i)+std::string("\tJ: ")+std::to_string(my_params.J)).c_str());
 }
-void SWIFT::price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out){
+void SWIFT::price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out,ffloat* end){
+    unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(unsigned int i=0;i<my_params.J;i++) for(unsigned int j=1;j<6;j++) *(*out++)=precached->results(j,i).real();
+    //std::cout<<"out: "<<*out<<"\tend: "<<end<<'\n';
+    for(i=0;i<my_params.J&&(*out)<end;i++) for(unsigned int j=1;j<6;j++) *(*out)++=precached->results(j,i).real();
+    if(i<my_params.J) throw std::runtime_error((std::string("Gradient buffer too small i: ")+std::to_string(i)+std::string("\tJ: ")+std::to_string(my_params.J)).c_str());
+}
+void SWIFT::flush_cache(){
+    results_cache.clear();
 }
 SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj, const options_chain& to_price_init,const ffloat stock_price):to_price(to_price_init){
     unsigned int swift_J=swift_obj.my_params.J;
