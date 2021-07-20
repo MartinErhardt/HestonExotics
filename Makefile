@@ -1,6 +1,7 @@
 CXX = g++ 
 LDD = g++
-CXXFLAGS= -I src/inc -Wpedantic -Wall -Wextra -std=c++17 -oFast -fopenmp -fprofile-generate -flto -march=native -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant
+CXXFLAGS= -I src/inc -Wpedantic -Wall -Wextra -std=c++17 -fopenmp -oFast -fprofile-generate -flto -march=native -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant
+CXXDBGFLAGS= -I src/inc -Wpedantic -Wall -Wextra -std=c++17 -g -fopenmp
 CLANGFLAGS = -Wpedantic -Wall -Werror -Wextra -std=c++17 -oFast -fopenmp -march=native -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -I src/inc -DEIGEN_USE_MKL_ALL
 LDFLAGS = -lgcov --coverage  -lcurl -llevmar -lfftw3 -fopenmp
 CLANGLDFLAGS = -lstdc++  -lcurl -llevmar -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
@@ -19,9 +20,9 @@ HestonExotics: $(OBJS) $(LIB_OBJS)
 	rm $(shell find -name '*.gcda')
 simdjson.o:
 	$(GETLIBS)
-	$(CXX) $(CXXFLAGS) -c -o $(LIB_OBJS) $(LIBS) 
+	$(CXX) $(CXXDBGFLAGS) -c -o $(LIB_OBJS) $(LIBS) 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -c -o $@ $^
+	$(CXX) $(CXXDBGFLAGS) -c -o $@ $^
 
 %_icc.o: %.cpp
 	dpcpp $(CLANGFLAGS) -c -o $@ $^

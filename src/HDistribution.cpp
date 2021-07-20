@@ -8,41 +8,7 @@ using namespace std::complex_literals;
 ffloat HDistribution::int_error(const unsigned int trunc_m)const {
     ffloat exp2_m=std::exp2(trunc_m);
     return std::fabs(chf(exp2_m*M_PI)+chf(-exp2_m*M_PI))/(4*exp2_m*M_PI*M_PI*tau);
-}/*
-HelperVariables GetHelperVariables(std::complex<double> u, double tau) const
-	{
-		auto const& [k, v_bar, sigma, rho, v_0] = m_parameters;
-		std::complex<double> xi = k - sigma * rho * u * 1i;
-		std::complex<double> d = std::sqrt(xi * xi + m_sigma_squared * (u * u + u * 1i));
-		std::complex<double> A1 = (u * u + 1i * u) * std::sinh(0.5 * d * tau);
-		std::complex<double> A2 = d * std::cosh(0.5 * d * tau) / v_0 + xi * std::sinh(d * tau * 0.5) / v_0;
-		std::complex<double> A = A1 / A2;
-		std::complex<double> D = std::log(d / v_0) + (k - d) * tau / 2.0 - std::log((d + xi) / (2 * v_0) + (d - xi) / (2 * v_0)
-                                                                                                           * std::exp(-d * tau));
-
-		return{xi, d, A1, A2, A, D};
-	}
-
-	[[nodiscard]] std::complex<double> GetNonXChar(std::complex<double> u) const final
-    {
-        u = -u; //TODO: Fix properly later on.
-        return GetCuiCharExplicit(u, m_T);
-//        return GetGatheralChar(u, m_T);
-//        return GetHestonChar(u, m_T);
-    }
-
-    [[nodiscard]] std::vector<std::complex<double>> GetNonXCharGradient(std::complex<double> u) const final
-    {
-        u = -u; //TODO: Fix properly later on.
-        return GetCuiGradient(u, m_T);
-    }
-
-	[[nodiscard]] std::complex<double> GetCuiChar(std::complex<double> u, double tau) const
-    {
-        auto const& [k, v_bar, sigma, rho, v_0] = m_parameters;
-        auto const& [xi, d, A1, A2, A, D] = GetHelperVariables(u, tau);
-	    return std::exp(- (k * v_bar * rho * tau * 1i * u) / sigma - A + (2 * k * v_bar * D) / (m_sigma_squared));
-    }*/
+}
 HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,const ffloat tau){
         xi=p.kappa+p.sigma*p.rho*1i*u;
         std::complex<ffloat> fac=u*u-1i*u;
@@ -289,7 +255,7 @@ void distr_test(){
                     kappa * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
                     sigma * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5)
             }, (((double) rand() / (RAND_MAX))));
-        double x=(((double) rand() / (RAND_MAX)) - 0.5)*100;
+        double x=(((double) rand() / (RAND_MAX)) - 0.5)*1000;
         std::vector<std::complex<double>> correct =GetCuiGradient(test.p,-x,test.tau);
         std::vector<std::complex<double>> wrong = test.chf_grad(x);
         std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<test.tau<<"\tx: "<<x<<"\tdiff: "<<std::sqrt((correct[0]-wrong[0])*std::conj((correct[0]-wrong[0]))+

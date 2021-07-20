@@ -21,12 +21,14 @@ typedef struct{
 typedef struct OptionsChain{
     std::vector<option> options;
     unsigned int days_to_expiry;
+    ffloat time_to_expiry;
     ffloat max_strike;
     ffloat min_strike;
-    OptionsChain(unsigned int days_until){
+    OptionsChain(unsigned int days_until,ffloat time_until){
         options=std::vector<option>();
         min_strike=std::numeric_limits<ffloat>::max();
         max_strike=std::numeric_limits<ffloat>::lowest();
         days_to_expiry=days_until;
+        time_to_expiry=time_until;
     }
 }options_chain;

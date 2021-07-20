@@ -3,6 +3,7 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #include "WebAPI.h"
 #include "../simdjson.h"
+#include"BSM.h"
 //#include <math.h>
 using namespace WebInterface;
 //using namespace simdjson;
@@ -103,7 +104,7 @@ std::unique_ptr<std::list<options_chain>> WebAPI::get_all_option_chains(const st
     auto expiries =parse_expiries();
     std::cout<<"Done\n";
     for(const std::string& date : *expiries){
-        options_chain& new_opt_chain=*(new options_chain(days_to_date(date)));
+        options_chain& new_opt_chain=*(new options_chain(days_to_date(date),static_cast<ffloat>(days_to_date(date))/trading_days));
         std::cout<<"Download all options expiring on "<<date<<"...";
         download_to_buf(OPTIONS_CHAIN_URL(underlying,date));
         std::cout<<"Done\n";

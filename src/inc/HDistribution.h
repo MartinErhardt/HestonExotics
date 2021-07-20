@@ -11,7 +11,7 @@ typedef struct HP{
     ffloat kappa; // mean reversion rate
     ffloat sigma; // variance of volatility
     friend bool operator==(const HP& l, const HP& r){
-        std::cout<<"== overload successful\n";
+        //std::cout<<"== overload successful\n";
         return (l.v_0==r.v_0) && (l.v_m==r.v_m) && (l.rho==r.rho) && (l.kappa==r.kappa) && (l.sigma==r.sigma);
     };
 } HParams;

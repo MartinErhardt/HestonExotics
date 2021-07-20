@@ -21,9 +21,10 @@ int main(int argc, char *argv[]) {
         std::unique_ptr<std::list<options_chain>> all_chains=Getter->get_all_option_chains(std::string(*(argv+2)));
         std::cout<<"Options data downloaded and parsed\n";
         calibrate(S,*all_chains);
-    }
-    if (argc ==2 && std::string(*(argv+1)) == "test"){
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "distr"){
         distr_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "pricing"){
+        pricing_test();
     }/*
     std::string input;
     std::cout<<"Enter S: ";
