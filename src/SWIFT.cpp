@@ -19,7 +19,7 @@ ffloat SwiftParameters::u(const unsigned int i) const{
 std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts){
     unsigned int m=0;
     while(distr.int_error(m++)>TRUNCATION_PRECISION);
-    std::cout<<"min_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
+    //std::cout<<"min_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
     ffloat max=yearly_risk_free*distr.tau+std::log(stock_price/opts.min_strike);
     ffloat min=yearly_risk_free*distr.tau+std::log(stock_price/opts.max_strike);
     ffloat c=std::abs(distr.first_order_moment())+10.*std::sqrt(std::fabs(distr.second_order_moment())+std::sqrt(std::abs(distr.fourth_order_moment())));
@@ -92,7 +92,7 @@ SWIFT::cache_entry * SWIFT::get_precached(const HDistribution& distr,const ffloa
     if(!results_cache.size()||!is_opts(*(precached=&*find_if(results_cache.begin(), results_cache.end(), is_opts)))) //TODO test if this &* is local in scope
         precached=&results_cache.emplace_back(distr,*this,opts,S);
     else std::cout<<"Used precached values\n";
-    std::cout<<"returning precached or newly cached results\t# rows: "<<precached->results.rows()<<"\t# cols: "<<precached->results.cols()<<'\n';
+    //std::cout<<"returning precached or newly cached results\t# rows: "<<precached->results.rows()<<"\t# cols: "<<precached->results.cols()<<'\n';
     return precached;
 }
 void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out,ffloat* end){
@@ -118,22 +118,28 @@ void SWIFT::flush_cache(){
 }
 SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj, const options_chain& to_price_init,const ffloat stock_price):to_price(to_price_init){
     unsigned int swift_J=swift_obj.my_params.J;
-    ffloat e_m=static_cast<ffloat>(swift_obj.my_params.exp2_m);
+    //ffloat e_m=static_cast<ffloat>(swift_obj.my_params.exp2_m);
     ffloat discount=std::exp(-yearly_risk_free*distr.tau);
     MatrixXcd pricing_matrix(6,swift_J);
     MatrixXcd to_price_matrix(swift_J,to_price.options.size());
-    std::cout<<"J: "<<swift_J<<"\tn opts: "<<to_price.options.size()<<'\n';
+    //std::cout<<"J: "<<swift_J<<"\tn opts: "<<to_price.options.size()<<'\n';
     //std::cout<<"I allocate "<<sizeof(to_price_matrix)+sizeof(pricing_matrix)<<" bytes on the stack\n";
     for(unsigned int i=0;i<swift_J;i++){
-        std::vector<std::complex<ffloat>> chf_chf_grad_val=distr.chf_chf_grad(e_m*swift_obj.my_params.u(i));
-        //std::cout<<"chf_val: "<<chf_chf_grad_val[0]<<"\tchf_grad_1: "<<chf_chf_grad_val[1]<<"\tchf_grad_2: "<<chf_chf_grad_val[2]<<"\tchf_grad_3: "<<chf_chf_grad_val[3]<<"\tchf_grad_4: "<<chf_chf_grad_val[4]<<"\tchf_grad_5: "<<chf_chf_grad_val[5]<<'\n';
-        for(int j=0;j<6;j++) pricing_matrix(j,i)=discount*chf_chf_grad_val[j]*swift_obj.density_coeffs[i];
+        std::vector<std::complex<ffloat>> chf_chf_grad_val=distr.chf_chf_grad(swift_obj.my_params.u(i));
+        //std::cout<<"j"<<i//<<"u: "<<swift_obj.my_params.u(i)
+        //<<"\tchf: "<<chf_chf_grad_val[0]<<"\tU_j"<<swift_obj.density_coeffs[i]<<'\n';
+        
+        //std::cout<<"i: "<<i<<"\ta_i0: "<<chf_chf_grad_val[i]*swift_obj.density_coeffs[i]<<'\n';
+        for(int j=0;j<6;j++) pricing_matrix(j,i)=chf_chf_grad_val[j]*swift_obj.density_coeffs[i];
     }
     unsigned int j=0;
     //std::cout<<"Filled pricing matrix\n";
     for(const option& opt: to_price.options){
         ffloat x=yearly_risk_free*distr.tau+std::log(stock_price/opt.strike);
-        for(unsigned int i=0;i<swift_J;i++) to_price_matrix(i,j)=std::exp(-1i*swift_obj.my_params.u(j)*e_m*x);
+        for(unsigned int i=0;i<swift_J;i++){ to_price_matrix(i,j)=discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x);
+        //std::cout<<"j: "<<j<<"\ti: "<<i<<"\tb_ji: "<<discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x)<<'\n';
+            
+        }
         j++;
     }
     //std::cout<<"Filled to price matrix\n";

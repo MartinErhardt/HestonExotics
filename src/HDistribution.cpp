@@ -21,6 +21,7 @@ HDistribution::Helpers::Helpers(const HParams& p,const std::complex<ffloat> u,co
         exp_kappa_tau=std::exp(p.kappa*tau*.5);
         B=d*exp_kappa_tau/(p.v_0*A_2);
         D=std::log((2.*d)/(d+xi+(d-xi)*std::exp(-d*tau)))+(p.kappa-d)*tau*.5;
+        //if(d!=d||A_1!=A_1||A)
         //std::complex<ffloat> D2=std::log(d/p.v_0)+(p.kappa-d)*tau*.5-std::log((d+xi)/(2*p.v_0)+(d-xi)/(2*p.v_0)*std::exp(-d*tau));
         
 }

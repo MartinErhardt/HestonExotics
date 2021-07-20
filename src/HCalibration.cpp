@@ -43,7 +43,7 @@ void update_adata(ffloat *p, adata_s * adata){
     for(auto exp_data : adata->exp_list){
         if(!(exp_data.distr->p==new_params)){
             exp_data.pricing_method->flush_cache();
-            std::cout<<"delete distr\n";
+            //std::cout<<"delete distr\n";
             delete exp_data.distr;
             exp_data.distr=new HDistribution(new_params, exp_data.opts.time_to_expiry);
         }
@@ -63,7 +63,7 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
     ffloat* jac2=jac;
-    std::cout<<"dimension m: "<<m<<"\tdimension n: "<<n_observations<<"\tbuffer start"<<jac2<<"\tbuffer end: "<<jac+n_observations*m<<"\tbuffer size: "<<jac+n_observations*m-jac2<<'\n';
+    //std::cout<<"dimension m: "<<m<<"\tdimension n: "<<n_observations<<"\tbuffer start"<<jac2<<"\tbuffer end: "<<jac+n_observations*m<<"\tbuffer size: "<<jac+n_observations*m-jac2<<'\n';
     for(auto exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts_grad(*exp_data.distr,my_adata->S,exp_data.opts, &jac2,jac+n_observations*m);
     if(jac2<jac+n_observations*m) throw std::runtime_error("Gradient buffer too large");
 }
@@ -72,13 +72,14 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
     ffloat* x2=x;
-    std::cout<<"dimension m: "<<m<<"\tdimension n: "<<n_observations<<"\tbuffer start"<<x2<<"\tbuffer end: "<<x+n_observations<<"\tbuffer size: "<<x+n_observations-x2<<'\n';
+    //std::cout<<"dimension m: "<<m<<"\tdimension n: "<<n_observations<<"\tbuffer start"<<x2<<"\tbuffer end: "<<x+n_observations<<"\tbuffer size: "<<x+n_observations-x2<<'\n';
     for(auto exp_data : my_adata->exp_list){
         //ffloat* x3=x2;
         exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);
         //std::cout<<"Wrote x bytes to buffer: "<<x3-x2<<'\n';
     }
     if(x2<x+n_observations) throw std::runtime_error("Pricing buffer too large");
+    for(ffloat* x2=x;x2<x+n_observations;x2++) std::cout<<*x2<<'\n';
 }
 std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
     adata_s adata={S,*(new std::vector<expiry_data>())};
@@ -136,45 +137,46 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
 void pricing_test(){
     adata_s adata={1.,*(new std::vector<expiry_data>())};
     std::vector<ffloat> prices={
-        0.042586294721138125,
-        0.023641592088786585,
-        0.0019440157951742521,
-        0.00022392448196595696,
-        0.15394307729684117,
-        0.062423134693627078,
-        0.037160940679338901,
-        0.0075330127639257173,
-        0.0021673166013319129,
-        0.20438572195683066,
-        0.081424849991559661,
-        0.047007748980945639,
-        0.013394282373546331,
-        0.0051668781595412168,
-        0.24157958765738144,
-        0.098995681742815825,
-        0.055258248005976791,
-        0.017997610006326152,
-        0.0084473242276258149,
-        0.27251527476477067,
-        0.11480330738708111,
-        0.062447017312870085,
-        0.02368351753820408,
-        0.011714293679763154,
-        0.29968779663470374,
-        0.12892217853282648,
-        0.06899485651494297,
-        0.028292304151513077,
-        0.014883806331163247,
-        0.35699111669477707,
-        0.16022472334978263,
-        0.086978373783797788,
-        0.041295833353604657,
-        0.024161745003170965,
-        0.41608092403745739,
-        0.18693436154386253,
-        0.10163210012281151,
-        0.052461508349658841,
-        0.032268406118609122};
+        0.079676812094469612,
+        0.042586263756033402,
+        0.023642876097251266,
+        0.0019447635553313004,
+        0.00022457675334788794,
+        0.15394308829999556,
+        0.062423699148410512,
+        0.03716156027004304,
+        0.0075329906749080954,
+        0.0021671474663124877,
+        0.20438572427747337,
+        0.081424876885654141,
+        0.047007477654992851,
+        0.013394276263081869,
+        0.0051665880568379507,
+        0.24157958905122354,
+        0.09899570130848076,
+        0.055258126136188711,
+        0.017997398670040403,
+        0.0084472770368514277,
+        0.27251527545827303,
+        0.11480331435058673,
+        0.062447187930262341,
+        0.023683757123971076,
+        0.011714319060476305,
+        0.29968779707061638,
+        0.12892214079993489,
+        0.068994812796204188,
+        0.02829225908895841,
+        0.01488391596622375,
+        0.3569911166621863,
+        0.16022472995208151,
+        0.086978384558870039,
+        0.041295845512103642,
+        0.024161759165286907,
+        0.41608092405221836,
+        0.18693437912935496,
+        0.10163212168506526,
+        0.052461532814837883,
+        0.032268432242168528};
     std::vector<double> expiries = {
     0.119047619047619,
     0.238095238095238,
