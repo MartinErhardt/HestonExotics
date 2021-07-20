@@ -229,12 +229,12 @@ void distr_test(){
     //    double rho = -0.5;            // |  correlation between spot and volatility
     //    double v0 = 0.04;             // |  initial variance
     /////// EQ
-        double kappa = 1;           // |  mean reversion rate
-        double v_bar = 0.09;          // |  long term variance
-        double sigma = 1;          // |  variance of volatility
-        double rho = 0.04;            // |  correlation between spot and volatility
-        double v0 = 0.09;             // |  initial variance
-
+   //     double kappa = 1;           // |  mean reversion rate
+   //     double v_bar = 0.09;          // |  long term variance
+   //     double sigma = 1;          // |  variance of volatility
+   //     double rho = 0.04;            // |  correlation between spot and volatility
+   //     double v0 = 0.09;             // |  initial variance
+double v0 =0.104070976986039; double	v_bar= 0.079973176513060754;	double rho= -0.22685877363829868;	double kappa= 1.0162287151772771;	double sigma= 0.93898628610895796;
     /*
     for(int i=1;i<1000; i++){
         test.p.v_0=v0 * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);

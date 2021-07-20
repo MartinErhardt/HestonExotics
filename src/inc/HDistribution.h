@@ -36,9 +36,9 @@ class HDistribution{
     std::vector<std::complex<ffloat>> chf_chf_grad(const std::complex<ffloat> ,const helpers& hlp,std::complex<ffloat>chf_val) const;
     std::complex<ffloat> chf(const std::complex<ffloat> u,const helpers& hlp) const;
 public:
-    const HParams p;
+    HParams p;
     const ffloat tau;
-    HDistribution(HParams params,const ffloat init_tau): p(params),tau(init_tau){};
+    HDistribution(HParams params,const ffloat init_tau): p(HParams(params)),tau(init_tau){};
     std::complex<ffloat> chf(const std::complex<ffloat> u) const;
     std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u) const;
     std::vector<std::complex<ffloat>> chf_chf_grad(const std::complex<ffloat> u) const;
@@ -46,5 +46,6 @@ public:
     ffloat first_order_moment() const;
     ffloat second_order_moment() const;
     ffloat fourth_order_moment() const;
+    //~HDistribution(){std::cout<<"I'm being destructed:((\n";};
 };
 void distr_test();

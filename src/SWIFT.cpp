@@ -6,7 +6,6 @@
 #include <iostream>
 #include<fftw3.h>
 #include<complex>
-typedef std::numeric_limits< double > dbl;
 
 using namespace std::complex_literals;
 using Eigen::MatrixXcd; // TODO typedef depending on ffloat type
@@ -31,7 +30,7 @@ std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& dis
     int k_2=floor(exp2_m*upper);
     ffloat iota_density=ceil(std::log2(M_PI*std::abs(k_1-k_2)))-1;
     unsigned int J=std::exp2(iota_density-1);
-    std::cout<<"m: "<<m<<"\texp2_m: "<<exp2_m<<"\tc:"<<c<<"\tLower integral bound: "<<k_1<<"\tUpper integral bound: "<<k_2<<"\tJ: "<<J<<'\n';
+    //std::cout<<"m: "<<m<<"\texp2_m: "<<exp2_m<<"\tc:"<<c<<"\tLower integral bound: "<<k_1<<"\tUpper integral bound: "<<k_2<<"\tJ: "<<J<<'\n';
     return std::unique_ptr<swift_parameters>(new swift_parameters({m,exp2_m,sqrt_exp2_m,lower,upper,k_1,k_2,J}));
 }
 
@@ -126,11 +125,15 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     //std::cout<<"I allocate "<<sizeof(to_price_matrix)+sizeof(pricing_matrix)<<" bytes on the stack\n";
     for(unsigned int i=0;i<swift_J;i++){
         std::vector<std::complex<ffloat>> chf_chf_grad_val=distr.chf_chf_grad(swift_obj.my_params.u(i));
-        //std::cout<<"j"<<i//<<"u: "<<swift_obj.my_params.u(i)
-        //<<"\tchf: "<<chf_chf_grad_val[0]<<"\tU_j"<<swift_obj.density_coeffs[i]<<'\n';
+        
+        //std::cout<<"j"<<i<<"u: "<<swift_obj.my_params.u(i)
+        //<<"\tchf: "<<chf_chf_grad_val[0]<<"\tv0: "<<distr.p.v_0<<"\tv_m: "<<distr.p.v_m<<"\trho: "<<distr.p.rho<<"\tkappa: "<<distr.p.kappa<<"\tsigma: "<<distr.p.kappa<<'\n';
         
         //std::cout<<"i: "<<i<<"\ta_i0: "<<chf_chf_grad_val[i]*swift_obj.density_coeffs[i]<<'\n';
-        for(int j=0;j<6;j++) pricing_matrix(j,i)=chf_chf_grad_val[j]*swift_obj.density_coeffs[i];
+        for(int j=0;j<6;j++){ pricing_matrix(j,i)=chf_chf_grad_val[j]*swift_obj.density_coeffs[i];
+            //std::cout<<"i: "<<i<<"\tj: "<<j<<"\ttau: "<<distr.tau<<"\tu_i: "<<swift_obj.my_params.u(i)<<"\tval: "<<chf_chf_grad_val[j]<<'\n';
+            
+        }
     }
     unsigned int j=0;
     //std::cout<<"Filled pricing matrix\n";
