@@ -28,8 +28,9 @@ typedef struct ED{
 typedef struct AS{
     ffloat S;
     std::vector<expiry_data>& exp_list;
-    ~AS(){for(auto e :exp_list){
-        std::cout<<"freed? "<<e.distr<<'\n';
+    ~AS(){//std::cout<<"freed? "<<'\n';
+        for(auto e :exp_list){
+        //std::cout<<"freed? "<<e.distr<<'\n';
         delete (e.distr);
     }
     } //moved when push_back 
@@ -94,8 +95,8 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     // We start in a Black-Scholes Model see p.106 lecture notes
     ffloat yearly_avg_iv = pow(1.+avg_iv*avg_iv,trading_days)-1.;
     ffloat p[5];
-    p[0]=2.*yearly_avg_iv;
-    p[1]=.5*yearly_avg_iv;
+    p[0]=yearly_avg_iv;
+    p[1]=yearly_avg_iv;
     p[2]=.04;
     p[3]=1.;
     p[4]=1.;
@@ -121,7 +122,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
         if(!opts->days_to_expiry) continue;
         for(auto e :opts->options) *(x2++)=e.price; //test
     }
-    std::cout<<"setup completed n_observations: "<<n_observations_cur<<'\n';
+    std::cout<<"setup completed\t# observations: "<<n_observations_cur<<'\n';
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
     opts[0]=LM_INIT_MU;
     // stopping thresholds for
@@ -132,11 +133,11 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     int retval;
     if((retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p, x, 5, n_observations_cur, 100, opts, info, NULL, NULL, (void*) &adata))<0) throw std::runtime_error("levmar failed!");
     auto to_calib=std::unique_ptr<HParams>(new HParams({p[0],p[1],p[2],p[3],p[4]}));
-    std::cout<<"abortion type: "<<retval<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<'\n';
+    std::cout<<"# iter: "<<retval<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<'\n';
     //std::cout<<"x: "<<x<<"\tx2: "<<x2<<'\n';
     
     //std::cout<<"double free here?\n";
-    delete &adata.exp_list;
+    //delete &adata;
     return to_calib;
 }
 
