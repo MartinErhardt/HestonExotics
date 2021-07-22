@@ -52,6 +52,7 @@ void WebAPI::download_to_buf(const std::string& url){
     buf.buf=NULL;
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     if((res = curl_easy_perform(curl)) != CURLE_OK) throw APIError();
+    //std::cout<<"WTF: "<<buf.buf<<'\n';
 }
 std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
     //std::cout<<buf.buf<< '\n';
@@ -73,7 +74,7 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
-            &&((current_vol=opt["volume"].get_int64())>=10)
+            &&((current_vol=opt["volume"].get_int64())>=1)
         )
         {
             option * new_opt =new option();
@@ -82,7 +83,6 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             new_opt->price=static_cast<ffloat>(price_obj.get_double());
             new_opt->bid=static_cast<ffloat>(opt["bid"].get_double());
             opt_chain.options->push_back(*new_opt);
-            std::cout<<"new_push back\n";
             opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
             opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
             //std::cout<<"min_strike"<<opt_chain.min_strike;
@@ -98,8 +98,8 @@ ffloat WebAPI::parse_stock_quote(){
     if(price_obj.type()!=simdjson::ondemand::json_type::null) return static_cast<ffloat>(price_obj.get_double());
     else throw APIError();
 }
-std::unique_ptr<std::list<options_chain>> WebAPI::get_all_option_chains(const std::string& underlying){
-    auto all_chains=std::make_unique<std::list<options_chain>>(); 
+std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& underlying){
+    auto all_chains=new std::list<options_chain>(); 
     std::cout<<"Download expiries...";
     download_to_buf(EXP_URL(underlying));
     std::cout<<"Done\n";
@@ -107,7 +107,10 @@ std::unique_ptr<std::list<options_chain>> WebAPI::get_all_option_chains(const st
     auto expiries =parse_expiries();
     std::cout<<"Done\n";
     for(const std::string& date : *expiries){
-        options_chain& new_opt_chain=*(new options_chain(days_to_date(date),static_cast<ffloat>(days_to_date(date))/trading_days));
+        unsigned int cur_days_to_date=days_to_date(date);
+        ffloat cur_time_to_date = static_cast<ffloat>(days_to_date(date))/trading_days;
+        if (cur_time_to_date<=EXP_LB) continue;
+        options_chain& new_opt_chain=*(new options_chain(cur_days_to_date,cur_time_to_date));
         std::cout<<"Download all options expiring on "<<date<<"...";
         download_to_buf(OPTIONS_CHAIN_URL(underlying,date));
         std::cout<<"Done\n";

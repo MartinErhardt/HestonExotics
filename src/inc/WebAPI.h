@@ -42,7 +42,7 @@ namespace WebInterface
         ffloat parse_stock_quote();
         public:
             WebAPI(const std::string& access_code);
-            std::unique_ptr<std::list<options_chain>> get_all_option_chains(const std::string& underlying);
+            std::list<options_chain>* get_all_option_chains(const std::string& underlying);
             ffloat get_stock_quote(const std::string& stock);
             ~WebAPI();
     };

@@ -80,7 +80,7 @@ void SWIFT::get_FFT_coeffs(){
     for(j=0;j<J;j++){
         //std::complex<ffloat> current(density_out[2*i+1][0],density_out[2*i+1][1]);
         density_coeffs[j]=(density_out[2*j+1][0]-1i*density_out[2*j+1][1])*sqrt_exp2_m/static_cast<ffloat>(J); //Why the sqrt_exp2_m/static_cast<ffloat>(J) factor?
-        std::cout <<"u_"<<j<<": "<<density_coeffs[j]<<'\n';
+        //std::cout <<"u_"<<j<<": "<<density_coeffs[j]<<'\n';
     }
     fftw_destroy_plan(payoff_plan);
     fftw_destroy_plan(density_plan);

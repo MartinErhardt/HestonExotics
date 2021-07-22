@@ -9,7 +9,6 @@
 ffloat norm_cdf(const ffloat value);
 ffloat d_j(const int j, const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
 ffloat call_price(const ffloat S, const ffloat K, const ffloat sigma, const double T);
-ffloat imp_vol(const ffloat S, const option& opt,ffloat expi);
 
 ffloat norm_cdf(ffloat value){
    return 0.5 * erfc(-value * M_SQRT1_2);
@@ -54,7 +53,7 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
     ffloat denom=0;
     double imp_v;
     for(std::list<options_chain>::const_iterator cur_chain = all_chains.begin(); cur_chain != all_chains.end(); cur_chain++){
-        if(cur_chain->time_to_expiry<=EXP_LB) continue;
+        //if(cur_chain->time_to_expiry<=EXP_LB) continue;
         for(const option& opt: *cur_chain->options){
             if((imp_v=imp_vol(S,opt,cur_chain->time_to_expiry))>=0){
                 avg_vol+=opt.volume*imp_v;

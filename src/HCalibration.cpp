@@ -19,7 +19,7 @@ typedef std::numeric_limits< double > dbl;
 typedef struct ED:traced<ED>{
     const options_chain& opts;
     HDistribution* distr;
-    SWIFT* pricing_method=nullptr;
+    SWIFT* pricing_method;
     ED(const options_chain& opts,HDistribution* init_distr, SWIFT* init_pricing_method): opts(opts),distr(init_distr),pricing_method(init_pricing_method){}
     //ED(const options_chain& opts,HParams p, ffloat expi): opts(opts),distr(new HDistribution(p,expi)){}
     ~ED(){delete distr; delete pricing_method;}
@@ -94,12 +94,12 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     p[0]=yearly_avg_iv;
     p[1]=yearly_avg_iv;
     p[2]=.04;
-    p[3]=.1;
-    p[4]=.1;
+    p[3]=1.;
+    p[4]=1.;
     unsigned int n_observations_cur=0;
     std::cout<<"start levmar setup\n";
     for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++){
-        if(opts->time_to_expiry<=EXP_LB) continue;
+        //if(opts->time_to_expiry<=EXP_LB) continue;
         if(opts->options->size()){
             n_observations_cur+=opts->options->size();
             HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts->time_to_expiry);
@@ -117,7 +117,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*(n_observations_cur+1));
     ffloat * x2=x;
     for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++){
-        if(opts->time_to_expiry<=EXP_LB) continue;
+        //if(opts->time_to_expiry<=EXP_LB) continue;
         for(auto e :*opts->options) *(x2++)=e.price; //test
     }
     std::cout<<"setup completed\t# observations: "<<n_observations_cur<<"\tx: "<<x<<"\tx2: "<<x2<<"\t diff"<<x2-x<<'\n';
