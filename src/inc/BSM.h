@@ -5,7 +5,7 @@
 #include"Types.h"
 #include <list>
 #include<math.h>
-#define EXP_LB 0.
+#define EXP_LB 0.2
 const double trading_days=static_cast<double>(5*static_cast<unsigned int>(365/7)+365%7);
 const ffloat yearly_risk_free=0.; //nominal risk free rate (p.a.) 3 month T-bill yields 0.0005
 const ffloat risk_free= pow(1.+yearly_risk_free,1./trading_days)-1.;

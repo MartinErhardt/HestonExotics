@@ -74,7 +74,7 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
-            &&((current_vol=opt["volume"].get_int64())>=1)
+            &&((current_vol=opt["volume"].get_int64())>=10)
         )
         {
             option * new_opt =new option();
