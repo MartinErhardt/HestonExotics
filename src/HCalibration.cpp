@@ -14,7 +14,7 @@
     ffloat rho;
 } HestonParams;
 */
-//typedef std::numeric_limits< double > dbl;
+typedef std::numeric_limits< double > dbl;
 
 typedef struct ED:traced<ED>{
     const options_chain& opts;
@@ -69,7 +69,7 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
     if(jac2<jac+n_observations*m) throw std::runtime_error("Gradient buffer too large");
 }
 void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void * adata){
-    //std::cout.precision(dbl::max_digits10);
+    
     std::cout<<"get prices\t v_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
@@ -137,6 +137,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
 }
 
 void pricing_test(){
+    std::cout.precision(dbl::max_digits10);
     adata_s adata={1.,*(new std::list<expiry_data>())};
     std::vector<ffloat> prices={
         0.079676812094469612,
@@ -227,8 +228,8 @@ void pricing_test(){
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
         HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
-        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
+        //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
+        SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
     }
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);
@@ -487,8 +488,8 @@ void gradient_test(){
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
         HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
-        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
+        //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
+        SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
     }
     ffloat * jac=(ffloat*) malloc(sizeof(ffloat)*200);
