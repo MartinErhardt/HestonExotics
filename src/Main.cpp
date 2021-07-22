@@ -25,6 +25,10 @@ int main(int argc, char *argv[]) {
         distr_test();
     }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "pricing"){
         pricing_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "gradient"){
+        gradient_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "levmar"){
+        levmar_test();
     }/*
     std::string input;
     std::cout<<"Enter S: ";

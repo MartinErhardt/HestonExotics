@@ -87,30 +87,30 @@ void SWIFT::get_FFT_coeffs(){
 }
 SWIFT::cache_entry * SWIFT::get_precached(const HDistribution& distr,const ffloat S, const options_chain& opts){
     cache_entry* precached=nullptr; 
-    const auto is_opts= [opts] (const cache_entry& e) {return &e.to_price==&opts;};
+    const auto is_opts= [&opts] (const cache_entry& e) {return &e.to_price==&opts;};
     if(!results_cache.size()||!is_opts(*(precached=&*find_if(results_cache.begin(), results_cache.end(), is_opts)))) //TODO test if this &* is local in scope
         precached=&results_cache.emplace_back(distr,*this,opts,S);
-    else std::cout<<"Used precached values\n";
+    //else std::cout<<"Used precached values\n";
     //std::cout<<"returning precached or newly cached results\t# rows: "<<precached->results.rows()<<"\t# cols: "<<precached->results.cols()<<'\n';
     return precached;
 }
 void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out,ffloat* end){
     unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(i=0;i<opts.options.size()&&(*out)<end;i++){
+    for(i=0;i<opts.options->size()&&(*out)<end;i++){
         *((*out)++)=precached->results(0,i).real();
-        //std::cout<<"p: "<<*((*out)-1)<<'\n';
+        std::cout<<"S: "<<S<<"\tstrike: "<<(*opts.options)[i].strike<<"\tvolume: "<<(*opts.options)[i].volume<<"\tp: "<<*((*out)-1)<<"\treal p: "<<(*opts.options)[i].price<<"\tdiff: "<<std::fabs(*((*out)-1)-(*opts.options)[i].price)<<"\texpiry: "<<opts.time_to_expiry<<'\n';
     }
-    if(i<opts.options.size()) throw std::runtime_error((std::string("Pricing buffer too small i: ")+ std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options.size())).c_str());
+    if(i<opts.options->size()) throw std::runtime_error((std::string("Pricing buffer too small i: ")+ std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options->size())).c_str());
 }
 void SWIFT::price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out,ffloat* end){
     unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(i=0;i<opts.options.size()&&(*out)<end;i++) for(unsigned int j=1;j<6;j++){
+    for(i=0;i<opts.options->size()&&(*out)<end;i++) for(unsigned int j=1;j<6;j++){
         *((*out)++)=precached->results(j,i).real();
         //std::cout<<"grad_"<<j<<": "<<*((*out)-1)<<'\n';
     }
-    if(i<opts.options.size()) throw std::runtime_error((std::string("Gradient buffer too small i: ")+std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options.size())).c_str());
+    if(i<opts.options->size()) throw std::runtime_error((std::string("Gradient buffer too small i: ")+std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options->size())).c_str());
 }
 void SWIFT::flush_cache(){
     results_cache.clear();
@@ -120,7 +120,7 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     //ffloat e_m=static_cast<ffloat>(swift_obj.my_params.exp2_m);
     ffloat discount=std::exp(-yearly_risk_free*distr.tau);
     MatrixXcd pricing_matrix(6,swift_J);
-    MatrixXcd to_price_matrix(swift_J,to_price.options.size());
+    MatrixXcd to_price_matrix(swift_J,to_price.options->size());
     //std::cout<<"J: "<<swift_J<<"\tn opts: "<<to_price.options.size()<<'\n';
     //std::cout<<"I allocate "<<sizeof(to_price_matrix)+sizeof(pricing_matrix)<<" bytes on the stack\n";
     for(unsigned int i=0;i<swift_J;i++){
@@ -137,7 +137,7 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     }
     unsigned int j=0;
     //std::cout<<"Filled pricing matrix\n";
-    for(const option& opt: to_price.options){
+    for(const option& opt: *to_price.options){
         ffloat x=yearly_risk_free*distr.tau+std::log(stock_price/opt.strike);
         for(unsigned int i=0;i<swift_J;i++){ to_price_matrix(i,j)=discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x);
         //std::cout<<"j: "<<j<<"\ti: "<<i<<"\tb_ji: "<<discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x)<<'\n';
@@ -150,6 +150,7 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
 }
 
 SWIFT::~SWIFT(){
+    //std::cout<<"delete";
     delete &density_coeffs;
     delete &results_cache;
 }

@@ -16,7 +16,7 @@ typedef struct HP{
     };
 } HParams;
 
-class HDistribution{
+class HDistribution:traced<HDistribution>{
     struct Helpers{
         std::complex<ffloat> xi;
         std::complex<ffloat> d;

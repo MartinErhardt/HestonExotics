@@ -17,7 +17,7 @@ typedef struct SwiftParameters{
     const unsigned int J;
     ffloat u(const unsigned int i) const;
 } swift_parameters;
-class SWIFT{
+class SWIFT:traced<SWIFT>{
 public:
     const swift_parameters my_params;
 private:

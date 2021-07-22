@@ -65,7 +65,7 @@ std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
 void WebAPI::parse_option_chain(options_chain& opt_chain){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
-        int64_t current_vol;
+        int64_t current_vol=0;
         std::string option_type=std::string(std::string_view(opt["option_type"]));
         auto strike_obj=opt["strike"];
         auto price_obj=opt["ask"];
@@ -73,13 +73,14 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
-            &&((current_vol=opt["volume"].get_int64())!=0))
+            &&((current_vol=opt["volume"].get_int64())>=10)
+        )
         {
             option * new_opt =new option();
             new_opt->volume=current_vol;
             new_opt->strike=static_cast<ffloat>(strike_obj.get_double());
             new_opt->price=static_cast<ffloat>(price_obj.get_double());
-            opt_chain.options.push_back(*new_opt);
+            opt_chain.options->push_back(*new_opt);
             opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
             opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
             //std::cout<<"min_strike"<<opt_chain.min_strike;

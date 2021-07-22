@@ -12,6 +12,7 @@ SRCS = $(shell find -name '*.cpp')
 OBJS = $(addsuffix .o,$(basename $(SRCS)))
 OBJS_ICC = $(addsuffix _icc.o,$(basename $(SRCS)))
 ALL_OBJS=$(shell find -name '*.o')
+ALL_OBJS_SRC=$(shell find ./src -name '*.o')
 LIB_OBJS_ICC=simdjson_icc.o
 #patch < ~/Projekt/HestonExotics/levmar_patch.diff
 
@@ -32,7 +33,7 @@ simdjson_icc.o:
 icc: $(OBJS_ICC) $(LIB_OBJS_ICC) 
 	dpcpp $(CLANGLDFLAGS) -o HestonExotics_icc $^
 clean:
-	rm $(ALL_OBJS)
+	rm $(ALL_OBJS_SRC)
 doc: doxygen_conf
 	doxygen doxygen_conf
 doxygen_conf:

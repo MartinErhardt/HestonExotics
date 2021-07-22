@@ -9,7 +9,7 @@
 ffloat norm_cdf(const ffloat value);
 ffloat d_j(const int j, const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
 ffloat call_price(const ffloat S, const ffloat K, const ffloat sigma, const double T);
-ffloat imp_vol(const ffloat S, const option& opt,unsigned int days_to_expiry);
+ffloat imp_vol(const ffloat S, const option& opt,ffloat expi);
 
 ffloat norm_cdf(ffloat value){
    return 0.5 * erfc(-value * M_SQRT1_2);
@@ -18,16 +18,15 @@ ffloat d_j(const int j, const ffloat S, const ffloat K, const ffloat r, const ff
   return (log(S/K)+(r+(pow(-1,j-1))*0.5*sigma*sigma)*T)/(sigma*(pow(T,0.5)));
 }
 ffloat call_price(const ffloat S, const ffloat K, const ffloat sigma, const double T){
-    return S*norm_cdf(d_j(1,S,K,risk_free,sigma,T))-K*exp(-risk_free*T) * norm_cdf(d_j(2,S,K,risk_free,sigma, T));
+    return S*norm_cdf(d_j(1,S,K,yearly_risk_free,sigma,T))-K*exp(-yearly_risk_free*T) * norm_cdf(d_j(2,S,K,yearly_risk_free,sigma, T));
 }
-ffloat imp_vol(const ffloat S, const option& opt,unsigned int days_to_expiry){
+ffloat imp_vol(const ffloat S, const option& opt,ffloat expi){
     ffloat i_val=(1/64.0);
     ffloat l_val;
     ffloat u_val;
     ffloat m_val;
     ffloat p;
-    const double expi=static_cast<double>(days_to_expiry);
-    double lower_bound=S-std::exp(-risk_free*expi)*opt.strike;
+    double lower_bound=S-std::exp(-yearly_risk_free*expi)*opt.strike;
     if(opt.price<=lower_bound) return -1.0;
     if(opt.price>=S) return -2.0;
     ffloat c;
@@ -55,13 +54,13 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
     ffloat denom=0;
     double imp_v;
     for(std::list<options_chain>::const_iterator cur_chain = all_chains.begin(); cur_chain != all_chains.end(); cur_chain++){
-        if(!cur_chain->days_to_expiry) continue;
-        for(const option& opt: cur_chain->options){
-            if((imp_v=imp_vol(S,opt,cur_chain->days_to_expiry))>=0){
+        if(cur_chain->time_to_expiry<=EXP_LB) continue;
+        for(const option& opt: *cur_chain->options){
+            if((imp_v=imp_vol(S,opt,cur_chain->time_to_expiry))>=0){
                 avg_vol+=opt.volume*imp_v;
                 denom+=opt.volume;
             } else std::cout<<"Can't calculate implied volatility (price below lower arbitrage-bound)\n";
-            std::cout<<"stock price: "<<S<<"\tprice: "<<opt.price<<"\tstrike: "<<opt.strike<<"\trisk free rate: "<<risk_free<<"\ttrading volume: "<<opt.volume<<"\timplied volatility: "<<imp_v<<'\n';
+            std::cout<<"stock price: "<<S<<"\tprice: "<<opt.price<<"\tstrike: "<<opt.strike<<"\trisk free rate: "<<yearly_risk_free<<"\ttrading volume: "<<opt.volume<<"\timplied volatility: "<<imp_v<<'\n';
         }
         
     }
