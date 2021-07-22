@@ -21,9 +21,9 @@ protected:
 typedef double ffloat;
 typedef struct{
     //unsigned int days_to_expiry;
-    ffloat price;
+    ffloat price; //ask
     //ffloat ask;
-    //ffloat bid;
+    ffloat bid;
     ffloat strike;
     int64_t volume;
 } option;

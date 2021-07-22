@@ -129,7 +129,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     opts[3]=1E-10;       // ||e||_2
     opts[4]= LM_DIFF_DELTA; // finite difference if used
     int retval;
-    if((retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p, x, 5, n_observations_cur, 1, opts, info, NULL, NULL, (void*) &adata))<0) throw std::runtime_error("levmar failed!");
+    if((retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p, x, 5, n_observations_cur, 100, opts, info, NULL, NULL, (void*) &adata))<0) throw std::runtime_error("levmar failed!");
     auto to_calib=std::unique_ptr<HParams>(new HParams({p[0],p[1],p[2],p[3],p[4]}));
     std::cout<<"# iter: "<<retval<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<info[6]<<'\n';
     if(info[6]!=6.) throw std::runtime_error("levmar failed! ");
@@ -558,8 +558,8 @@ void levmar_test(){
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
         HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
-        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
+        //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
+        SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
     }
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);

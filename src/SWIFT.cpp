@@ -99,7 +99,7 @@ void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_
     cache_entry* precached=get_precached(distr,S,opts);
     for(i=0;i<opts.options->size()&&(*out)<end;i++){
         *((*out)++)=precached->results(0,i).real();
-        //std::cout<<"S: "<<S<<"\tstrike: "<<(*opts.options)[i].strike<<"\tvolume: "<<(*opts.options)[i].volume<<"\tp: "<<*((*out)-1)<<"\treal p: "<<(*opts.options)[i].price<<"\tdiff: "<<std::fabs(*((*out)-1)-(*opts.options)[i].price)<<"\texpiry: "<<opts.time_to_expiry<<'\n';
+        //std::cout<<"S: "<<S<<"\tstrike: "<<(*opts.options)[i].strike<<"\tvolume: "<<(*opts.options)[i].volume<<"\tp: "<<*((*out)-1)<<"\treal p: "<<(*opts.options)[i].price<<"\tdiff: "<<*((*out)-1)-(*opts.options)[i].price<<"\texpiry: "<<opts.time_to_expiry<<'\n';
     }
     if(i<opts.options->size()) throw std::runtime_error((std::string("Pricing buffer too small i: ")+ std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options->size())).c_str());
 }
