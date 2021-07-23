@@ -60,28 +60,20 @@ void update_adata(ffloat *p, adata_s * adata){
     }
 }
 void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, void * adata){
-    std::cout<<"get jac\t\t v_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
+    std::cout<<"get gradient\tv_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
     ffloat* jac2=jac;
-    //std::cout<<"dimension m: "<<m<<"\tdimension n: "<<n_observations<<"\tbuffer start"<<jac2<<"\tbuffer end: "<<jac+n_observations*m<<"\tbuffer size: "<<jac+n_observations*m-jac2<<'\n';
     for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts_grad(*exp_data.distr,my_adata->S,exp_data.opts, &jac2,jac+n_observations*m);
     if(jac2<jac+n_observations*m) throw std::runtime_error("Gradient buffer too large");
 }
 void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void * adata){
-    
-    std::cout<<"get prices\t v_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
+    std::cout<<"get prices\tv_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
     ffloat* x2=x;
-    //std::cout<<"dimension m: "<<m<<"\tdimension n: "<<n_observations<<"\tbuffer start"<<x2<<"\tbuffer end: "<<x+n_observations<<"\tbuffer size: "<<x+n_observations-x2<<'\n';
-    for(auto &exp_data : my_adata->exp_list){
-        //ffloat* x3=x2;
-        exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);
-        //std::cout<<"Wrote x bytes to buffer: "<<x3-x2<<'\n';
-    }
+    for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);
     if(x2<x+n_observations) throw std::runtime_error("Pricing buffer too large");
-    //for(ffloat* x2=x;x2<x+n_observations;x2++) std::cout<<*x2<<'\n';
 }
 std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
     adata_s adata={S,*(new std::list<expiry_data>())};
@@ -93,7 +85,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     ffloat p[5];
     p[0]=yearly_avg_iv;
     p[1]=yearly_avg_iv;
-    p[2]=.04;
+    p[2]=-.2;
     p[3]=1.;
     p[4]=1.;
     unsigned int n_observations_cur=0;
@@ -113,14 +105,10 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
             adata.exp_list.emplace_back(*opts,new_distr,pricing_method);
         }
     }
-    std::cout<<"allocate x\n";
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*(n_observations_cur+1));
     ffloat * x2=x;
-    for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++){
-        //if(opts->time_to_expiry<=EXP_LB) continue;
-        for(auto e :*opts->options) *(x2++)=e.price; //test
-    }
-    std::cout<<"setup completed\t# observations: "<<n_observations_cur<<"\tx: "<<x<<"\tx2: "<<x2<<"\t diff"<<x2-x<<'\n';
+    for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++) for(auto e :*opts->options) *(x2++)=e.price;
+    std::cout<<"setup completed\t# observations: "<<n_observations_cur<<'\n';
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
     opts[0]=LM_INIT_MU;
     // stopping thresholds for
@@ -128,11 +116,18 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     opts[2]=1E-10;       // ||Dp||_2
     opts[3]=1E-10;       // ||e||_2
     opts[4]= LM_DIFF_DELTA; // finite difference if used
-    int retval;
-    if((retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p, x, 5, n_observations_cur, 100, opts, info, NULL, NULL, (void*) &adata))<0) throw std::runtime_error("levmar failed!");
+    std::vector<std::string> msg={{"1 -stopped by small gradient J^T e"},
+                                {"2 - stopped by small Dp"},
+                                {"3 - stopped by itmax"},
+                                {"4 - singular matrix. Restart from current p with increased \\mu"},
+                                {"5 - no further error reduction is possible. Restart with increased mu"},
+                                {"6 - stopped by small ||e||_2"},
+                                {"7 - stopped by invalid (i.e. NaN or Inf) \"func\" values; a user error"}};
+    int iter=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p, x, 5, n_observations_cur, 100, opts, info, NULL, NULL, (void*) &adata);
+    if(iter<0) throw std::runtime_error("levmar failed!");
     auto to_calib=std::unique_ptr<HParams>(new HParams({p[0],p[1],p[2],p[3],p[4]}));
-    std::cout<<"# iter: "<<retval<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<info[6]<<'\n';
-    if(info[6]!=6.) throw std::runtime_error("levmar failed! ");
+    std::cout<<"# iter: "<<iter<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<msg[info[6]-1]<<'\n';
+    if(info[6]!=6.&&info[6]!=2) throw std::runtime_error("levmar failed! ");
     return to_calib;
 }
 

@@ -66,15 +66,15 @@ std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
 void WebAPI::parse_option_chain(options_chain& opt_chain){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
-        int64_t current_vol=0;
         std::string option_type=std::string(std::string_view(opt["option_type"]));
         auto strike_obj=opt["strike"];
         auto price_obj=opt["ask"];
+        int64_t current_vol=opt["volume"].get_int64();
         if(option_type=="call"
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
-            &&((current_vol=opt["volume"].get_int64())>=10)
+            //&&(current_vol>=10)
         )
         {
             option * new_opt =new option();

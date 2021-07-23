@@ -58,8 +58,8 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
             if((imp_v=imp_vol(S,opt,cur_chain->time_to_expiry))>=0){
                 avg_vol+=opt.volume*imp_v;
                 denom+=opt.volume;
-            } else std::cout<<"Can't calculate implied volatility (price below lower arbitrage-bound)\n";
-            std::cout<<"stock price: "<<S<<"\tprice: "<<opt.price<<"\tstrike: "<<opt.strike<<"\trisk free rate: "<<yearly_risk_free<<"\ttrading volume: "<<opt.volume<<"\timplied volatility: "<<imp_v<<'\n';
+            } //else std::cout<<"Can't calculate implied volatility (price below lower arbitrage-bound)\n";
+            //std::cout<<"stock price: "<<S<<"\tprice: "<<opt.price<<"\tstrike: "<<opt.strike<<"\trisk free rate: "<<yearly_risk_free<<"\ttrading volume: "<<opt.volume<<"\timplied volatility: "<<imp_v<<'\n';
         }
         
     }
