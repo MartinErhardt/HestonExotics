@@ -16,6 +16,7 @@ ffloat SwiftParameters::u(const unsigned int i) const{
     return M_PI*(2*static_cast<ffloat>(i)+1)/(2.*static_cast<ffloat>(J))*static_cast<ffloat>(exp2_m);
 }
 std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts){
+    //std::cout<<"tau: "<<distr.tau<<"\tmin_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
     unsigned int m=0;
     while(distr.int_error(m++)>TRUNCATION_PRECISION);
     //std::cout<<"min_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';

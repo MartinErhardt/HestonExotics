@@ -63,5 +63,5 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
         }
         
     }
-    return avg_vol/denom;
+    return denom ? avg_vol/denom: 0.3; //FIXME hacky fix
 }

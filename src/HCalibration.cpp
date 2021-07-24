@@ -53,7 +53,7 @@ void update_adata(ffloat *p, adata_s * adata){
             //delete exp_data.pricing_method;
         //    if(current==nullptr||new_swift_parameters->m>current->my_params.m ||new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J)
         //        current=std::make_shared<SWIFT>(*new_swift_parameters);
-            //std::cout<<"maybe this?\n";
+            //std::cout<<"old m: "<<new_swift_parameters->m<<"\tnew m: "<<exp_data.pricing_method->my_params.m<<'\n'; 
             delete exp_data.pricing_method;
             exp_data.pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
         }
@@ -82,29 +82,31 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     ffloat avg_iv=avg_imp_vol(S, market_data);
     // We start in a Black-Scholes Model see p.106 lecture notes
     ffloat yearly_avg_iv = avg_iv*avg_iv;
+    //std::cout<<"yearly_avg_iv: "<<yearly_avg_iv<<'\n';
     ffloat p[5];
     p[0]=yearly_avg_iv;
     p[1]=yearly_avg_iv;
-    p[2]=-.2;
+    p[2]=0.04;
     p[3]=1.;
     p[4]=1.;
     unsigned int n_observations_cur=0;
     std::cout<<"start levmar setup\n";
-    for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++){
+    for(const auto &opts: market_data){
         //if(opts->time_to_expiry<=EXP_LB) continue;
-        if(opts->options->size()){
-            n_observations_cur+=opts->options->size();
-            HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts->time_to_expiry);
-            auto new_swift_parameters=SWIFT::get_parameters(*new_distr,S,*opts);
+        if(opts.options->size()>0){
+            n_observations_cur+=opts.options->size();
+            HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry);
+            auto new_swift_parameters=SWIFT::get_parameters(*new_distr,S,opts);
             //if (current==nullptr|| new_swift_parameters->m>current->my_params.m || new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J){
                 //std::cout<<"is here the free1?\n";
                 //current=std::make_shared<SWIFT>(*new_swift_parameters);
                 //std::cout<<"is here the free?\n";
             //}
             SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
-            adata.exp_list.emplace_back(*opts,new_distr,pricing_method);
+            adata.exp_list.emplace_back(opts,new_distr,pricing_method);
         }
     }
+    //std::cout<<"allocate x\n";
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*(n_observations_cur+1));
     ffloat * x2=x;
     for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++) for(auto e :*opts->options) *(x2++)=e.price;

@@ -21,9 +21,9 @@ HestonExotics: $(OBJS) $(LIB_OBJS)
 	rm $(shell find -name '*.gcda')
 simdjson.o:
 	$(GETLIBS)
-	$(CXX) $(CXXDBGFLAGS) -c -o $(LIB_OBJS) $(LIBS) 
+	$(CXX) $(CXXFLAGS) -c -o $(LIB_OBJS) $(LIBS) 
 %.o: %.cpp
-	$(CXX) $(CXXDBGFLAGS) -c -o $@ $^
+	$(CXX) $(CXXFLAGS) -c -o $@ $^
 
 %_icc.o: %.cpp
 	dpcpp $(CLANGFLAGS) -c -o $@ $^
