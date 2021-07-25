@@ -7,8 +7,9 @@
 class RNG{
     ffloat * buf_start;
     ffloat * buf_end;
+    ffloat * buf_cur;
     public:
-        ffloat * buf_cur;
         RNG(size_t size);
-        void update();
+        ffloat get_grand();
+        ffloat get_urand();
 };

@@ -33,6 +33,7 @@ typedef struct AS{
 } adata_s;
 #define NEWOLD_METHOD_RATIO 0.1
 void update_adata(ffloat *p, adata_s * adata);
+
 void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void * adata);
 void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, void * adata);
 
@@ -68,6 +69,8 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
     for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts_grad(*exp_data.distr,my_adata->S,exp_data.opts, &jac2,jac+n_observations*m);
     if(jac2<jac+n_observations*m) throw std::runtime_error("Gradient buffer too large");
 }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
 void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void * adata){
     std::cout<<"get prices\tv_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
     adata_s * my_adata=static_cast<adata_s*>(adata);
@@ -79,6 +82,8 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     //if(my_adata->real_prices) for(x2=x;x2<x+n_observations;x2++) if(*x2<my_adata->real_prices[x2-x]) underpriced++;
     //std::cout<<"share of underpriced: "<<static_cast<ffloat>(underpriced)/n_observations<<'\n';
 }
+#pragma GCC diagnostic pop
+
 std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
     adata_s adata={S,nullptr,*(new std::list<expiry_data>())};
     //HDistribution current_distribution;

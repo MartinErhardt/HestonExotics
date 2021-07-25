@@ -9,20 +9,32 @@
 #include"HDistribution.h"
 typedef struct {
     HParams h_params;
-    ffloat step_witdh_bound;
+    ffloat step_width_bound;
     ffloat barrier;
 } AdaptiveHParams;
-class HEvo {
+/*class HEvo {
     AdaptiveHParams params;
     protected:
         HEvo(AdaptiveHParams * params);
         void evolution(SDE_state<2> * current,ffloat * rands,double t);
-};
-class AdaptiveHEvo : HestonEvo{
+};*/
+class Adaptive{
     protected:
-        double step_width(SDE_state<2> * current);
+        ffloat step_width(SDE_state<2> * current); //TODO
 };
-template<typename SchemeParams,class Scheme> class HMonteCarlo : SDE<2,SchemeParams, Scheme>{
-    //static void calibrate(HestonParams * to_calibrate,const std::list<option>& to_calibrate_against);
-    HMonteCarlo(HParams * params);
+class NonAdaptive{
+    const ffloat step_size;
+    NonAdaptive(ffloat fixed_step_size): step_size(fixed_step_size){}
+    protected:
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-parameter"
+        ffloat step_width(SDE_state<2> * current){return step_size;}
+#pragma GCC diagnostic pop
+};
+template<typename SchemeParams,class Scheme> class HQEAnderson : SDE<2>, private Scheme{
+    ffloat log_X;
+    HParams params;        
+    using Scheme::step_width;
+    HQEAnderson(HParams * params);
+    SDE<2>& operator++();
 };
