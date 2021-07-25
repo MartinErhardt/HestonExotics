@@ -11,7 +11,7 @@ using namespace std::complex_literals;
 using Eigen::MatrixXcd; // TODO typedef depending on ffloat type
 //typedef Matrix<std::complex<ffloat>, 6, Eigen::Dynamic> MatrixXdcf6;
 //typedef Matrix<std::complex<ffloat>, Eigen::Dynamic, Eigen::Dynamic> MatrixXdcf;
-#define TRUNCATION_PRECISION 0.0005
+#define TRUNCATION_PRECISION 1e-12
 ffloat SwiftParameters::u(const unsigned int i) const{
     return M_PI*(2*static_cast<ffloat>(i)+1)/(2.*static_cast<ffloat>(J))*static_cast<ffloat>(exp2_m);
 }

@@ -41,15 +41,14 @@ void update_adata(ffloat *p, adata_s * adata){
         if(!(exp_data.distr->p==new_params)){
             exp_data.pricing_method->flush_cache();
             //std::cout<<"delete distr\n";
-            exp_data.distr->p=new_params;
+            exp_data.distr->p=new_params;//}
             //std::cout<<"new params at: "<<&(exp_data.distr->p)<<"\tv_0: "<<exp_data.distr->p.v_0<<"\tv_m: "<<exp_data.distr->p.v_m<<"\trho: "<<exp_data.distr->p.rho<<"\tkappa"<<exp_data.distr->p.kappa<<"\tsigma: "<<exp_data.distr->p.sigma<<'\n';
-        }
         //std::cout<<"cur params at: "<<&(exp_data.distr->p)<<"\tv_0: "<<(float)exp_data.distr->p.v_0<<"\tv_m: "<<exp_data.distr->p.v_m<<"\trho: "<<exp_data.distr->p.rho<<"\tkappa"<<exp_data.distr->p.kappa<<"\tsigma: "<<exp_data.distr->p.sigma<<'\n';
-        
+        //std::cout<<"new SWIFT\n";
         auto new_swift_parameters=SWIFT::get_parameters(*exp_data.distr,adata->S,exp_data.opts);
-        if (new_swift_parameters->m>exp_data.pricing_method->my_params.m 
+        //if (new_swift_parameters->m>exp_data.pricing_method->my_params.m 
             //||new_swift_parameters->J<NEWOLD_METHOD_RATIO*exp_data.pricing_method->my_params.J
-        ){
+        //){
             //delete exp_data.pricing_method;
         //    if(current==nullptr||new_swift_parameters->m>current->my_params.m ||new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J)
         //        current=std::make_shared<SWIFT>(*new_swift_parameters);
@@ -555,8 +554,8 @@ void levmar_test(){
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
         HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
-        //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
+        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
+        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
     }
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);
@@ -569,6 +568,25 @@ void levmar_test(){
     opts[3]=1E-10;       // ||e||_2
     opts[4]= LM_DIFF_DELTA; // finite difference if used
     int retval;
+    adata.exp_list.clear();
+    for (unsigned int index = 0; index < expiries.size(); ++index)
+    {
+        std::vector<ffloat> cur=K_over_S[index];
+        options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries[index])/trading_days,expiries[index]);
+        for(auto c: cur){
+            option * new_opt =new option();
+            new_opt->volume=1;
+            new_opt->strike=c;
+            new_opt->price=1.;
+            opt_chain->options->push_back(*new_opt);
+        }
+        opt_chain->min_strike=cur[0];
+        opt_chain->max_strike=cur[cur.size()-1];
+        HDistribution *new_distr=new HDistribution({p2[0],p2[1],p2[2],p2[3],p2[4]},expiries[index]);
+        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
+        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
+        adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
+    }
     retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &adata);
     std::cout<<"# iter: "<<retval<<"\tv_0: "<<p2[0]<<"\tv_m: "<<p2[1]<<"\trho: "<<p2[2]<<"\tkappa: "<<p2[3]<<"\tsigma: "<<p2[4]<<"\tinital error: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<info[6]<<'\n';
 }
