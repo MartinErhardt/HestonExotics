@@ -14,11 +14,16 @@ else
 	CXXDBGFLAGS= -I src/inc -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp
 	LDFLAGS = -lcurl -llevmar -lfftw3 -fopenmp -lgcov --coverage 
 endif
+
+all: bin_dirs HestonExotics
 HestonExotics: $(OBJS) $(LIBS)
 	$(CXX) $(LDFLAGS) -o HestonExotics $(OBJS)
 	rm -f *.gcda 2> /dev/null
 simdjson.cpp:
 	$(GETLIBS)
+bin_dirs:
+	mkdir -p bin
+	mkdir -p bin/src
 bin/%.o: %.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $^
 clean:
@@ -31,4 +36,4 @@ doc: doxygen_conf
 doxygen_conf:
 	doxygen -g doxygen_conf
 	patch -p0 < doxygen_conf.patch
-.PHONY: clean doc
+.PHONY: clean doc bin_dirs
