@@ -20,12 +20,14 @@ typedef struct ED:traced<ED>{
     const options_chain& opts;
     HDistribution* distr;
     SWIFT* pricing_method;
+    //unsigned int underpriced;
     ED(const options_chain& opts,HDistribution* init_distr, SWIFT* init_pricing_method): opts(opts),distr(init_distr),pricing_method(init_pricing_method){}
     //ED(const options_chain& opts,HParams p, ffloat expi): opts(opts),distr(new HDistribution(p,expi)){}
     ~ED(){delete distr; delete pricing_method;}
 } expiry_data;
 typedef struct AS{
     ffloat S;
+    ffloat* real_prices;
     std::list<expiry_data>& exp_list;
     ~AS(){delete &exp_list;} //moved when push_back 
 } adata_s;
@@ -73,9 +75,12 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     ffloat* x2=x;
     for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);
     if(x2<x+n_observations) throw std::runtime_error("Pricing buffer too large");
+    //unsigned int underpriced=0;
+    //if(my_adata->real_prices) for(x2=x;x2<x+n_observations;x2++) if(*x2<my_adata->real_prices[x2-x]) underpriced++;
+    //std::cout<<"share of underpriced: "<<static_cast<ffloat>(underpriced)/n_observations<<'\n';
 }
 std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
-    adata_s adata={S,*(new std::list<expiry_data>())};
+    adata_s adata={S,nullptr,*(new std::list<expiry_data>())};
     //HDistribution current_distribution;
     //std::shared_ptr<SWIFT> current;
     ffloat avg_iv=avg_imp_vol(S, market_data);
@@ -94,7 +99,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
         //if(opts->time_to_expiry<=EXP_LB) continue;
         if(opts.options->size()>0){
             n_observations_cur+=opts.options->size();
-            HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry);
+            HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry,0.0005);
             auto new_swift_parameters=SWIFT::get_parameters(*new_distr,S,opts);
             //if (current==nullptr|| new_swift_parameters->m>current->my_params.m || new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J){
                 //std::cout<<"is here the free1?\n";
@@ -109,6 +114,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*(n_observations_cur+1));
     ffloat * x2=x;
     for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++) for(auto e :*opts->options) *(x2++)=e.price;
+    adata.real_prices=x;
     std::cout<<"setup completed\t# observations: "<<n_observations_cur<<'\n';
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
     opts[0]=LM_INIT_MU;
@@ -133,8 +139,9 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
 }
 
 void pricing_test(){
+    //yearly_risk_free=0.02;
     std::cout.precision(dbl::max_digits10);
-    adata_s adata={1.,*(new std::list<expiry_data>())};
+    adata_s adata={1.,nullptr,*(new std::list<expiry_data>())};
     std::vector<ffloat> prices={
         0.079676812094469612,
         0.042586263756033402,
@@ -223,7 +230,7 @@ void pricing_test(){
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
+        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index],0.02);
         //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
         SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
@@ -235,7 +242,8 @@ void pricing_test(){
     }
 }
 void gradient_test(){
-    adata_s adata={1.,*(new std::list<expiry_data>())};
+    //yearly_risk_free=0.02;
+    adata_s adata={1.,nullptr,*(new std::list<expiry_data>())};
     std::vector<ffloat> grad={6.0887682383150116e-05,
                                     0.01009182616033304,
                                     -0.001422153712575771,
@@ -483,7 +491,7 @@ void gradient_test(){
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
+        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index],0.02);
         //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
         SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
@@ -504,7 +512,8 @@ void gradient_test(){
     }
 }
 void levmar_test(){
-    adata_s adata={1.,*(new std::list<expiry_data>())};
+    //yearly_risk_free=0.02;
+    adata_s adata={1.,nullptr,*(new std::list<expiry_data>())};
     std::vector<double> expiries = {
     0.119047619047619,
     0.238095238095238,
@@ -553,7 +562,7 @@ void levmar_test(){
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index]);
+        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index],0.02);
         auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
         SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
@@ -582,7 +591,7 @@ void levmar_test(){
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({p2[0],p2[1],p2[2],p2[3],p2[4]},expiries[index]);
+        HDistribution *new_distr=new HDistribution({p2[0],p2[1],p2[2],p2[3],p2[4]},expiries[index],0.02);
         auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
         SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);

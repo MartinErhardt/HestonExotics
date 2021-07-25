@@ -38,7 +38,8 @@ class HDistribution:traced<HDistribution>{
 public:
     HParams p;
     const ffloat tau;
-    HDistribution(HParams params,const ffloat init_tau): p(HParams(params)),tau(init_tau){};
+    const ffloat risk_free;
+    HDistribution(HParams params,const ffloat init_tau,const ffloat risk_free_init): p(HParams(params)),tau(init_tau),risk_free(risk_free_init){};
     std::complex<ffloat> chf(const std::complex<ffloat> u) const;
     std::vector<std::complex<ffloat>> chf_grad(const std::complex<ffloat> u) const;
     std::vector<std::complex<ffloat>> chf_chf_grad(const std::complex<ffloat> u) const;

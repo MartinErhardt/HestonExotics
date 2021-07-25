@@ -20,8 +20,8 @@ std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& dis
     unsigned int m=0;
     while(distr.int_error(m++)>TRUNCATION_PRECISION);
     //std::cout<<"min_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
-    ffloat max=yearly_risk_free*distr.tau+std::log(stock_price/opts.min_strike);
-    ffloat min=yearly_risk_free*distr.tau+std::log(stock_price/opts.max_strike);
+    ffloat max=distr.risk_free*distr.tau+std::log(stock_price/opts.min_strike);
+    ffloat min=distr.risk_free*distr.tau+std::log(stock_price/opts.max_strike);
     ffloat c=std::abs(distr.first_order_moment())+10.*std::sqrt(std::fabs(distr.second_order_moment())+std::sqrt(std::abs(distr.fourth_order_moment())));
     unsigned int exp2_m=std::exp2(m);
     ffloat sqrt_exp2_m=std::sqrt(static_cast<ffloat>(exp2_m));
@@ -119,7 +119,7 @@ void SWIFT::flush_cache(){
 SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj, const options_chain& to_price_init,const ffloat stock_price):to_price(to_price_init){
     unsigned int swift_J=swift_obj.my_params.J;
     //ffloat e_m=static_cast<ffloat>(swift_obj.my_params.exp2_m);
-    ffloat discount=std::exp(-yearly_risk_free*distr.tau);
+    ffloat discount=std::exp(-distr.risk_free*distr.tau);
     MatrixXcd pricing_matrix(6,swift_J);
     MatrixXcd to_price_matrix(swift_J,to_price.options->size());
     //std::cout<<"J: "<<swift_J<<"\tn opts: "<<to_price.options.size()<<'\n';
@@ -139,7 +139,7 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     unsigned int j=0;
     //std::cout<<"Filled pricing matrix\n";
     for(const option& opt: *to_price.options){
-        ffloat x=yearly_risk_free*distr.tau+std::log(stock_price/opt.strike);
+        ffloat x=distr.risk_free*distr.tau+std::log(stock_price/opt.strike);
         for(unsigned int i=0;i<swift_J;i++){ to_price_matrix(i,j)=discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x);
         //std::cout<<"j: "<<j<<"\ti: "<<i<<"\tb_ji: "<<discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x)<<'\n';
             

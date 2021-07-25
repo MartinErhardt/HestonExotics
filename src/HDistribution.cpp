@@ -255,7 +255,7 @@ double v0 =0.104070976986039; double	v_bar= 0.079973176513060754;	double rho= -0
                     rho * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
                     kappa * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
                     sigma * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5)
-            }, (((double) rand() / (RAND_MAX))));
+            }, (((double) rand() / (RAND_MAX))),0.02);
         double x=(((double) rand() / (RAND_MAX)) - 0.5)*1000;
         std::vector<std::complex<double>> correct =GetCuiGradient(test.p,-x,test.tau);
         std::vector<std::complex<double>> wrong = test.chf_grad(x);

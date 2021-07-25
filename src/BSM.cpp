@@ -6,6 +6,7 @@
 #include <list>
 #include <iostream>
 
+
 ffloat norm_cdf(const ffloat value);
 ffloat d_j(const int j, const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
 ffloat call_price(const ffloat S, const ffloat K, const ffloat sigma, const double T);
