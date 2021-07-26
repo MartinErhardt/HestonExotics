@@ -1,20 +1,28 @@
-module quantiles
-use iso_c_binding
-implicit none
+!ALGORITHM AS241  APPL. STATIST. (1988) VOL. 37, NO. 3
+!
+!	Produces the normal deviate Z corresponding to a given lower
+!	tail area of P; Z is accurate to about 1 part in 10**16.
+!
+!	The hash sums below are the sums of the mantissas of the
+!	coefficients.   They are included for use in checking
+!	transcription.
+MODULE QUANTILES
+USE ISO_C_BINDING
+IMPLICIT NONE
 
-contains
+CONTAINS
 
-real (C_DOUBLE) function ppnd16(P,Ifault) bind(c)
-    implicit none
+REAL (C_DOUBLE) function PPND16(P,IFAULT) BIND(C,NAME='ppnd16')
+    IMPLICIT NONE
 
-    real (C_DOUBLE), intent(in) :: P
-    Integer (C_INT), intent(out) :: Ifault
-    real ZERO , ONE , HALF , SPLIT1 , SPLIT2 , CONST1 ,   &
+    REAL (C_DOUBLE), intent(in) :: P
+    Integer (C_INT), intent(out) :: IFAULT
+    REAL ZERO , ONE , HALF , SPLIT1 , SPLIT2 , CONST1 ,   &
                      & CONST2 , A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , &
                      & B1 , B2 , B3 , B4 , B5 , B6 , B7 , C0 , C1 , C2 ,&
                      & C3 , C4 , C5 , C6 , C7 , D1 , D2 , D3 , D4 , D5 ,&
                      & D6 , D7 , E0 , E1 , E2 , E3 , E4 , E5 , E6 , E7 ,&
-                     & F1 , F2 , F3 , F4 , F5 , F6 , F7 , q , r
+                     & F1 , F2 , F3 , F4 , F5 , F6 , F7 , Q , R
     PARAMETER (ZERO=0.D0,ONE=1.D0,HALF=0.5D0,SPLIT1=0.425D0,          &
                & SPLIT2=5.D0,CONST1=0.180625D0,CONST2=1.6D0)
 !
@@ -74,38 +82,38 @@ real (C_DOUBLE) function ppnd16(P,Ifault) bind(c)
                & F7=2.04426310338993978564D-15)
 !	HASH SUM EF    47.52583 31754 92896 71629
 !
-    Ifault = 0
-    q = P - HALF
-    IF ( ABS(q).LE.SPLIT1 ) THEN
-        r = CONST1 - q*q
-        ppnd16 = q*(((((((A7*r+A6)*r+A5)*r+A4)*r+A3)*r+A2)*r+A1)*r+A0) &
-                & /(((((((B7*r+B6)*r+B5)*r+B4)*r+B3)*r+B2)*r+B1)*r+ONE)
+    IFAULT = 0
+    Q = P - HALF
+    IF ( ABS(Q).LE.SPLIT1 ) THEN
+        R = CONST1 - Q*Q
+        PPND16 = Q*(((((((A7*R+A6)*R+A5)*R+A4)*R+A3)*R+A2)*R+A1)*R+A0) &
+                & /(((((((B7*R+B6)*R+B5)*R+B4)*R+B3)*R+B2)*R+B1)*R+ONE)
         RETURN
     ELSE
-        IF ( q.LT.ZERO ) THEN
-            r = P
+        IF ( Q.LT.ZERO ) THEN
+            R = P
         ELSE
-            r = ONE - P
+            R = ONE - P
         ENDIF
-        IF ( r.LE.ZERO ) THEN
-            Ifault = 1
-            ppnd16 = ZERO
+        IF ( R.LE.ZERO ) THEN
+            IFAULT = 1
+            PPND16 = ZERO
             RETURN
         ENDIF
-        r = SQRT(-LOG(r))
-        IF ( r.LE.SPLIT2 ) THEN
-            r = r - CONST2
-            ppnd16 = (((((((C7*r+C6)*r+C5)*r+C4)*r+C3)*r+C2)*r+C1)*r+C0)&
-                   & /(((((((D7*r+D6)*r+D5)*r+D4)*r+D3)*r+D2)*r+D1)     &
-                   & *r+ONE)
+        R = SQRT(-LOG(R))
+        IF ( R.LE.SPLIT2 ) THEN
+            R = R - CONST2
+            PPND16 = (((((((C7*R+C6)*R+C5)*R+C4)*R+C3)*R+C2)*R+C1)*R+C0)&
+                   & /(((((((D7*R+D6)*R+D5)*R+D4)*R+D3)*R+D2)*R+D1)     &
+                   & *R+ONE)
         ELSE
-            r = r - SPLIT2
-            ppnd16 = (((((((E7*r+E6)*r+E5)*r+E4)*r+E3)*r+E2)*r+E1)*r+E0)&
-                   & /(((((((F7*r+F6)*r+F5)*r+F4)*r+F3)*r+F2)*r+F1)     &
-                   & *r+ONE)
+            R = R - SPLIT2
+            PPND16 = (((((((E7*R+E6)*R+E5)*R+E4)*R+E3)*R+E2)*R+E1)*R+E0)&
+                   & /(((((((F7*R+F6)*R+F5)*R+F4)*R+F3)*R+F2)*R+F1)     &
+                   & *R+ONE)
         ENDIF
-        IF ( q.LT.ZERO ) ppnd16 = -ppnd16
+        IF ( Q.LT.ZERO ) PPND16 = -PPND16
         RETURN
     ENDIF
-end function ppnd16
-end module quantiles
+END FUNCTION PPND16
+END MODULE QUANTILES

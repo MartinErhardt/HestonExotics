@@ -25,11 +25,9 @@ ffloat RNG::get_urand(){
     return *(buf_cur++);
 }
 ffloat RNG::get_grand(){
-    double retval;
     int ifault=0;
     if(buf_cur==buf_end) setup();
-    retval=*(buf_cur++);
-    retval=ppnd16(&retval,&ifault);
+    double retval=ppnd16(buf_cur++,&ifault);
     if(ifault) throw std::runtime_error("Quantile function failed!");
     return retval;
 }
