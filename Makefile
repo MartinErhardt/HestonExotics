@@ -4,9 +4,10 @@ SJSON_SRC=simdjson.cpp simdjson.h
 SJSON_OBJ=bin/simdjson.o
 SHISHUA_INC=shishua/shishua.h
 #SHISHUA_OBJ=bin/shishua.o
-FFLAGS= -std=f2008ts# -ffixed-form 
 AS241_SRC=src/as241.f90
 AS241_OBJ=bin/as241.o
+FC=gfortran
+FFLAGS= -std=f2008ts -fdefault-real-8
 #patch < ~/Projekt/HestonExotics/levmar_patch.diff
 ifeq ($(CXX), dpcpp)
 	CXXFLAGS = -Wpedantic -Wall -Werror -Wextra -std=c++17 -oFast -fopenmp -march=native -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -I src/inc -I shishua -DEIGEN_USE_MKL_ALL
@@ -35,7 +36,7 @@ $(SHISHUA_INC):%:
 #$(AS241_SRC):%:
 #	curl -o $@ http://lib.stat.cmu.edu/apstat/241 
 $(AS241_OBJ):%:$(AS241_SRC)
-	$(CXX) $(FFLAGS) -c $^ -o $@
+	$(FC) $(FFLAGS) -c $^ -o $@
 	
 #$(SHISHUA_OBJ):%:$(SHISHUA_SRC)
 #	$(CXX) $(CXXFLAGS) -DHEADER='"shishua.h"' -c -o $@ $(SHISHUA_SRC)

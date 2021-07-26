@@ -13,7 +13,7 @@ SDE<2>& HQEAnderson<SchemeParams,Scheme>::operator++() {
     ffloat gamma_2=.5;
     ffloat discount=std::exp(-kappa*delta);
     ffloat m=theta+(state.cur[1]-theta)*discount;
-    ffloat sp2=state.cur[1]*eps*eps*discount/kappa*(1-discount)+theta*eps*eps/(2*kappa)*discount*discount;
+    ffloat sp2=state.cur[1]*eps*eps*discount/kappa*(1-discount)+theta*eps*eps/(2*kappa)*(1.-discount)*(1.-discount);
     ffloat Psi=sp2/(m*m);
     ffloat p=(Psi-1)/(Psi+1);
     ffloat beta=2/(m*(Psi+1));

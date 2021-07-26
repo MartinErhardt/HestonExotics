@@ -23,7 +23,7 @@ std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& dis
     ffloat max=distr.risk_free*distr.tau+std::log(stock_price/opts.min_strike);
     ffloat min=distr.risk_free*distr.tau+std::log(stock_price/opts.max_strike);
     ffloat c=std::abs(distr.first_order_moment())+10.*std::sqrt(std::fabs(distr.second_order_moment())+std::sqrt(std::abs(distr.fourth_order_moment())));
-    unsigned int exp2_m=(1<<m);
+    unsigned int exp2_m=std::exp2(m);
     ffloat sqrt_exp2_m=std::sqrt(static_cast<ffloat>(exp2_m));
     ffloat lower=min-c;
     ffloat upper=max+c;

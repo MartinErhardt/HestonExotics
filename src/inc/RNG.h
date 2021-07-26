@@ -5,7 +5,7 @@
 #include<stdint.h>
 #include"Types.h"
 #define SEEDTYPE unsigned int
-#define ALIGN (1<<6)
+#define ALIGN (1<<7)
 #include"shishua.h"
 
 class RNG{
