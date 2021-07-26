@@ -14,7 +14,7 @@ ifeq ($(CXX), dpcpp)
 	LDFLAGS = -lstdc++  -lcurl -llevmar -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
 else
 	CXX = g++
-	CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Wextra -std=c++17 -fopenmp -oFast  -march=native -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant -fprofile-generate
+	CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Wextra -std=c++17 -fopenmp -oFast  -march=native# -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant -fprofile-generate
 	CXXDBGFLAGS= -I src/inc -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp
 	LDFLAGS = -lgfortran -lcurl  -llevmar -lfftw3 -fopenmp #-lgcov --coverage 
 endif

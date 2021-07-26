@@ -594,7 +594,7 @@ void levmar_test(){
         auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
         SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
         adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
-    }
+    } //FIXME when p[4]=1.2 weird things happen..
     retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &adata);
     std::cout<<"# iter: "<<retval<<"\tv_0: "<<p2[0]<<"\tv_m: "<<p2[1]<<"\trho: "<<p2[2]<<"\tkappa: "<<p2[3]<<"\tsigma: "<<p2[4]<<"\tinital error: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<info[6]<<'\n';
     //TODO assert

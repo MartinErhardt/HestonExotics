@@ -2,7 +2,6 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #include"SWIFT.h"
-#include"BSM.h"
 #include <iostream>
 #include<fftw3.h>
 #include<complex>
@@ -11,14 +10,14 @@ using namespace std::complex_literals;
 using Eigen::MatrixXcd; // TODO typedef depending on ffloat type
 //typedef Matrix<std::complex<ffloat>, 6, Eigen::Dynamic> MatrixXdcf6;
 //typedef Matrix<std::complex<ffloat>, Eigen::Dynamic, Eigen::Dynamic> MatrixXdcf;
-#define TRUNCATION_PRECISION 1e-12
+#define TRUNCATION_PRECISION 1e-10
 ffloat SwiftParameters::u(const unsigned int i) const{
     return M_PI*(2*static_cast<ffloat>(i)+1)/(2.*static_cast<ffloat>(J))*static_cast<ffloat>(exp2_m);
 }
 std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts){
     //std::cout<<"tau: "<<distr.tau<<"\tmin_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
     unsigned int m=0;
-    while(distr.int_error(m++)>TRUNCATION_PRECISION);
+    while(distr.int_error(m++)>TRUNCATION_PRECISION); 
     //std::cout<<"min_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
     ffloat max=distr.risk_free*distr.tau+std::log(stock_price/opts.min_strike);
     ffloat min=distr.risk_free*distr.tau+std::log(stock_price/opts.max_strike);
@@ -120,6 +119,7 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     unsigned int swift_J=swift_obj.my_params.J;
     //ffloat e_m=static_cast<ffloat>(swift_obj.my_params.exp2_m);
     ffloat discount=std::exp(-distr.risk_free*distr.tau);
+    //std::cout<<"J: "<<swift_J<<"\t# obs: "<<to_price.options->size();
     MatrixXcd pricing_matrix(6,swift_J);
     MatrixXcd to_price_matrix(swift_J,to_price.options->size());
     //std::cout<<"J: "<<swift_J<<"\tn opts: "<<to_price.options.size()<<'\n';
@@ -130,7 +130,7 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
         //std::cout<<"j"<<i<<"u: "<<swift_obj.my_params.u(i)
         //<<"\tchf: "<<chf_chf_grad_val[0]<<"\tv0: "<<distr.p.v_0<<"\tv_m: "<<distr.p.v_m<<"\trho: "<<distr.p.rho<<"\tkappa: "<<distr.p.kappa<<"\tsigma: "<<distr.p.kappa<<'\n';
         
-        //std::cout<<"i: "<<i<<"\ta_i0: "<<chf_chf_grad_val[i]*swift_obj.density_coeffs[i]<<'\n';
+        //std::cout<<"i: "<<i<<"\ta_i0: "<<chf_chf_grad_val[i]<<'\n';
         for(int j=0;j<6;j++){ pricing_matrix(j,i)=chf_chf_grad_val[j]*swift_obj.density_coeffs[i];
             //std::cout<<"i: "<<i<<"\tj: "<<j<<"\ttau: "<<distr.tau<<"\tu_i: "<<swift_obj.my_params.u(i)<<"\tval: "<<chf_chf_grad_val[j]<<'\n';
             

@@ -41,12 +41,12 @@ ffloat imp_vol(const ffloat S, const option& opt,ffloat expi){
         while (call_price(S,opt.strike, i_val, expi)>=opt.price);
         l_val=i_val;
     }
-    while(std::fabs(u_val-l_val)>=PRECISION){
+    do{
         m_val=(l_val+u_val)/2;
         p=call_price(S,opt.strike,m_val, expi);
         if(p<opt.price) l_val=m_val;
         else u_val=m_val;
-    }
+    }while(std::fabs(u_val-l_val)>=PRECISION);
     return m_val;
 }
 ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
