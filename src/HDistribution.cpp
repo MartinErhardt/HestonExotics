@@ -234,7 +234,7 @@ void distr_test(){
    //     double sigma = 1;          // |  variance of volatility
    //     double rho = 0.04;            // |  correlation between spot and volatility
    //     double v0 = 0.09;             // |  initial variance
-double v0 =0.104070976986039; double	v_bar= 0.079973176513060754;	double rho= -0.22685877363829868;	double kappa= 1.0162287151772771;	double sigma= 0.93898628610895796;
+double v0 =0.0727878;double	v_bar= 0.0946025;	double rho= 0.0576755;	double kappa= 1.04079;	double sigma=1.64704;
     /*
     for(int i=1;i<1000; i++){
         test.p.v_0=v0 * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5);
@@ -256,7 +256,7 @@ double v0 =0.104070976986039; double	v_bar= 0.079973176513060754;	double rho= -0
                     kappa * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
                     sigma * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5)
             }, (((double) rand() / (RAND_MAX))),0.02);
-        double x=(((double) rand() / (RAND_MAX)) - 0.5)*1000;
+        double x=(((double) rand() / (RAND_MAX)) - 0.5)*5000;
         std::vector<std::complex<double>> correct =GetCuiGradient(test.p,-x,test.tau);
         std::vector<std::complex<double>> wrong = test.chf_grad(x);
         std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<test.tau<<"\tx: "<<x<<"\tdiff: "<<std::sqrt((correct[0]-wrong[0])*std::conj((correct[0]-wrong[0]))+

@@ -10,12 +10,15 @@ FC=gfortran
 FFLAGS= -std=f2008ts -fdefault-real-8
 #patch < ~/Projekt/HestonExotics/levmar_patch.diff
 ifeq ($(CXX), dpcpp)
-	CXXFLAGS = -Wpedantic -Wall -Werror -Wextra -std=c++17 -oFast -fopenmp -march=native -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -I src/inc -I shishua -DEIGEN_USE_MKL_ALL
+	CXXFLAGS = -Wpedantic -Wall -Werror -Wextra -std=c++17 -oFast -fopenmp -march=native -DFASTMATH -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -I src/inc -I shishua -DEIGEN_USE_MKL_ALL
 	LDFLAGS = -lstdc++  -lcurl -llevmar -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
 else
 	CXX = g++
-	CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Wextra -std=c++17 -fopenmp -oFast  -march=native# -ffloat-store -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant -fprofile-generate
-	CXXDBGFLAGS= -I src/inc -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp
+	ifeq ($(DBG), true)
+	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp  -march=native
+	else
+	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Wextra -std=c++17 -fopenmp -oFast  -march=native -ffloat-store -DFASTMATH -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules #-fsingle-precision-constant -fprofile-generate;
+	endif
 	LDFLAGS = -lgfortran -lcurl  -llevmar -lfftw3 -fopenmp #-lgcov --coverage 
 endif
 

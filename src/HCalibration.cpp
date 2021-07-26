@@ -95,7 +95,7 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     ffloat p[5];
     p[0]=yearly_avg_iv;
     p[1]=yearly_avg_iv;
-    p[2]=0.04;
+    p[2]=-.2;
     p[3]=1.;
     p[4]=1.;
     unsigned int n_observations_cur=0;
