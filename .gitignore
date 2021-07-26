@@ -6,5 +6,9 @@ HestonExotics_icc
 ./src/inc/sav
 *.kate-swp
 *.o
+*.mod
 *.gcno
 *.gcda
+*.orig
+*.rm
+shishua/

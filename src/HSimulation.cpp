@@ -4,6 +4,7 @@
 #include"HDistribution.h"
 #include"HSimulation.h"
 #define PSI_C 1.5
+
 template <typename SchemeParams,class Scheme>
 SDE<2>& HQEAnderson<SchemeParams,Scheme>::operator++() {
     auto const& [v_0,theta,rho,kappa,eps] = params;

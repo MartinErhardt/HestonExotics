@@ -7,7 +7,7 @@
 #include<cstdlib>
 #include <limits>
 #include <iostream>
-#define PRECISION 0.0000001
+#define PRECISION 1e-6
 template<class D>
 struct traced
 {
@@ -19,6 +19,8 @@ protected:
     ~traced() = default;
 };
 typedef double ffloat;
+typedef uint64_t fuint; //same size as ffloat!!
+static_assert(sizeof(ffloat) == sizeof(fuint), "ffloat and fuint not of same size!");
 typedef struct{
     //unsigned int days_to_expiry;
     ffloat price; //ask

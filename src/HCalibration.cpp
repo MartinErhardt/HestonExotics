@@ -245,6 +245,7 @@ void pricing_test(){
     for(int i=0;i<40;i++){
         std::cout<<"x: "<<x[i]<<"\tp: "<<prices[i]<<"\tdiff: "<<std::fabs(x[i]-prices[i])<<'\n';
     }
+    //TODO assert
 }
 void gradient_test(){
     //yearly_risk_free=0.02;
@@ -515,6 +516,7 @@ void gradient_test(){
                     std::fabs(grad[5*i]-jac[5*i+3])+
                     std::fabs(grad[5*i+2]-jac[5*i+4])<<'\n';
     }
+    //TODO assert
 }
 void levmar_test(){
     //yearly_risk_free=0.02;
@@ -603,4 +605,5 @@ void levmar_test(){
     }
     retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &adata);
     std::cout<<"# iter: "<<retval<<"\tv_0: "<<p2[0]<<"\tv_m: "<<p2[1]<<"\trho: "<<p2[2]<<"\tkappa: "<<p2[3]<<"\tsigma: "<<p2[4]<<"\tinital error: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<info[6]<<'\n';
+    //TODO assert
 }

@@ -62,7 +62,6 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
             } //else std::cout<<"Can't calculate implied volatility (price below lower arbitrage-bound)\n";
             //std::cout<<"stock price: "<<S<<"\tprice: "<<opt.price<<"\tstrike: "<<opt.strike<<"\trisk free rate: "<<yearly_risk_free<<"\ttrading volume: "<<opt.volume<<"\timplied volatility: "<<imp_v<<'\n';
         }
-        
     }
     return denom ? avg_vol/denom: 0.3; //FIXME hacky fix
 }
