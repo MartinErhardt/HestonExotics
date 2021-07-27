@@ -35,6 +35,6 @@ template<typename SchemeParams,class Scheme> class HQEAnderson : SDE<2>, private
     ffloat log_X;
     const HParams params;        
     using Scheme::step_width;
-    HQEAnderson(const HParams& params_init,SchemeParams scheme_params_init, RNG*rng, const SDE_state<2> init_cond) : Scheme(scheme_params_init),SDE<2>(rng,init_cond),params(params_init),log_X(std::log(init_cond.cur[0])){}
+    HQEAnderson(const HParams& params_init,SchemeParams scheme_params_init, RNG*rng, const SDE_state<2> init_cond) : Scheme(scheme_params_init),SDE<2>(init_cond,rng),params(params_init),log_X(std::log(init_cond.cur[0])){}
     SDE<2>& operator++();
 };

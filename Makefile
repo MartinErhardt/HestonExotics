@@ -48,7 +48,7 @@ bin/%.o: %.cpp
 clean:
 	rm bin/src/*
 fclean:
-	rm -f bin/simdjson.o
+	rm -f $(SJSON_OBJ) $(AS241_OBJ)
 	rm bin/src/*
 doc: doxygen_conf
 	doxygen doxygen_conf

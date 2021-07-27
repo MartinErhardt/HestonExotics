@@ -15,8 +15,8 @@ CONTAINS
 REAL (C_DOUBLE) function PPND16(P,IFAULT) BIND(C,NAME='ppnd16')
     IMPLICIT NONE
 
-    REAL (C_DOUBLE), intent(in) :: P
-    Integer (C_INT), intent(out) :: IFAULT
+    REAL (C_DOUBLE), INTENT(IN) :: P
+    Integer (C_INT), INTENT(OUT) :: IFAULT
     REAL ZERO , ONE , HALF , SPLIT1 , SPLIT2 , CONST1 ,   &
                      & CONST2 , A0 , A1 , A2 , A3 , A4 , A5 , A6 , A7 , &
                      & B1 , B2 , B3 , B4 , B5 , B6 , B7 , C0 , C1 , C2 ,&

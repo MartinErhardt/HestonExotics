@@ -49,4 +49,4 @@ public:
     ffloat fourth_order_moment() const;
     //~HDistribution(){std::cout<<"I'm being destructed:((\n";};
 };
-void distr_test();
+
