@@ -5,20 +5,9 @@
 #include"BSM.h"
 #include<iostream>
 #include<levmar/levmar.h>
-/*typedef struct {
-    ffloat mu;
-    ffloat theta;
-    ffloat kappa;
-    ffloat xi;
-    ffloat rho;
-} HestonParams;
-*/
 typedef std::numeric_limits< double > dbl;
-
 #define NEWOLD_METHOD_RATIO 0.1
 void update_adata(ffloat *p, adata_s * adata);
-
-
 void update_adata(ffloat *p, adata_s * adata){
     const HParams new_params={p[0],p[1],p[2],p[3],p[4]};
     //std::shared_ptr<SWIFT> current=nullptr; delete
@@ -54,6 +43,7 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
 void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void * adata){
+#pragma GCC diagnostic pop
     std::cout<<"get prices\tv_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
@@ -64,7 +54,6 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     //if(my_adata->real_prices) for(x2=x;x2<x+n_observations;x2++) if(*x2<my_adata->real_prices[x2-x]) underpriced++;
     //std::cout<<"share of underpriced: "<<static_cast<ffloat>(underpriced)/n_observations<<'\n';
 }
-#pragma GCC diagnostic pop
 
 std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
     adata_s adata={S,nullptr,*(new std::list<expiry_data>())};

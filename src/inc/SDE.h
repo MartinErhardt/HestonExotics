@@ -6,25 +6,29 @@
 template<const unsigned int d> struct SDE_state {
     ffloat cur[d];
     ffloat prev[d];
-    ffloat time;
+    ffloat cur_time;
+    ffloat prev_time;
 };
 
 template<const unsigned int d> class SDE {
         //using SchemeEvoPolicy::evolution;
     protected:
-        SDE_state<d> state;
         RNG * rng;
+        SDE_state<d> state;
     public:
-        SDE(const SDE_state<d>& init_cond, RNG*init_rng):state(*init_cond),rng(init_rng){}
+        SDE(const SDE_state<d>& init_cond, RNG*init_rng):rng(init_rng),state(init_cond){}
         //SDE & operator++() { evolution(this->state,(rng->buf_cur+=d),step_width(this->state)); return *this;}
-        SDE& operator++(int) {SDE& retval = *this; ++(*this); return retval;}
+        //SDE& operator=(const SDE_state<d> new_state) {state=new_state; return *this;}
+        SDE<d>& operator++(int) {SDE& retval = *this; ++(*this); return retval;}
         //bool operator==(SDE other) const {return *this == other;}
-        bool operator>=(SDE& other) const {return state.time >= other.state.time;}
+        bool operator>=(SDE& other) const {return state.cur_time >= other.state.cur_time;}
+        bool operator>=(ffloat time) const {return state.cur_time >= time;}
         //bool operator!=(SDE other) const {return !(*this == other);}
-        SDE_state<d> * operator*() {return &state;}
-        using difference_type = double;
-        using value_type = SDE_state<d> *;
-        using pointer = const SDE_state<d> **;
-        using reference = const SDE_state<d> *;
+        SDE_state<d>& operator*() {return state;}
+        SDE_state<d>* operator->(){return &state;}
+        using difference_type = ffloat;
+        using value_type = SDE<d>;
+        using pointer = const SDE<d> **;
+        using reference = const SDE<d> *;
         using iterator_category = std::output_iterator_tag;
 };

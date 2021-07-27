@@ -18,8 +18,12 @@ public:
 protected:
     ~traced() = default;
 };
+#if FP_SIZE==8
 typedef double ffloat;
 typedef uint64_t fuint; //same size as ffloat!!
+#else
+#error currently unsupported
+#endif
 static_assert(sizeof(ffloat) == sizeof(fuint), "ffloat and fuint not of same size!");
 typedef struct{
     //unsigned int days_to_expiry;

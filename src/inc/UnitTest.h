@@ -6,3 +6,4 @@ void distr_test();
 void pricing_test();
 void gradient_test();
 void levmar_test();
+void rng_test();

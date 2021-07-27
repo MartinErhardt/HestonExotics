@@ -17,13 +17,18 @@ typedef struct SwiftParameters{
     const unsigned int J;
     ffloat u(const unsigned int i) const;
 } swift_parameters;
+#if FP_SIZE==8
+typedef Eigen::MatrixXcd MatC;
+#else
+#error no Matrix format found
+#endif
 class SWIFT:traced<SWIFT>{
 public:
     const swift_parameters my_params;
 private:
     std::vector<std::complex<ffloat>>& density_coeffs;
     typedef struct CacheEntry{
-        Eigen::MatrixXcd results;
+        MatC results;
         const options_chain& to_price;
         CacheEntry(const HDistribution& distr,const SWIFT& swift_obj, const options_chain& to_price_init,const ffloat stock_price);
         //~CacheEntry();

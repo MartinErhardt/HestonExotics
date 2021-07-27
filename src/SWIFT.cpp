@@ -7,7 +7,6 @@
 #include<complex>
 
 using namespace std::complex_literals;
-using Eigen::MatrixXcd; // TODO typedef depending on ffloat type
 //typedef Matrix<std::complex<ffloat>, 6, Eigen::Dynamic> MatrixXdcf6;
 //typedef Matrix<std::complex<ffloat>, Eigen::Dynamic, Eigen::Dynamic> MatrixXdcf;
 #ifdef FASTMATH
@@ -111,8 +110,7 @@ void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_
 void SWIFT::price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out,ffloat* end){
     unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(i=0;i<opts.options->size()&&(*out)<end;i++) for(unsigned int j=1;j<6;j++){
-        *((*out)++)=precached->results(j,i).real();
+    for(i=0;i<opts.options->size()&&(*out)<end;i++) for(unsigned int j=1;j<6;j++){*((*out)++)=precached->results(j,i).real();
         //std::cout<<"grad_"<<j<<": "<<*((*out)-1)<<'\n';
     }
     if(i<opts.options->size()) throw std::runtime_error((std::string("Gradient buffer too small i: ")+std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options->size())).c_str());
@@ -125,8 +123,8 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     //ffloat e_m=static_cast<ffloat>(swift_obj.my_params.exp2_m);
     ffloat discount=std::exp(-distr.risk_free*distr.tau);
     //std::cout<<"J: "<<swift_J<<"\t# obs: "<<to_price.options->size();
-    MatrixXcd pricing_matrix(6,swift_J);
-    MatrixXcd to_price_matrix(swift_J,to_price.options->size());
+    MatC pricing_matrix(6,swift_J);
+    MatC to_price_matrix(swift_J,to_price.options->size());
     //std::cout<<"J: "<<swift_J<<"\tn opts: "<<to_price.options.size()<<'\n';
     //std::cout<<"I allocate "<<sizeof(to_price_matrix)+sizeof(pricing_matrix)<<" bytes on the stack\n";
     for(unsigned int i=0;i<swift_J;i++){
