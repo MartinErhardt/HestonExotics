@@ -53,9 +53,11 @@ clean:
 fclean:
 	rm -f $(SJSON_OBJ) $(AS241_OBJ)
 	rm bin/src/*
+loc:
+	find . -regextype posix-extended -regex "./src/.*(.h|.cpp|.f90)" | xargs wc -l
 doc: doxygen_conf
 	doxygen doxygen_conf
 doxygen_conf:
 	doxygen -g doxygen_conf
 	patch -p0 < doxygen_conf.patch
-.PHONY: clean doc bin_dirs HestonExotics
+.PHONY: clean doc bin_dirs HestonExotics loc

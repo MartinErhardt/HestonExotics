@@ -47,7 +47,5 @@ typedef struct OptionsChain{
         time_to_expiry=time_until;
         //std::cout<<"create\n";
     }
-    ~OptionsChain(){
-        std::cout<<"destroy\n";
-    }
+    ~OptionsChain(){delete options;}
 }options_chain;

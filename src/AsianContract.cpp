@@ -9,7 +9,7 @@ using namespace HSimulation;
 std::vector<ffloat>* ArithmeticAOptionTool::price_trapezoidal(const HParams& p, const ffloat s, 
                                                               const std::vector<options_chain>& all_chains,
                                                               unsigned int n_opts,unsigned int min_steps){
-    const SDE_state<2> initial_state={{s,p.v_0},{0.0,0.0},0.0,0.0};
+    const SDE_state<2> initial_state={{s,p.v_0},{.0,.0},.0,.0};
     HQEAnderson<ffloat,NonAdaptive> heston_sde(p,all_chains.begin()->time_to_expiry/min_steps,my_rng,initial_state);
     std::vector<ffloat>& prices=*(new std::vector<ffloat>(n_opts));
     //TODO assert all_chains ordered by expiry

@@ -23,6 +23,7 @@ int main(int argc, char *argv[]) {
         std::list<options_chain>* all_chains=Getter->get_all_option_chains(std::string(*(argv+2)));
         std::cout<<"Options data downloaded and parsed\n";
         calibrate(S,*all_chains);
+        delete all_chains;
     }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "distr"){
         distr_test();
     }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "pricing"){
@@ -37,6 +38,7 @@ int main(int argc, char *argv[]) {
         std::cout << std::fixed << std::setprecision(5) << std::setfill('0');
         for(const options_chain& opt_chain: *all_chains) for(const option& opt: *(opt_chain.options))
             std::cout<<"S: "<<S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
+        delete all_chains;
     }/*
     std::string input;
     std::cout<<"Enter S: ";
