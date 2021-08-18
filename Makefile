@@ -17,7 +17,7 @@ else
 	CXX = g++
 	ifeq ($(DBG), true)
 	    FFLAGS= -std=f2008ts -fdefault-real-8
-	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp  -march=native
+	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp  -march=native -DFP_SIZE=8
 	else
 	    FFLAGS= -std=f2008ts -fdefault-real-8 -flto
 	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Wextra -std=c++17  -fopenmp -oFast  -march=native -ffloat-store -DFASTMATH -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules -DFP_SIZE=8 -flto #-fsingle-precision-constant -fprofile-generate;

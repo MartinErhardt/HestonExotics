@@ -158,3 +158,9 @@ SWIFT::~SWIFT(){
     delete &density_coeffs;
     delete &results_cache;
 }
+std::ostream& operator<<(std::ostream& out, SwiftParameters const& sp)
+{
+    return out <<"m: "<< sp.m << ", " << "exp2_m: "<< sp.exp2_m << ", " << "sqrt_exp2_m: "<< sp.sqrt_exp2_m << ", "
+               <<"k1: "<< sp.k_1 << ", " << "lower: "<< sp.lower << ", " << "k2: "<< sp.k_2 << ", " << "upper: "<< sp.upper << ", "
+               << "J: "<< sp.J << std::endl;
+}

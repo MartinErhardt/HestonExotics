@@ -46,6 +46,7 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
 #pragma GCC diagnostic pop
     std::cout<<"get prices\tv_0: "<<p[0]<<"\tv_m: "<<p[1]<<"\trho: "<<p[2]<<"\tkappa: "<<p[3]<<"\tsigma: "<<p[4]<<'\n';
     adata_s * my_adata=static_cast<adata_s*>(adata);
+    std::cout<<*my_adata;
     update_adata(p,my_adata);
     ffloat* x2=x;
     for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);
@@ -112,4 +113,15 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
     std::cout<<"# iter: "<<iter<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<msg[info[6]-1]<<'\n';
     if(info[6]!=6.&&info[6]!=2) throw std::runtime_error("levmar failed! ");
     return to_calib;
+}
+
+std::ostream& operator<<(std::ostream& out, adata_s const& as){
+    //ffloat * cur_price=as.real_prices;
+    for(auto& ed:as.exp_list){
+        for(option& o: *ed.opts.options){
+            out<<"S: "<<as.S//<<"\temp price"<<*(cur_price++)
+            <<"\task: "<<o.price<<"\tbid: "<<o.bid<<"\tstrike: "<<o.strike<<"\tvolume: "<<o.volume<<"\tdays left: "<<ed.distr->tau*trading_days<<std::endl;
+        }
+    }
+    return out;
 }

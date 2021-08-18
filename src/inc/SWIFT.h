@@ -17,6 +17,7 @@ typedef struct SwiftParameters{
     const unsigned int J;
     ffloat u(const unsigned int i) const;
 } swift_parameters;
+std::ostream& operator<<(std::ostream& out, swift_parameters const& sp);
 #if FP_SIZE==8
 typedef Eigen::MatrixXcd MatC;
 #else

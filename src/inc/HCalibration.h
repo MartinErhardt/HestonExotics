@@ -6,7 +6,7 @@
 #include<memory>
 #include<list>
 #include"SWIFT.h"
-
+#include"BSM.h"
 typedef struct ED:traced<ED>{
     const options_chain& opts;
     HDistribution* distr;
@@ -15,14 +15,18 @@ typedef struct ED:traced<ED>{
     ED(const options_chain& opts,HDistribution* init_distr, SWIFT* init_pricing_method): opts(opts),distr(init_distr),pricing_method(init_pricing_method){}
     //ED(const options_chain& opts,HParams p, ffloat expi): opts(opts),distr(new HDistribution(p,expi)){}
     ~ED(){delete distr; delete pricing_method;}
+    //ED(const ED& to_copy){
+    //    std::copy
+    //}
 } expiry_data;
 typedef struct AS{
     ffloat S;
     ffloat* real_prices;
     std::list<expiry_data>& exp_list;
     ~AS(){delete &exp_list;} //moved when push_back 
+    
 } adata_s;
-
+std::ostream& operator<<(std::ostream& out, adata_s const& as);
 void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void * adata);
 void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, void * adata);
 

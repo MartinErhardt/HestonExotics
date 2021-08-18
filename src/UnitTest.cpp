@@ -6,6 +6,7 @@
 #include"BSM.h"
 
 #include<levmar/levmar.h>
+#include<memory.h>
 typedef std::numeric_limits< double > dbl;
 using namespace std::complex_literals;
 
@@ -163,11 +164,65 @@ double v0 =0.0727878;double	v_bar= 0.0946025;	double rho= 0.0576755;	double kapp
                     (correct[4]-wrong[4])*std::conj((correct[4]-wrong[4])))<<'\n';
     }
 }
-
+std::vector<double> expiries = {
+    0.119047619047619,
+    0.238095238095238,
+    0.357142857142857,
+    0.476190476190476,
+    0.595238095238095,
+    0.714285714285714,
+    1.07142857142857,
+    1.42857142857143};
+std::vector<std::vector<double>> strikes = {
+    {0.9371, 0.9956, 1.0427, 1.2287, 1.3939},
+    {0.8603, 0.9868, 1.0463, 1.2399, 1.4102},
+    {0.8112, 0.9728, 1.0499, 1.2485, 1.4291},
+    {0.7760, 0.9588, 1.0530, 1.2659, 1.4456},
+    {0.7470, 0.9464, 1.0562, 1.2646, 1.4603},
+    {0.7216, 0.9358, 1.0593, 1.2715, 1.4736},
+    {0.6699, 0.9175, 1.0663, 1.2859, 1.5005},
+    {0.6137, 0.9025, 1.0766, 1.3046, 1.5328}
+};
+std::vector<swift_parameters> params={{5, 32, 5.6568542494923806, -1.8343994686679572, 1.5720210785285174, -58, 50, 128},
+                                        {5, 32, 5.6568542494923806, -2.6596460616572828, 2.4759124462331239, -85, 79, 256},
+                                        {5, 32, 5.6568542494923806, -3.3440060583236764, 3.2104875432489965, -107, 102, 256},
+                                        {5, 32, 5.6568542494923806, -3.9452944230550919, 3.8494203406057474, -126, 123, 256},
+                                        {5, 32, 5.6568542494923806, -4.4898573506150337, 4.4267150742095884, -143, 141, 256},
+                                        {5, 32, 5.6568542494923806, -4.9920925407415853, 4.9592398930278314, -159, 158, 256},
+                                        {5, 32, 5.6568542494923806, -6.3157233304280682, 6.353408918854841, -202, 203, 512},
+                                        {5, 32, 5.6568542494923806, -7.4606624599663149, 7.5789582584617987, -238, 242, 512}};
+double p[5]={
+    1.,            // kappa
+    0.09,          // v_bar
+    1.,            // sigma
+    .04,          // rho
+    .09          // v0
+};
+std::unique_ptr<adata_s> get_adata(const double S, const std::vector<double>& expiries_arg,const std::vector<std::vector<double>>& strikes_arg, const HParams heston_params,bool predefined){
+    std::unique_ptr<adata_s> adata=std::unique_ptr<adata_s>(new adata_s{S,nullptr,*(new std::list<expiry_data>())});
+    for (unsigned int i = 0; i < expiries_arg.size(); ++i)
+    {
+        std::vector<ffloat> cur=strikes_arg[i];
+        options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries_arg[i])/trading_days,expiries_arg[i]);
+        for(auto c: cur){
+            option * new_opt =new option();
+            new_opt->volume=1;
+            new_opt->strike=c;
+            new_opt->price=1.;
+            opt_chain->options->push_back(*new_opt);
+        }
+        opt_chain->min_strike=cur[0];
+        opt_chain->max_strike=cur[cur.size()-1];
+        HDistribution *new_distr=new HDistribution(heston_params,expiries_arg[i],0.02);
+        swift_parameters& new_swift_parameters=predefined ? params[i] : *SWIFT::get_parameters(*new_distr,adata->S,*opt_chain);
+        std::cout<<new_swift_parameters;
+        SWIFT* pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
+        adata->exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
+    }
+    return adata;
+}
 void pricing_test(){
-    //yearly_risk_free=0.02;
-    std::cout.precision(dbl::max_digits10);
-    adata_s adata={1.,nullptr,*(new std::list<expiry_data>())};
+    //std::cout.precision(dbl::max_digits10);
     std::vector<ffloat> prices={
         0.079676812094469612,
         0.042586263756033402,
@@ -209,68 +264,14 @@ void pricing_test(){
         0.10163212168506526,
         0.052461532814837883,
         0.032268432242168528};
-    std::vector<double> expiries = {
-    0.119047619047619,
-    0.238095238095238,
-    0.357142857142857,
-    0.476190476190476,
-    0.595238095238095,
-    0.714285714285714,
-    1.07142857142857,
-    1.42857142857143};
-    std::vector<std::vector<double>> K_over_S = {
-        {0.9371, 0.9956, 1.0427, 1.2287, 1.3939},
-        {0.8603, 0.9868, 1.0463, 1.2399, 1.4102},
-        {0.8112, 0.9728, 1.0499, 1.2485, 1.4291},
-        {0.7760, 0.9588, 1.0530, 1.2659, 1.4456},
-        {0.7470, 0.9464, 1.0562, 1.2646, 1.4603},
-        {0.7216, 0.9358, 1.0593, 1.2715, 1.4736},
-        {0.6699, 0.9175, 1.0663, 1.2859, 1.5005},
-        {0.6137, 0.9025, 1.0766, 1.3046, 1.5328}
-    };
-    std::vector<swift_parameters> params={{5, 32, 5.6568542494923806, -1.8343994686679572, 1.5720210785285174, -58, 50, 128},
-                                            {5, 32, 5.6568542494923806, -2.6596460616572828, 2.4759124462331239, -85, 79, 256},
-                                            {5, 32, 5.6568542494923806, -3.3440060583236764, 3.2104875432489965, -107, 102, 256},
-                                            {5, 32, 5.6568542494923806, -3.9452944230550919, 3.8494203406057474, -126, 123, 256},
-                                            {5, 32, 5.6568542494923806, -4.4898573506150337, 4.4267150742095884, -143, 141, 256},
-                                            {5, 32, 5.6568542494923806, -4.9920925407415853, 4.9592398930278314, -159, 158, 256},
-                                            {5, 32, 5.6568542494923806, -6.3157233304280682, 6.353408918854841, -202, 203, 512},
-                                            {5, 32, 5.6568542494923806, -7.4606624599663149, 7.5789582584617987, -238, 242, 512}};
-    double kappa = 1;           // |  mean reversion rate
-    double v_bar = 0.09;          // |  long term variance
-    double sigma = 1;          // |  variance of volatility
-    double rho = 0.04;            // |  correlation between spot and volatility
-    double v0 = 0.09;
-    double p[5];
-    p[0]=v0;p[1]=v_bar,p[2]=rho;p[3]=kappa;p[4]=sigma;
-    for (unsigned int index = 0; index < expiries.size(); ++index)
-    {
-        std::vector<ffloat> cur=K_over_S[index];
-        options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries[index])/trading_days,expiries[index]);
-        for(auto c: cur){
-            option * new_opt =new option();
-            new_opt->volume=1;
-            new_opt->strike=c;
-            new_opt->price=1.;
-            opt_chain->options->push_back(*new_opt);
-        }
-        opt_chain->min_strike=cur[0];
-        opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index],0.02);
-        //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
-        adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
-    }
+    std::unique_ptr<adata_s> adata_ptr=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]}, true);
+    std::cout<<*adata_ptr;
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);
-    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &adata);
-    for(int i=0;i<40;i++){
-        std::cout<<"x: "<<x[i]<<"\tp: "<<prices[i]<<"\tdiff: "<<std::fabs(x[i]-prices[i])<<'\n';
-    }
+    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &(*adata_ptr));
+    for(int i=0;i<40;i++) std::cout<<"x: "<<x[i]<<"\tp: "<<prices[i]<<"\tdiff: "<<std::fabs(x[i]-prices[i])<<'\n';
     //TODO assert
 }
 void gradient_test(){
-    //yearly_risk_free=0.02;
-    adata_s adata={1.,nullptr,*(new std::list<expiry_data>())};
     std::vector<ffloat> grad={6.0887682383150116e-05,
                                     0.01009182616033304,
                                     -0.001422153712575771,
@@ -471,60 +472,9 @@ void gradient_test(){
                                     -0.00030980371835320395,
                                     0.040232991901821259,
                                     0.22181984888582221};
-    std::vector<double> expiries = {
-    0.119047619047619,
-    0.238095238095238,
-    0.357142857142857,
-    0.476190476190476,
-    0.595238095238095,
-    0.714285714285714,
-    1.07142857142857,
-    1.42857142857143};
-    std::vector<std::vector<double>> K_over_S = {
-        {0.9371, 0.9956, 1.0427, 1.2287, 1.3939},
-        {0.8603, 0.9868, 1.0463, 1.2399, 1.4102},
-        {0.8112, 0.9728, 1.0499, 1.2485, 1.4291},
-        {0.7760, 0.9588, 1.0530, 1.2659, 1.4456},
-        {0.7470, 0.9464, 1.0562, 1.2646, 1.4603},
-        {0.7216, 0.9358, 1.0593, 1.2715, 1.4736},
-        {0.6699, 0.9175, 1.0663, 1.2859, 1.5005},
-        {0.6137, 0.9025, 1.0766, 1.3046, 1.5328}
-    };
-    std::vector<swift_parameters> params={{5, 32, 5.6568542494923806, -1.8343994686679572, 1.5720210785285174, -58, 50, 128},
-                                            {5, 32, 5.6568542494923806, -2.6596460616572828, 2.4759124462331239, -85, 79, 256},
-                                            {5, 32, 5.6568542494923806, -3.3440060583236764, 3.2104875432489965, -107, 102, 256},
-                                            {5, 32, 5.6568542494923806, -3.9452944230550919, 3.8494203406057474, -126, 123, 256},
-                                            {5, 32, 5.6568542494923806, -4.4898573506150337, 4.4267150742095884, -143, 141, 256},
-                                            {5, 32, 5.6568542494923806, -4.9920925407415853, 4.9592398930278314, -159, 158, 256},
-                                            {5, 32, 5.6568542494923806, -6.3157233304280682, 6.353408918854841, -202, 203, 512},
-                                            {5, 32, 5.6568542494923806, -7.4606624599663149, 7.5789582584617987, -238, 242, 512}};
-    double kappa = 1;           // |  mean reversion rate
-    double v_bar = 0.09;          // |  long term variance
-    double sigma = 1;          // |  variance of volatility
-    double rho = 0.04;            // |  correlation between spot and volatility
-    double v0 = 0.09;
-    double p[5];
-    p[0]=v0;p[1]=v_bar,p[2]=rho;p[3]=kappa;p[4]=sigma;
-    for (unsigned int index = 0; index < expiries.size(); ++index)
-    {
-        std::vector<ffloat> cur=K_over_S[index];
-        options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries[index])/trading_days,expiries[index]);
-        for(auto c: cur){
-            option * new_opt =new option();
-            new_opt->volume=1;
-            new_opt->strike=c;
-            new_opt->price=1.;
-            opt_chain->options->push_back(*new_opt);
-        }
-        opt_chain->min_strike=cur[0];
-        opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index],0.02);
-        //auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(params[index]);//std::shared_ptr(current);
-        adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
-    }
+    std::unique_ptr<adata_s> adata_ptr=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]},true);
     ffloat * jac=(ffloat*) malloc(sizeof(ffloat)*200);
-    get_jacobian_for_levmar(&p[0], jac, 5, 40, (void *) &adata);
+    get_jacobian_for_levmar(&p[0], jac, 5, 40, (void *) &(*adata_ptr));
     for(int i=0;i<40;i++){
         std::cout<<"dv0(ER): "<<grad[5*i+4]<<"\tdv0(ME): "<<jac[5*i]
         <<"\tdvm(ER): "<<grad[5*i+1]<<"\tdvm(ME): "<<jac[5*i+1]
@@ -540,83 +490,22 @@ void gradient_test(){
     //TODO assert
 }
 void levmar_test(){
-    //yearly_risk_free=0.02;
-    adata_s adata={1.,nullptr,*(new std::list<expiry_data>())};
-    std::vector<double> expiries = {
-    0.119047619047619,
-    0.238095238095238,
-    0.357142857142857,
-    0.476190476190476,
-    0.595238095238095,
-    0.714285714285714,
-    1.07142857142857,
-    1.42857142857143};
-    std::vector<std::vector<double>> K_over_S = {
-        {0.9371, 0.9956, 1.0427, 1.2287, 1.3939},
-        {0.8603, 0.9868, 1.0463, 1.2399, 1.4102},
-        {0.8112, 0.9728, 1.0499, 1.2485, 1.4291},
-        {0.7760, 0.9588, 1.0530, 1.2659, 1.4456},
-        {0.7470, 0.9464, 1.0562, 1.2646, 1.4603},
-        {0.7216, 0.9358, 1.0593, 1.2715, 1.4736},
-        {0.6699, 0.9175, 1.0663, 1.2859, 1.5005},
-        {0.6137, 0.9025, 1.0766, 1.3046, 1.5328}
-    };
-    double kappa = 1;           // |  mean reversion rate
-    double v_bar = 0.09;          // |  long term variance
-    double sigma = 1;          // |  variance of volatility
-    double rho = 0.04;            // |  correlation between spot and volatility
-    double v0 = 0.09;
-    double p[5];double p2[5];
-    p[0]=v0;p[1]=v_bar,p[2]=rho;p[3]=kappa;p[4]=sigma;
-    p2[0]=v0+.2;p2[1]=v_bar+.2,p2[2]=rho+.2;p2[3]=kappa+.2;p2[4]=sigma+.2;
-    for (unsigned int index = 0; index < expiries.size(); ++index)
-    {
-        std::vector<ffloat> cur=K_over_S[index];
-        options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries[index])/trading_days,expiries[index]);
-        for(auto c: cur){
-            option * new_opt =new option();
-            new_opt->volume=1;
-            new_opt->strike=c;
-            new_opt->price=1.;
-            opt_chain->options->push_back(*new_opt);
-        }
-        opt_chain->min_strike=cur[0];
-        opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({v0,v_bar,rho,kappa,sigma},expiries[index],0.02);
-        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
-        adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
-    }
+    double p2[5];
+    std::unique_ptr<adata_s> adata_ptr=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]},false);
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);
-    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &adata);
+    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &(*adata_ptr));
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
     opts[0]=LM_INIT_MU;
     // stopping thresholds for
-    opts[1]=1E-10;       // ||J^T e||_inf
-    opts[2]=1E-10;       // ||Dp||_2
-    opts[3]=1E-10;       // ||e||_2
+    opts[1]=1e-10;       // ||J^T e||_inf
+    opts[2]=1e-10;       // ||Dp||_2
+    opts[3]=1e-10;       // ||e||_2
     opts[4]= LM_DIFF_DELTA; // finite difference if used
     int retval;
-    adata.exp_list.clear();
-    for (unsigned int index = 0; index < expiries.size(); ++index)
-    {
-        std::vector<ffloat> cur=K_over_S[index];
-        options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries[index])/trading_days,expiries[index]);
-        for(auto c: cur){
-            option * new_opt =new option();
-            new_opt->volume=1;
-            new_opt->strike=c;
-            new_opt->price=1.;
-            opt_chain->options->push_back(*new_opt);
-        }
-        opt_chain->min_strike=cur[0];
-        opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution({p2[0],p2[1],p2[2],p2[3],p2[4]},expiries[index],0.02);
-        auto new_swift_parameters=SWIFT::get_parameters(*new_distr,adata.S,*opt_chain);
-        SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
-        adata.exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
-    } //FIXME when p[4]=1.2 weird things happen..
-    retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &adata);
+    p2[0]=p[0]+.2;p2[1]=p[1]+.2,p2[2]=p[2]+.2;p2[3]=p[3]+.2;p2[4]=p[4]+.2;
+    adata_ptr=get_adata(1.,expiries, strikes,{p2[0],p2[1],p2[2],p2[3],p2[4]},false);
+    retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &(*adata_ptr));
     std::cout<<"# iter: "<<retval<<"\tv_0: "<<p2[0]<<"\tv_m: "<<p2[1]<<"\trho: "<<p2[2]<<"\tkappa: "<<p2[3]<<"\tsigma: "<<p2[4]<<"\tinital error: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<info[6]<<'\n';
     //TODO assert
 }
+
