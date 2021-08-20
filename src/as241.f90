@@ -84,6 +84,7 @@ REAL (C_DOUBLE) function PPND16(P,IFAULT) BIND(C,NAME='ppnd16')
 !
     IFAULT = 0
     Q = P - HALF
+    !PRINT*,P;
     IF ( ABS(Q).LE.SPLIT1 ) THEN
         R = CONST1 - Q*Q
         PPND16 = Q*(((((((A7*R+A6)*R+A5)*R+A4)*R+A3)*R+A2)*R+A1)*R+A0) &

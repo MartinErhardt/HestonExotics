@@ -13,6 +13,8 @@
 #include"HCalibration.h"
 
 #define MY_TOKEN "RVjzAiRnplMr78OblRHnVOvmb2SA"
+const char help[]="HestonExotics [{-a <underlying> <volume type> <# volume>}...] [{-c <underlying> <volume type> <# volume>}...] [{-p <underlying> <days to expiration> <option type> <strike>}...] [{-t <test>}...] [-h]";
+
 //ffloat call_price(const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
 int main(int argc, char *argv[]) {
     std::string tmp_token(MY_TOKEN); // initialized on the stack s.t. reference is not temporary and comprimised.
@@ -32,6 +34,8 @@ int main(int argc, char *argv[]) {
         gradient_test();
     }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "levmar"){
         levmar_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "rng"){
+        rng_test();
     }else if (argc ==4 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "tradier"){
         ffloat S=Getter->get_stock_quote(std::string(*(argv+3)));
         std::list<options_chain>* all_chains=Getter->get_all_option_chains(std::string(*(argv+3)));

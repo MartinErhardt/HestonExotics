@@ -69,12 +69,12 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
         std::string option_type=std::string(std::string_view(opt["option_type"]));
         auto strike_obj=opt["strike"];
         auto price_obj=opt["ask"];
-        int64_t current_vol=opt["open_interest"].get_int64();
+        int64_t current_vol=opt["volume"].get_int64();
         if(option_type=="call"
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
-            &&(current_vol>=100)
+            //&&(current_vol>=1)
         )
         {
             option * new_opt =new option();

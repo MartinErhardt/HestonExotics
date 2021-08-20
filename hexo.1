@@ -1,0 +1,67 @@
+.TH hexo 1 "20 AUG 2021" "0.5" "User Manual"
+.SH NAME
+hexo \- price exotic derivatives in the Heston model 
+.SH SYNOPSIS
+hexo [{-a all-args}...] [{-c config-args}...] [{-p price-args}...] [{-t test-arg}...] [-h]
+.SH OPTIONS
+.IP "-a <underlying> <volume type> <# volume>"
+First download all call-option on the underlying. Next filter for all option-contracts with at least the specified number of 
+
+.TS
+tab (@);
+l|l.
+volume type@description
+_
+open_interest@contracts outstanding
+volume@contracts traded on the last trading day or the currently intraday
+.TE
+
+use this data to calibrate the heston model and lastly price all available European call options as if they were asian options to the same strike and expiry date.
+.IP "-c <underlying> <volume type> <# volume>" 
+.B (unsupported)
+First download all calls on the underlying. Next filter only the options with at least the specified number of 
+
+.TS
+tab (@);
+l|l.
+volume type@description
+_
+open_interest@contracts outstanding
+volume@contracts traded on the last trading day or the currently intraday
+.TE
+
+These options are then used to calibrate the Heston model and store the model parameters in a SQL-database
+.IP "-p <underlying> <exotic option type> <days to expiration> <strike>"
+.B (unsupported)
+price an exotic option of specified type with specified # of days to expiration and strike on the specificied underlying (unsupported)
+.IP "-t <test>, --test=<test>"
+runs one of the following available tests:
+.TS
+tab (@);
+l|l.
+test@description
+_
+distr@tests HDistribution.cpp
+pricing@tests get_prices_for_levmar in HCalibration.cpp
+gradient@tests get_gradient_for_levmar in HCalibration.cpp
+levmar@tests calibrate in HCalibration.cpp
+rng@tests RNG.cpp
+.TE
+.IP -h, --help
+display help
+.SH SEE ALSO
+.RS
+.nf
+- as241<http://lib.stat.cmu.edu/apstat/>
+- eigen<https://eigen.tuxfamily.org/index.php?title=Main_Page>
+- fftw3<https://www.fftw.org/>
+- lcurl<https://curl.se/libcurl/>
+- levmar<http://users.ics.forth.gr/~lourakis/levmar/>
+- shishua<https://github.com/espadrine/shishua>
+- simdjson<https://github.com/simdjson/simdjson>
+- SWIFTOptionCalibration<https://github.com/eudaldrg/SWIFTOptionCalibration>
+.RE
+.SH BUGS 
+No known bugs.
+.SH AUTHOR
+Martin Erhardt<merhardt@rhrk.uni-kl.de>

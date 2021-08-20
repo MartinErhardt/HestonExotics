@@ -25,12 +25,12 @@ else
 	LDFLAGS = -lgfortran -lcurl  -llevmar -lfftw3 -fopenmp -flto #-lgcov --coverage 
 endif
 
-all: | bin_dirs HestonExotics
+all: | bin_dirs hexo
 bin_dirs:
 	mkdir -p bin
 	mkdir -p bin/src
-HestonExotics: $(SJSON_OBJ) $(SHISHUA_INC) $(AS241_OBJ) $(OBJS) 
-	$(CXX) -o HestonExotics  $(OBJS)  $(AS241_OBJ) $(LDFLAGS)
+hexo: $(SJSON_OBJ) $(SHISHUA_INC) $(AS241_OBJ) $(OBJS) 
+	$(CXX) -o hexo  $(OBJS)  $(AS241_OBJ) $(LDFLAGS)
 	rm -f *.gcda 2> /dev/null
 $(SJSON_SRC):%:
 	curl -O https://raw.githubusercontent.com/simdjson/simdjson/master/singleheader/$@
@@ -60,4 +60,4 @@ doc: doxygen_conf
 doxygen_conf:
 	doxygen -g doxygen_conf
 	patch -p0 < doxygen_conf.patch
-.PHONY: clean doc bin_dirs HestonExotics loc
+.PHONY: clean doc bin_dirs hexo loc

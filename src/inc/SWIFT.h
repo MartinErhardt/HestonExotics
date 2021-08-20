@@ -43,6 +43,7 @@ public:
     void flush_cache();
     void price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out_array,ffloat*end);
     void price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out_array,ffloat*end);
+    static swift_parameters* get_parameters_p(const HDistribution& distr,const ffloat stock_price, const options_chain& opts);
     static std::unique_ptr<swift_parameters> get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts);
     ~SWIFT();
 };

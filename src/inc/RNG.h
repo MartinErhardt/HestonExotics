@@ -9,12 +9,16 @@
 #include"shishua.h"
 
 class RNG{
-    ffloat * buf_start;
-    ffloat * buf_end;
-    ffloat * buf_cur;
+    ffloat * buf_start_u;
+    ffloat * buf_end_u;
+    ffloat * buf_cur_u;
+    ffloat * buf_start_g;
+    ffloat * buf_end_g;
+    ffloat * buf_cur_g;
     SEEDTYPE my_seed[4]={0};
     prng_state s;
-    void setup();
+    ffloat* setup_u(ffloat* buf_start_setup,ffloat* buf_end_setup);
+    ffloat* setup_g();
     public:
         RNG(size_t size,unsigned int seed);
         ffloat get_grand();

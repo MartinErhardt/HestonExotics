@@ -18,7 +18,7 @@ using namespace std::complex_literals;
 ffloat SwiftParameters::u(const unsigned int i) const{
     return M_PI*(2*static_cast<ffloat>(i)+1)/(2.*static_cast<ffloat>(J))*static_cast<ffloat>(exp2_m);
 }
-std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts){
+swift_parameters* SWIFT::get_parameters_p(const HDistribution& distr,const ffloat stock_price, const options_chain& opts){
     //std::cout<<"tau: "<<distr.tau<<"\tmin_strike: "<<opts.min_strike<<"\tmax_strike: "<<opts.max_strike<<'\n';
     unsigned int m=0;
     while(distr.int_error(m++)>TRUNCATION_PRECISION); 
@@ -35,7 +35,10 @@ std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& dis
     ffloat iota_density=ceil(std::log2(M_PI*std::abs(k_1-k_2)))-1;
     unsigned int J=std::exp2(iota_density-1);
     //std::cout<<"m: "<<m<<"\texp2_m: "<<exp2_m<<"\tc:"<<c<<"\tLower integral bound: "<<k_1<<"\tUpper integral bound: "<<k_2<<"\tJ: "<<J<<'\n';
-    return std::unique_ptr<swift_parameters>(new swift_parameters({m,exp2_m,sqrt_exp2_m,lower,upper,k_1,k_2,J}));
+    return new swift_parameters({m,exp2_m,sqrt_exp2_m,lower,upper,k_1,k_2,J});
+}
+std::unique_ptr<swift_parameters> SWIFT::get_parameters(const HDistribution& distr,const ffloat stock_price, const options_chain& opts){
+    return std::unique_ptr<swift_parameters>(get_parameters_p(distr,stock_price,opts));
 }
 
 SWIFT::SWIFT(const swift_parameters& init_params) : my_params(swift_parameters(init_params)), density_coeffs(*(new std::vector<std::complex<ffloat>>(init_params.J))),results_cache(*(new std::list<cache_entry>())) {
