@@ -1,15 +1,33 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-#ifndef RNG_H
-#define RNG_H
+#pragma once
+#include<stdint.h>
+#include"Types.h"
+#define SEEDTYPE unsigned int
+#define ALIGN (1<<7)
+#include"shishua.h"
 
 class RNG{
-    double * buf_start;
-    double * buf_end;
+    ffloat * buf_start_u;
+    ffloat * buf_end_u;
+    ffloat * buf_cur_u;
+    ffloat * buf_start_g;
+    ffloat * buf_end_g;
+    ffloat * buf_cur_g;
+    SEEDTYPE my_seed[4]={0};
+    prng_state s;
+    ffloat* setup_u(ffloat* buf_start_setup,ffloat* buf_end_setup);
+    ffloat* setup_g();
     public:
-        double * buf_cur;
-        RNG(size_t size);
-        void update();
+        RNG(size_t size,unsigned int seed);
+        ffloat get_grand(){
+            if(buf_cur_g==buf_end_g) buf_cur_g=setup_g();
+            return *(buf_cur_g++);
+        }
+        ffloat get_urand(){
+            if(buf_cur_u==buf_end_u) buf_cur_u=setup_u(buf_start_u,buf_end_u);
+            return *(buf_cur_u++);
+        }
+        ~RNG();
 };
-#endif

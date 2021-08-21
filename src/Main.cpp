@@ -6,17 +6,60 @@
 #include <unistd.h>
 #endif
 #include <curl/curl.h>
-
-#include "SDE.h"
+#include<list>
+#include "UnitTest.h"
 #include "WebAPI.h"
-//#include "TWS.h"
-#define MY_TOKEN "RVjzAiRnplMr78OblRHnVOvmb2SA"
+#include"BSM.h"
+#include"HCalibration.h"
 
+#define MY_TOKEN "RVjzAiRnplMr78OblRHnVOvmb2SA"
+const char help[]="HestonExotics [{-a <underlying> <volume type> <# volume>}...] [{-c <underlying> <volume type> <# volume>}...] [{-p <underlying> <days to expiration> <option type> <strike>}...] [{-t <test>}...] [-h]";
+
+//ffloat call_price(const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
 int main(int argc, char *argv[]) {
     std::string tmp_token(MY_TOKEN); // initialized on the stack s.t. reference is not temporary and comprimised.
-    auto Getter=std::make_unique<WebInterface::WebAPI>(tmp_token); 
+    auto Getter=std::make_unique<WebInterface::WebAPI>(tmp_token);
     if (argc >=2 && std::string(*(argv+1)) == "quote"){
-        Getter->get_all_option_chains(std::string(*(argv+2)));
-    }
+        ffloat S=Getter->get_stock_quote(std::string(*(argv+2)));
+        //std::cout<<std::string(*(argv+2))<<"price: \t"<<S<<'\n';
+        std::list<options_chain>* all_chains=Getter->get_all_option_chains(std::string(*(argv+2)));
+        std::cout<<"Options data downloaded and parsed\n";
+        calibrate(S,*all_chains);
+        delete all_chains;
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "distr"){
+        distr_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "pricing"){
+        pricing_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "gradient"){
+        gradient_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "levmar"){
+        levmar_test();
+    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "rng"){
+        rng_test();
+    }else if (argc ==4 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "tradier"){
+        ffloat S=Getter->get_stock_quote(std::string(*(argv+3)));
+        std::list<options_chain>* all_chains=Getter->get_all_option_chains(std::string(*(argv+3)));
+        std::cout << std::fixed << std::setprecision(5) << std::setfill('0');
+        for(const options_chain& opt_chain: *all_chains) for(const option& opt: *(opt_chain.options))
+            std::cout<<"S: "<<S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
+        delete all_chains;
+    }/*
+    std::string input;
+    std::cout<<"Enter S: ";
+    std::getline (std::cin,input);
+    ffloat S=std::stod(input);
+    std::cout<<"Enter K: ";
+    std::getline (std::cin,input);
+    ffloat K=std::stod(input);
+    std::cout<<"Enter r: ";
+    std::getline (std::cin,input);
+    ffloat r=std::stod(input);
+    std::cout<<"Enter sigma: ";
+    std::getline (std::cin,input);
+    ffloat sigma=std::stod(input);
+    std::cout<<"Enter time: ";
+    std::getline (std::cin,input);
+    double T=std::stod(input);
+    std::cout<<"call price: "<< call_price(S,K,r,sigma,T)<<'\n';*/
     return 0;
 }

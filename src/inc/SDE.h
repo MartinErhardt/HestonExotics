@@ -1,34 +1,34 @@
 /* This Source Code Form is subject to the terms of the Mozilla Public
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
-#ifndef SDE_H
-#define SDE_H
-
+#pragma once 
 #include "RNG.h"
 template<const unsigned int d> struct SDE_state {
-    double cur_state[d];
-    double prev_state[d];
-    double time;
+    ffloat cur[d];
+    ffloat prev[d];
+    ffloat cur_time;
+    ffloat prev_time;
 };
 
-template<const unsigned int d,typename SchemeEvoParams, class SchemeEvoPolicy> class SDE : private SchemeEvoPolicy{
-        SDE_state<d> state;
+template<const unsigned int d> class SDE {
+        //using SchemeEvoPolicy::evolution;
+    protected:
         RNG * rng;
-        using SchemeEvoPolicy::evolution;
-        using SchemeEvoPolicy::step_width;
+        SDE_state<d> state;
     public:
-        SDE(SDE_state<d> * init_cond, RNG * rng,SchemeEvoParams params);
-        SDE & operator++() { evolution(this->state,(rng->buf_cur+=d),step_width(this->state)); return *this;}
-        SDE operator++(int) {SDE retval = *this; ++(*this); return retval;}
+        SDE(const SDE_state<d>& init_cond, RNG*init_rng):rng(init_rng),state(init_cond){}
+        //SDE & operator++() { evolution(this->state,(rng->buf_cur+=d),step_width(this->state)); return *this;}
+        //SDE& operator=(const SDE_state<d> new_state) {state=new_state; return *this;}
+        SDE<d>& operator++(int) {SDE& retval = *this; ++(*this); return retval;}
         //bool operator==(SDE other) const {return *this == other;}
-        bool operator>=(SDE other) const {return state.time >= other.state.time;}
+        bool operator>=(SDE& other) const {return state.cur_time >= other.state.cur_time;}
+        bool operator>=(ffloat time) const {return state.cur_time >= time;}
         //bool operator!=(SDE other) const {return !(*this == other);}
-        SDE_state<d> * operator*() {return &state;}
-        
-        using difference_type = double;
-        using value_type = SDE_state<d> *;
-        using pointer = const SDE_state<d> **;
-        using reference = const SDE_state<d> *;
+        SDE_state<d>& operator*() {return state;}
+        SDE_state<d>* operator->(){return &state;}
+        using difference_type = ffloat;
+        using value_type = SDE<d>;
+        using pointer = const SDE<d> **;
+        using reference = const SDE<d> *;
         using iterator_category = std::output_iterator_tag;
-    };
-#endif
+};

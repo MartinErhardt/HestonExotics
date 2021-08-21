@@ -3,13 +3,12 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #include "WebAPI.h"
 #include "../simdjson.h"
+#include"BSM.h"
 //#include <math.h>
 using namespace WebInterface;
 
-size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer*userp);
 unsigned int days_to_date(const std::string& expiration_date);
-size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer* buf)
-{
+size_t write_data(void* buffer, size_t size, size_t nmemb, WebInterface::JSON_buffer* buf){
     char* new_loc=NULL;
     if (!(new_loc= (char*)malloc(buf->size_buf+nmemb*size+1+simdjson::SIMDJSON_PADDING))) return 0;
     if (buf->buf) memcpy(new_loc,buf->buf,buf->size_buf);
@@ -19,15 +18,17 @@ size_t write_data(void *buffer, size_t size, size_t nmemb, WebInterface::JSON_bu
     buf->buf=new_loc;
     buf->size_buf=buf->size_buf+nmemb*size;
     return size * nmemb;
-}
+} //TODO number of workdays excluding holidays
 unsigned int days_to_date(const std::string& expiration_date){
     struct std::tm then={};
     std::istringstream ss(expiration_date.c_str());
     ss>>std::get_time(&then, "%Y-%m-%d");
-    return static_cast<unsigned int>(std::difftime(std::mktime(&then),time(0))/(60*60*24));
+    unsigned int raw_diff=static_cast<unsigned int>(std::difftime(std::mktime(&then),time(0))/(60*60*24));
+    unsigned int work_day_diff=5*static_cast<unsigned int>(raw_diff/7)+raw_diff%7;
+    //std::cout<<"raw_diff"<<raw_diff<<"\t work_day_diff"<<work_day_diff<<'\n';
+    return work_day_diff;
 }
-WebAPI::WebAPI(const std::string& access_code):token(access_code)
-{
+WebAPI::WebAPI(const std::string& access_code):token(access_code){
     std::cout << token << '\n';
     buf.size_buf=0;
     buf.buf=NULL;
@@ -41,14 +42,14 @@ WebAPI::WebAPI(const std::string& access_code):token(access_code)
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &buf);
 }
 
-void WebAPI::download_to_buf(const std::string& url)
-{
+void WebAPI::download_to_buf(const std::string& url){
     CURLcode res;
     free(buf.buf);
     buf.size_buf=0;
     buf.buf=NULL;
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     if((res = curl_easy_perform(curl)) != CURLE_OK) throw APIError();
+    //std::cout<<"WTF: "<<buf.buf<<'\n';
 }
 std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
     //std::cout<<buf.buf<< '\n';
@@ -59,38 +60,67 @@ std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
     for(auto date : JSONList["date"]) expiries->push_back(std::string(std::string_view(date)));
     return expiries;
 }
-void WebAPI::parse_option_chain(std::list<option>& options, unsigned int days_to_expire){
-    //std::cout<<buf.buf<< '\n';
+void WebAPI::parse_option_chain(options_chain& opt_chain){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
         std::string option_type=std::string(std::string_view(opt["option_type"]));
+        auto strike_obj=opt["strike"];
+        auto price_obj=opt["ask"];
+        int64_t current_vol=opt["volume"].get_int64();
         if(option_type=="call"
-            &&!(opt["bid"].type()==simdjson::ondemand::json_type::null)
-            &&!(opt["ask"].type() ==simdjson::ondemand::json_type::null)
-            &&!(opt["strike"].type() ==simdjson::ondemand::json_type::null))
+            &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
+            &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
+            &&(price_obj.type()!=simdjson::ondemand::json_type::null)
+            //&&(current_vol>=1)
+        )
         {
-            option * new_opt=new option();
-            new_opt->strike=static_cast<ffloat>(opt["strike"].get_double());
-            new_opt->days_to_expiry=days_to_expire;
-            ffloat bid=static_cast<ffloat>(opt["bid"].get_double());
-            ffloat ask=static_cast<ffloat>(opt["ask"].get_double());
-            new_opt->price=(bid+ask)/2;
-            options.push_back(*new_opt);
-            std::cout<<"price: "<<new_opt->price<<"\tstrike: "<<new_opt->strike<<"\tspread: "<<ask-bid<<"\texpiration date: "<<std::string_view(opt["expiration_date"])<<"\tdays to date:  "<<days_to_expire<<'\n';
+            option * new_opt =new option();
+            new_opt->volume=current_vol;
+            new_opt->strike=static_cast<ffloat>(strike_obj.get_double());
+            new_opt->price=static_cast<ffloat>(price_obj.get_double());
+            new_opt->bid=static_cast<ffloat>(opt["bid"].get_double());
+            opt_chain.options->push_back(*new_opt);
+            opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
+            opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
+            //std::cout<<"min_strike"<<opt_chain.min_strike;
+            //std::cout<<"max_strike"<<opt_chain.max_strike;
         }
     }
+    //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';
 }
-std::unique_ptr<std::list<option>> WebAPI::get_all_option_chains(const std::string& underlying){
-    auto options=std::make_unique<std::list<option>>(); 
+ffloat WebAPI::parse_stock_quote(){
+    auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
+    auto obj= doc.get_object()["quotes"]["quote"]; //TODO Exception handling
+    auto price_obj=obj["bid"];
+    if(price_obj.type()!=simdjson::ondemand::json_type::null) return static_cast<ffloat>(price_obj.get_double());
+    else throw APIError();
+}
+std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& underlying){
+    auto all_chains=new std::list<options_chain>(); 
+    std::cout<<"Download expiries...";
     download_to_buf(EXP_URL(underlying));
+    std::cout<<"Done\n";
+    std::cout<<"Parse expiries...";
     auto expiries =parse_expiries();
-    unsigned int days_to_expire;
+    std::cout<<"Done\n";
     for(const std::string& date : *expiries){
+        unsigned int cur_days_to_date=days_to_date(date);
+        ffloat cur_time_to_date = static_cast<ffloat>(days_to_date(date))/trading_days;
+        if (cur_time_to_date<=EXP_LB) continue;
+        options_chain& new_opt_chain=*(new options_chain(cur_days_to_date,cur_time_to_date));
+        std::cout<<"Download all options expiring on "<<date<<"...";
         download_to_buf(OPTIONS_CHAIN_URL(underlying,date));
-        days_to_expire=days_to_date(date);
-        parse_option_chain(*options,days_to_expire);
+        std::cout<<"Done\n";
+        std::cout<<"Parse all options expiring on "<<date<<"...";
+        parse_option_chain(new_opt_chain);
+        std::cout<<"Done\n";
+        all_chains->push_back(new_opt_chain);
     }
-    return options;
+    return all_chains;
+}
+ffloat WebAPI::get_stock_quote(const std::string& stock){
+    download_to_buf(QUOTE_URL(stock));
+    return parse_stock_quote();
 }
 WebAPI::~WebAPI()
 {
