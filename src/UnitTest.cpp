@@ -502,9 +502,11 @@ void levmar_test(){
     assert(diff<LEVMAR_TOLERANCE &&"Levmar test passed");
     std::cout<<"Levmar test passed"<<std::endl;
 }
-#define SAMPLE_SIZE (1<<23)
-#define BLOCK_SIZE (1<<9)
-#define RNG_TOLERANCE 1e-3
+#define SAMPLE_SIZE (1<<28)
+#define BLOCK_SIZE (1<<19)
+#define RNG_TOLERANCE 1e-4
+#define PROG_BAR_WIDTH 100
+#define PROG_CHAR '#'
 void rng_test(){
     RNG shishua(BLOCK_SIZE, 1);
     ffloat mean_uniform=0.;
@@ -514,12 +516,22 @@ void rng_test(){
     std::cout<<"Start RNG test, sample size: "<<SAMPLE_SIZE<<", block size: "<<BLOCK_SIZE<<std::endl;
     ffloat* uniform_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
     ffloat* gaussian_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
+    char prog_bar[PROG_BAR_WIDTH];
+    for(unsigned int i=0;i<PROG_BAR_WIDTH;i++) prog_bar[i]=PROG_CHAR;
+    //std::cout<<"prog bar initialized"<<prog_bar<<std::endl;
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){
         uniform_array[i]=shishua.get_urand();
         mean_uniform+=uniform_array[i];
         gaussian_array[i]=shishua.get_grand();
         mean_gaussian+=gaussian_array[i];
+        if(!(i&((SAMPLE_SIZE>>7)-1))){
+            double prog= ((double)i)/((double)SAMPLE_SIZE);
+            int visible_prog=(int)(prog*PROG_BAR_WIDTH);
+            printf("\r[%.*s%*s] %3d%%", visible_prog, prog_bar, PROG_BAR_WIDTH-visible_prog, " ",(int) (prog*100));
+            fflush(stdout);
+        }
     }
+    printf("\r[%s] 100%%\n", prog_bar);
     mean_uniform/=SAMPLE_SIZE;
     mean_gaussian/=SAMPLE_SIZE;
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){

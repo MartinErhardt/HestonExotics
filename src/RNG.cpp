@@ -33,14 +33,6 @@ ffloat* RNG::setup_g(){
     }while((++x2)!=buf_end_g);
     return buf_start_g;
 }
-ffloat RNG::get_urand(){
-    if(buf_cur_u==buf_end_u) buf_cur_u=setup_u(buf_start_u,buf_end_u);
-    return *(buf_cur_u++);
-}
-ffloat RNG::get_grand(){
-    if(buf_cur_g==buf_end_g) buf_cur_g=setup_g();
-    return *(buf_cur_g++);
-}
 RNG::~RNG(){
     free(buf_start_g);
     free(buf_start_u);

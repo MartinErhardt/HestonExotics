@@ -21,7 +21,13 @@ class RNG{
     ffloat* setup_g();
     public:
         RNG(size_t size,unsigned int seed);
-        ffloat get_grand();
-        ffloat get_urand();
+        ffloat get_grand(){
+            if(buf_cur_g==buf_end_g) buf_cur_g=setup_g();
+            return *(buf_cur_g++);
+        }
+        ffloat get_urand(){
+            if(buf_cur_u==buf_end_u) buf_cur_u=setup_u(buf_start_u,buf_end_u);
+            return *(buf_cur_u++);
+        }
         ~RNG();
 };
