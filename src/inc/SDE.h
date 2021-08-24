@@ -3,13 +3,18 @@
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #pragma once 
 #include "RNG.h"
+/**
+ * @brief template encapsulating the state of a (discretized) SDE of dimension d
+ */
 template<const unsigned int d> struct SDE_state {
-    ffloat cur[d];
-    ffloat prev[d];
-    ffloat cur_time;
-    ffloat prev_time;
+    ffloat cur[d];      //<current SDE values
+    ffloat prev[d];     //<previous SDE values (before discretized time step)
+    ffloat cur_time;    //<current time
+    ffloat prev_time;   //<previous time (before discretized time step)
 };
-
+/**
+ * @brief This is a extremely thin layer of abstraction simply there to encode iterator propertis and initialize the prng.
+ */
 template<const unsigned int d> class SDE {
         //using SchemeEvoPolicy::evolution;
     protected:

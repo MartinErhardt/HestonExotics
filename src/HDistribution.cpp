@@ -73,10 +73,7 @@ std::vector<std::complex<ffloat>> HDistribution::chf_chf_grad(const std::complex
     std::complex<ffloat> h_sigma=(-A_sigma-2.*kvm2divsp2/p.sigma*hlp.D+kvm2divsp2/hlp.d*(d_sigma-hlp.d/hlp.A_2*A_2_sigma)-tiuvmdivs/p.sigma*p.rho*p.kappa);
     std::complex<ffloat> h_kappa=(-A_rho/(p.sigma*1i*u)+2.*p.v_m/sp2*hlp.D+kvm2divsp2/hlp.B*B_kappa+tiuvmdivs*p.rho);
     std::complex<ffloat> h_rho=(-A_rho+kvm2divsp2/hlp.d*(d_rho-hlp.d/hlp.A_2*A_2_rho)+tiuvmdivs*p.kappa);
-    //std::cout<<
-    //"d_rho: "<<d_rho<<"\tA2_rho: "<<A_2_rho<<"\tB_rho: "<<B_rho<<"\tA1_rho: "<<A_1_rho<<"\tA_rho: "<<A_rho<<
-    //"\td_sigma: "<<d_sigma<<"\tA_1_sigma: "<<A_1_sigma<<"\tA_2_sigma: "<<A_2_sigma<<"\tA_sigma: "<<A_sigma<<'\n';
-    //std::cout<<"MY char_u: "<<chf_val<<"\th_v_0: "<<h_v_0<<"\th_v_bar: "<< h_v_m<<"\th_rho: "<<h_rho<<"\th_kappa: "<<h_kappa<<"\th_sigma: "<<h_sigma<<'\n';
+    
     return { chf_val,
             chf_val*h_v_0,
             chf_val*h_v_m,

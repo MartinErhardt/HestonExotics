@@ -38,7 +38,7 @@ $(SJSON_OBJ):%:$(SJSON_SRC)
 	$(CXX) $(CXXFLAGS) -c -o $@ $(basename $(notdir $@)).cpp
 $(SHISHUA_INC):%:
 	git clone https://github.com/espadrine/shishua.git
-	patch shishua/shishua-avx2.h shishua_inline_patch.diff
+	patch -p0 < shishua_inline_patch.diff
 #$(AS241_SRC):%:
 #	curl -o $@ http://lib.stat.cmu.edu/apstat/241 
 $(AS241_OBJ):%:$(AS241_SRC)
@@ -59,5 +59,5 @@ doc: doxygen_conf
 	doxygen doxygen_conf
 doxygen_conf:
 	doxygen -g doxygen_conf
-	patch -p0 < doxygen_conf.patch
+	patch -p0 < doxygen_conf.diff
 .PHONY: clean doc bin_dirs hexo loc

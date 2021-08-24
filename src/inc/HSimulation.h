@@ -7,23 +7,28 @@
 #include"SDE.h"
 #include"Types.h"
 #include"HDistribution.h"
-#define PSI_C 1.5
+#define PSI_C 1.5 ///< point at which the process is so small, that it makes sense to switch methods
 namespace HSimulation{
-    typedef struct {
+    /*typedef struct {
         HParams h_params;
         ffloat step_width_bound;
         ffloat barrier;
-    } AdaptiveHParams;
+    } AdaptiveHParams;*/
     /*class HEvo {
         AdaptiveHParams params;
         protected:
             HEvo(AdaptiveHParams * params);
             void evolution(SDE_state<2> * current,ffloat * rands,double t);
-    };*/
+    };
     class Adaptive{
         protected:
             ffloat step_width(SDE_state<2> * current); //TODO
-    };
+    };*/
+    /**
+     * @brief Simple placeholder class for NonAdaptive methods.
+     * 
+     * Note, that here init_step_size is globally the step_size
+     */
     class NonAdaptive{
     public:
         ffloat init_step_size;
@@ -33,7 +38,13 @@ namespace HSimulation{
             ffloat step_width(SDE_state<2> * current){return init_step_size;}
     #pragma GCC diagnostic pop
     };
+    /**enum containing positions of price process and volatility process in the two-dimensional SDE*/
     enum positions{X=0,V=1};
+    /**
+     * @brief template to simulate the Heston model SDE using the Quadratic Exponential (QE) method introduced by Anderson.
+     * 
+     * This uses an approach called Policy-based design. Scheme is another class that contains a function called step_width. Using this function we can avoid implementing any function step_width and customize step_width as if it was a virtual function. Furthermore this leads to a much better performance.
+     */
     template<typename SchemeParams,class Scheme> class HQEAnderson : Scheme,SDE<2>{
         ffloat log_X;
         const HParams params;    
@@ -45,6 +56,13 @@ namespace HSimulation{
         using SDE::operator>=;
         using SDE::operator++;
         HQEAnderson(const HParams& params_init,SchemeParams scheme_params_init, RNG*rng, const SDE_state<2> init_cond) : Scheme(scheme_params_init),SDE<2>(init_cond,rng),log_X(std::log(init_cond.cur[0])),params(params_init){}
+        /**
+         * @brief implements a step of the Quadratic Exponential (QE) method to simulate the Heston SDE, first described by Anderson
+         * 
+         * Note that this has to be implemented inline.
+         * 
+         * @return updated this instance
+         */
         SDE<2>& operator++(){
             auto const& [v_0,theta,rho,kappa,eps] = params;
             ffloat delta=step_width(&state);
@@ -85,7 +103,4 @@ namespace HSimulation{
         HQEAnderson<SchemeParams,Scheme>& operator=(const SDE_state<2> new_state) {state=new_state; return *this;}
     };
 }
-//template<typename A,class B>class Test{
-//public:
-//    void operator++();
-//};
+

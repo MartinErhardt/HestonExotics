@@ -34,7 +34,7 @@ WebAPI::WebAPI(const std::string& access_code):token(access_code){
     buf.buf=NULL;
     header_list=NULL;
     simdjson::ondemand::parser JSONParser;
-    if(!(curl = curl_easy_init())) throw APIError();
+    if(!(curl = curl_easy_init())) throw std::runtime_error("could not initialize curl");
     header_list = curl_slist_append(header_list, AUTH_HEADER(token));
     header_list = curl_slist_append(header_list, JSON_HEADER);
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header_list);
@@ -48,7 +48,7 @@ void WebAPI::download_to_buf(const std::string& url){
     buf.size_buf=0;
     buf.buf=NULL;
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-    if((res = curl_easy_perform(curl)) != CURLE_OK) throw APIError();
+    if((res = curl_easy_perform(curl)) != CURLE_OK) throw std::runtime_error("curl failed in download_to_buf");
     //std::cout<<"WTF: "<<buf.buf<<'\n';
 }
 std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
@@ -72,6 +72,7 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
             //&&(current_vol>=1)
+    //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';
         )
         {
             option * new_opt =new option();
@@ -82,11 +83,8 @@ void WebAPI::parse_option_chain(options_chain& opt_chain){
             opt_chain.options->push_back(*new_opt);
             opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
             opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
-            //std::cout<<"min_strike"<<opt_chain.min_strike;
-            //std::cout<<"max_strike"<<opt_chain.max_strike;
         }
     }
-    //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';
 }
 ffloat WebAPI::parse_stock_quote(){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);

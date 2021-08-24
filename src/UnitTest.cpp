@@ -99,7 +99,7 @@ std::vector<std::complex<double>> GetCuiGradient(HParams p, std::complex<double>
 #include<levmar/levmar.h>
 #include<memory.h>
 //#define NDEBUG
-#define DISTR_TOLERANCE 1e-9
+#define DISTR_TOLERANCE 1e-6
 #include<assert.h>
 void __assert_fail(const char * assertion, const char * file, unsigned int line, const char * function)
 {
@@ -126,7 +126,7 @@ void distr_test(){
         std::complex<double> wrong = test.chf(x,tau);
         std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<tau<<"\tx: "<<x<<"\tmy_chf: "<<wrong<<"\tEudald Romo chf: "<< correct<<"\tdiff: "<<std::fabs(correct-wrong)<<'\n';
     }*/
-    double diff=0.;
+    //bool test_passed=true;
     for(int i=1;i<1000; i++){
          HDistribution test(
              {      v0 * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
@@ -135,15 +135,14 @@ void distr_test(){
                     kappa * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5),
                     sigma * (1.0 + (((double) rand() / (RAND_MAX)) - 0.5) / 5)
             }, (((double) rand() / (RAND_MAX))),0.02);
-        double x=(((double) rand() / (RAND_MAX)) - 0.5)*5000;
+        double x=(((double) rand() / (RAND_MAX)) - 0.5)*500;
         std::vector<std::complex<double>> correct =GetCuiGradient(test.p,-x,test.tau);
         std::vector<std::complex<double>> wrong = test.chf_grad(x);
         double error=0;
         for(int j=0;j<5;j++) error+=std::abs(correct[0]-wrong[0]);
         std::cout<<"v_0: "<<test.p.v_0<<"\tv_m: "<<test.p.v_m<<"\trho: "<<test.p.rho<<"\tkappa: "<<test.p.kappa<<"\tsigma: "<<test.p.sigma<<"\ttau: "<<test.tau<<"\tx: "<<x<<"\tdiff: "<<std::sqrt(error)<<'\n';
-        diff+=std::sqrt(error);
+        assert(std::sqrt(error)<DISTR_TOLERANCE);
     }
-    assert(diff<DISTR_TOLERANCE);
     std::cout<<"Distribution Test passed"<<std::endl;
 }
 //#################################################################Model-Calibration#########################################################################################################
@@ -196,8 +195,8 @@ std::unique_ptr<adata_s> get_adata(const double S, const std::vector<double>& ex
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
         HDistribution *new_distr=new HDistribution(heston_params,expiries_arg[i],0.02);
-        std::unique_ptr<swift_parameters> dynamic_parameters=SWIFT::get_parameters(*new_distr,adata->S,*opt_chain);
-        swift_parameters& new_swift_parameters=predefined ? params[i] : *dynamic_parameters;
+        swift_parameters dynamic_parameters(*new_distr,adata->S,*opt_chain);
+        swift_parameters& new_swift_parameters=predefined ? params[i] : dynamic_parameters;
         SWIFT* pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
         adata->exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
     }
@@ -503,10 +502,16 @@ void levmar_test(){
     std::cout<<"Levmar test passed"<<std::endl;
 }
 #define SAMPLE_SIZE (1<<28)
-#define BLOCK_SIZE (1<<19)
+#define BLOCK_SIZE (1<<20)
 #define RNG_TOLERANCE 1e-4
 #define PROG_BAR_WIDTH 100
 #define PROG_CHAR '#'
+void update_prog(char* prog_bar, unsigned int i){
+    double prog= ((double)i)/((double)SAMPLE_SIZE);
+    int visible_prog=(int)(prog*PROG_BAR_WIDTH);
+    printf("\r[%.*s%*s] %3d%%", visible_prog, prog_bar, PROG_BAR_WIDTH-visible_prog, " ",(int) (prog*100));
+    fflush(stdout);
+}
 void rng_test(){
     RNG shishua(BLOCK_SIZE, 1);
     ffloat mean_uniform=0.;
@@ -514,34 +519,31 @@ void rng_test(){
     ffloat mean_gaussian=0.;
     ffloat emp_gaussian=0.;
     std::cout<<"Start RNG test, sample size: "<<SAMPLE_SIZE<<", block size: "<<BLOCK_SIZE<<std::endl;
-    ffloat* uniform_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
-    ffloat* gaussian_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
-    char prog_bar[PROG_BAR_WIDTH];
+    //ffloat* uniform_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
+    //ffloat* gaussian_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
+    char prog_bar[PROG_BAR_WIDTH+1];
     for(unsigned int i=0;i<PROG_BAR_WIDTH;i++) prog_bar[i]=PROG_CHAR;
+    prog_bar[PROG_BAR_WIDTH]='\0';
     //std::cout<<"prog bar initialized"<<prog_bar<<std::endl;
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){
-        uniform_array[i]=shishua.get_urand();
-        mean_uniform+=uniform_array[i];
-        gaussian_array[i]=shishua.get_grand();
-        mean_gaussian+=gaussian_array[i];
-        if(!(i&((SAMPLE_SIZE>>7)-1))){
-            double prog= ((double)i)/((double)SAMPLE_SIZE);
-            int visible_prog=(int)(prog*PROG_BAR_WIDTH);
-            printf("\r[%.*s%*s] %3d%%", visible_prog, prog_bar, PROG_BAR_WIDTH-visible_prog, " ",(int) (prog*100));
-            fflush(stdout);
-        }
+        mean_uniform+=shishua.get_urand();
+        mean_gaussian+=shishua.get_grand();
+        if(!(i&((SAMPLE_SIZE>>7)-1))) update_prog(prog_bar,i);
     }
-    printf("\r[%s] 100%%\n", prog_bar);
+    printf("\r[%s] 100%%\n",prog_bar);
     mean_uniform/=SAMPLE_SIZE;
     mean_gaussian/=SAMPLE_SIZE;
+    RNG shishua2(BLOCK_SIZE, 1); //reinitialize shishua since RNG is deterministic we can do this and will get the exact same (pseudo) random number
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){
-        emp_uniform+=(uniform_array[i]-mean_uniform)*(uniform_array[i]-mean_uniform);
-        emp_gaussian+=(gaussian_array[i]-mean_gaussian)*(gaussian_array[i]-mean_gaussian);
+        double uni_rand=shishua2.get_urand();
+        double gaussian_rand=shishua2.get_grand();
+        emp_uniform+=(uni_rand-mean_uniform)*(uni_rand-mean_uniform);
+        emp_gaussian+=(gaussian_rand-mean_gaussian)*(gaussian_rand-mean_gaussian);
+        if(!(i&((SAMPLE_SIZE>>7)-1))) update_prog(prog_bar,i);
     }
+    printf("\r[%s] 100%%\n",prog_bar);
     emp_uniform/=(SAMPLE_SIZE-1);
     emp_gaussian/=(SAMPLE_SIZE-1);
-    free(uniform_array);
-    free(gaussian_array);
     std::cout<<"emp_uniform: "<<emp_uniform<<"\tmean_uniform: "<<mean_uniform<<"\temp_gaussian: "<<emp_gaussian<<"\tmean_gaussian: "<<mean_gaussian<<std::endl;
     std::cout<<"emp_uniform_error: "<<std::fabs(emp_uniform-1./12.)<<"\tmean_uniform_error: "<<std::fabs(mean_uniform-.5)<<"\temp_gaussian_error: "<<std::fabs(emp_gaussian-1.)<<"\tmean_gaussian_error: "<<std::fabs(mean_gaussian-0.)<<std::endl;
     assert(std::fabs(emp_gaussian-1.)<RNG_TOLERANCE&&std::fabs(mean_gaussian-0.)<RNG_TOLERANCE&&

@@ -3,6 +3,8 @@ simdjson.cpp
 HestonExotics
 HestonExotics_icc
 hexo
+doxygen_conf
+doxygen_conf.rej
 ./seticcvars.sh
 ./src/inc/sav
 *.kate-swp
@@ -13,3 +15,6 @@ hexo
 *.orig
 *.rm
 shishua/
+html/
+latex/
+doc/

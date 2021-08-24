@@ -11,6 +11,7 @@ ffloat norm_cdf(const ffloat value);
 ffloat d_j(const int j, const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
 ffloat call_price(const ffloat S, const ffloat K, const ffloat sigma, const double T);
 
+#define BSM_BISECTION_PRECISION 1e-6
 ffloat norm_cdf(ffloat value){
    return 0.5 * erfc(-value * M_SQRT1_2);
 }
@@ -46,7 +47,7 @@ ffloat imp_vol(const ffloat S, const option& opt,ffloat expi){
         p=call_price(S,opt.strike,m_val, expi);
         if(p<opt.price) l_val=m_val;
         else u_val=m_val;
-    }while(std::fabs(u_val-l_val)>=PRECISION);
+    }while(std::fabs(u_val-l_val)>=BSM_BISECTION_PRECISION);
     return m_val;
 }
 ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){

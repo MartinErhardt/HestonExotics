@@ -19,7 +19,7 @@ void update_adata(ffloat *p, adata_s * adata){
             //std::cout<<"new params at: "<<&(exp_data.distr->p)<<"\tv_0: "<<exp_data.distr->p.v_0<<"\tv_m: "<<exp_data.distr->p.v_m<<"\trho: "<<exp_data.distr->p.rho<<"\tkappa"<<exp_data.distr->p.kappa<<"\tsigma: "<<exp_data.distr->p.sigma<<'\n';
         //std::cout<<"cur params at: "<<&(exp_data.distr->p)<<"\tv_0: "<<(float)exp_data.distr->p.v_0<<"\tv_m: "<<exp_data.distr->p.v_m<<"\trho: "<<exp_data.distr->p.rho<<"\tkappa"<<exp_data.distr->p.kappa<<"\tsigma: "<<exp_data.distr->p.sigma<<'\n';
         //std::cout<<"new SWIFT\n";
-        std::unique_ptr<swift_parameters> new_swift_parameters=SWIFT::get_parameters(*exp_data.distr,adata->S,exp_data.opts);
+        swift_parameters new_swift_parameters(*exp_data.distr,adata->S,exp_data.opts);
         //if (new_swift_parameters->m>exp_data.pricing_method->my_params.m 
             //||new_swift_parameters->J<NEWOLD_METHOD_RATIO*exp_data.pricing_method->my_params.J
         //){
@@ -28,7 +28,7 @@ void update_adata(ffloat *p, adata_s * adata){
         //        current=std::make_shared<SWIFT>(*new_swift_parameters);
             //std::cout<<"old m: "<<new_swift_parameters->m<<"\tnew m: "<<exp_data.pricing_method->my_params.m<<'\n'; 
             delete exp_data.pricing_method;
-            exp_data.pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
+            exp_data.pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
         }
     }
 }
@@ -77,13 +77,13 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
         if(opts.options->size()>0){
             n_observations_cur+=opts.options->size();
             HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry,0.0005);
-            std::unique_ptr<swift_parameters> new_swift_parameters=SWIFT::get_parameters(*new_distr,S,opts);
+            swift_parameters new_swift_parameters(*new_distr,S,opts);
             //if (current==nullptr|| new_swift_parameters->m>current->my_params.m || new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J){
                 //std::cout<<"is here the free1?\n";
                 //current=std::make_shared<SWIFT>(*new_swift_parameters);
                 //std::cout<<"is here the free?\n";
             //}
-            SWIFT* pricing_method=new SWIFT(*new_swift_parameters);//std::shared_ptr(current);
+            SWIFT* pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
             adata.exp_list.emplace_back(opts,new_distr,pricing_method);
         }
     }
