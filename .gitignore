@@ -5,7 +5,8 @@ HestonExotics_icc
 hexo
 doxygen_conf
 doxygen_conf.rej
-./seticcvars.sh
+levmar-2.6/
+levmar-2.6.tgz
 ./src/inc/sav
 *.kate-swp
 *.o

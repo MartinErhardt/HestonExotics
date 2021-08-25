@@ -7,29 +7,30 @@ SHISHUA_INC=shishua/shishua.h
 AS241_SRC=src/as241.f90
 AS241_OBJ=bin/as241.o
 FC=gfortran
-
+INCS= -I src/inc -I shishua -I levmar-2.6
+MACROS= -DFP_SIZE=8
 #patch < ~/Projekt/HestonExotics/levmar_patch.diff
 ifeq ($(CXX), dpcpp)
 	FFLAGS= -std=f2008ts -fdefault-real-8
-	CXXFLAGS = -Wpedantic -Wall -Wextra -std=c++17 -oFast -fopenmp -march=native -DFASTMATH -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -I src/inc -I shishua -DEIGEN_USE_MKL_ALL -DFP_SIZE=8
-	LDFLAGS = -lstdc++  -lcurl -llevmar -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm
+	CXXFLAGS = $(INCS) -Wpedantic -Wall -Wextra -std=c++17 -oFast -fopenmp -march=native -DFASTMATH -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -DEIGEN_USE_MKL_ALL $(MACROS)
+	LDFLAGS = -lstdc++  -lcurl -llevmar -I levmar-2.6 -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -L./levmar-2.6 -llevmar
 else
 	CXX = g++
 	ifeq ($(DBG), true)
 	    FFLAGS= -std=f2008ts -fdefault-real-8
-	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp  -march=native -DFP_SIZE=8
+	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp  -march=native $(MACROS)
 	else
-	    FFLAGS= -std=f2008ts -fdefault-real-8 -flto
-	    CXXFLAGS= -I src/inc -I shishua -Wpedantic -Wall -Wextra -std=c++17  -fopenmp -oFast  -march=native -ffloat-store -DFASTMATH -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules -DFP_SIZE=8 -flto #-fsingle-precision-constant -fprofile-generate;
+	    FFLAGS=  -std=f2008ts -fdefault-real-8 -flto
+	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Wextra -std=c++17  -fopenmp -oFast  -march=native -ffloat-store -DFASTMATH -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules $(MACROS) -flto #-fsingle-precision-constant -fprofile-generate;
 	endif
-	LDFLAGS = -lgfortran -lcurl  -llevmar -lfftw3 -fopenmp -flto #-lgcov --coverage 
+	LDFLAGS = -lgfortran -lcurl -lfftw3 -fopenmp -flto -lblas -llapack -L./levmar-2.6 -llevmar  #-lgcov --coverage 
 endif
 
 all: | bin_dirs hexo
 bin_dirs:
 	mkdir -p bin
 	mkdir -p bin/src
-hexo: $(SJSON_OBJ) $(SHISHUA_INC) $(AS241_OBJ) $(OBJS) 
+hexo: $(SJSON_OBJ) $(SHISHUA_INC) $(AS241_OBJ) levmar-2.6 $(OBJS) 
 	$(CXX) -o hexo  $(OBJS)  $(AS241_OBJ) $(LDFLAGS)
 	rm -f *.gcda 2> /dev/null
 $(SJSON_SRC):%:
@@ -43,7 +44,12 @@ $(SHISHUA_INC):%:
 #	curl -o $@ http://lib.stat.cmu.edu/apstat/241 
 $(AS241_OBJ):%:$(AS241_SRC)
 	$(FC) $(FFLAGS) -c $^ -o $@
-	
+levmar-2.6:
+	curl -O http://users.ics.forth.gr/~lourakis/levmar/levmar-2.6.tgz
+	tar -xzf levmar-2.6.tgz
+	patch -p0 < levmar_patch.diff
+	cd levmar-2.6 && make
+	rm levmar-2.6.tgz
 #$(SHISHUA_OBJ):%:$(SHISHUA_SRC)
 #	$(CXX) $(CXXFLAGS) -DHEADER='"shishua.h"' -c -o $@ $(SHISHUA_SRC)
 bin/%.o: %.cpp

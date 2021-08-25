@@ -4,7 +4,7 @@
 #include"HCalibration.h"
 #include"BSM.h"
 #include<iostream>
-#include<levmar/levmar.h>
+#include"levmar.h"
 typedef std::numeric_limits< double > dbl;
 #define NEWOLD_METHOD_RATIO 0.1
 void update_adata(ffloat *p, adata_s * adata);
