@@ -4,7 +4,7 @@
 #pragma once
 #include<stdint.h>
 #include"Types.h"
-#define SEEDTYPE unsigned int
+#define SEEDTYPE uint64_t
 #define ALIGN (1<<7) ///<heap alignment
 #include"shishua.h"
 /**

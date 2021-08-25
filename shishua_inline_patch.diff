@@ -1,21 +1,22 @@
---- shishua/shishua-avx2.h	2021-07-26 01:46:56.588238550 +0200
-+++ shishua/shishua-avx2.h	2021-07-26 01:51:28.121574601 +0200
-@@ -88,8 +89,7 @@
-   0xF06AD7AE9717877E, 0x85839D6EFFBD7DC6, 0x64D325D1C5371682, 0xCADD0CCCFDFFBBE1,
+--- shishua/shishua-avx2.h	2021-08-25 16:43:51.051863625 +0200
++++ shishua/shishua-avx2.h	2021-08-25 16:44:23.318553205 +0200
+@@ -89,7 +89,7 @@
    0x626E33B8D04B4331, 0xBBF73C790D94F79D, 0x471C4AB3ED3D82A5, 0xFEC507705E4AE6E5,
  };
--
--prng_state prng_init(SEEDTYPE seed[4]) {
-+prng_state inline prng_init(SEEDTYPE seed[4]) {
-   prng_state s;
-   memset(&s, 0, sizeof(prng_state));
+ 
+-void prng_init(prng_state *s, uint64_t seed[4]) {
++void inline prng_init(prng_state *s, uint64_t seed[4]) {
+   memset(s, 0, sizeof(prng_state));
  # define STEPS 1
---- shishua/shishua-sse2.h	2021-07-26 01:46:56.588238550 +0200
-+++ shishua/shishua-sse2.h	2021-07-26 01:51:28.121574601 +0200
-@@ -176,5 +176,5 @@
+ # define ROUNDS 13
+--- shishua/shishua-sse2.h	2021-08-25 17:08:33.750673643 +0200
++++ shishua/shishua-sse2.h	2021-08-25 17:08:16.007309173 +0200
+@@ -175,7 +175,7 @@
+   0x626E33B8D04B4331, 0xBBF73C790D94F79D, 0x471C4AB3ED3D82A5, 0xFEC507705E4AE6E5,
  };
  
--prng_state prng_init(SEEDTYPE seed[4]) {
-+prng_state inline prng_init(SEEDTYPE seed[4]) {
+-void prng_init(prng_state *s, uint64_t seed[4]) {
++void inline prng_init(prng_state *s, uint64_t seed[4]) {
    // Note: output is uninitialized at first, but since we pass NULL, its value
    // is initially ignored.
+   s->counter[0] = _mm_setzero_si128();

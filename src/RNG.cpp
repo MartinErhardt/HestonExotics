@@ -8,12 +8,12 @@ extern "C" double ppnd16(double *,int*);
 
 RNG::RNG(size_t size,unsigned int seed){
     my_seed[0]=seed;
-    if((size*sizeof(ffloat))&(ALIGN-1)) throw std::runtime_error("RNG: init size does not satisfy alignment"); 
+    if((size*sizeof(ffloat))&(ALIGN-1)) throw std::runtime_error("RNG: init size does not satisfy alignment");
     buf_start_u=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));
     buf_end_u=buf_start_u+size;
     buf_start_g=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));
     buf_end_g=buf_start_g+size;
-    s = prng_init(my_seed);
+    prng_init(&s, my_seed);
     buf_cur_u=setup_u(buf_start_u,buf_end_u);
     buf_cur_g=setup_g();
 }
