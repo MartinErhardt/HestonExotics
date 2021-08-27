@@ -2,7 +2,7 @@
 .SH NAME
 hexo \- price exotic derivatives in the Heston model 
 .SH SYNOPSIS
-hexo [{-a all-args}...] [{-c config-args}...] [{-p price-args}...] [{-t test-arg}...] [-h]
+hexo [{-c <underlying> [<volume type> <# volume>]}...] [{-d <underlying> [<volume type> <# volume>]}...] [-h] [{-p <underlying> <option type> {all|<days to expiration> <strike>} }...] [{-t <test>}...]
 .SH OPTIONS
 .IP "-a <underlying> <volume type> <# volume>"
 First download all call-option on the underlying. Next filter for all option-contracts with at least the specified number of 

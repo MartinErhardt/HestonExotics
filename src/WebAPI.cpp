@@ -29,7 +29,6 @@ unsigned int days_to_date(const std::string& expiration_date){
     return work_day_diff;
 }
 WebAPI::WebAPI(const std::string& access_code):token(access_code){
-    std::cout << token << '\n';
     buf.size_buf=0;
     buf.buf=NULL;
     header_list=NULL;
@@ -60,18 +59,18 @@ std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
     for(auto date : JSONList["date"]) expiries->push_back(std::string(std::string_view(date)));
     return expiries;
 }
-void WebAPI::parse_option_chain(options_chain& opt_chain){
+void WebAPI::parse_option_chain(options_chain& opt_chain,const char* vol_type, int vol_n){
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     for(auto opt : doc.get_object()["options"]["option"]){
         std::string option_type=std::string(std::string_view(opt["option_type"]));
         auto strike_obj=opt["strike"];
         auto price_obj=opt["ask"];
-        int64_t current_vol=opt["volume"].get_int64();
+        int64_t current_vol=opt[vol_type].get_int64();
         if(option_type=="call"
             &&((opt["volume"]).type()!=simdjson::ondemand::json_type::null)
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
-            //&&(current_vol>=1)
+            &&(current_vol>=vol_n)
     //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';
         )
         {
@@ -93,7 +92,7 @@ ffloat WebAPI::parse_stock_quote(){
     if(price_obj.type()!=simdjson::ondemand::json_type::null) return static_cast<ffloat>(price_obj.get_double());
     else throw APIError();
 }
-std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& underlying){
+std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& underlying,const char* vol_type, int vol_n){
     auto all_chains=new std::list<options_chain>(); 
     std::cout<<"Download expiries...";
     download_to_buf(EXP_URL(underlying));
@@ -110,7 +109,7 @@ std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& under
         download_to_buf(OPTIONS_CHAIN_URL(underlying,date));
         std::cout<<"Done\n";
         std::cout<<"Parse all options expiring on "<<date<<"...";
-        parse_option_chain(new_opt_chain);
+        parse_option_chain(new_opt_chain,vol_type,vol_n);
         std::cout<<"Done\n";
         all_chains->push_back(new_opt_chain);
     }

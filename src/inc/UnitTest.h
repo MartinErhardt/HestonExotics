@@ -2,16 +2,8 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #pragma once
-#include<vector>
-enum tests{
-    DISTRIBUTION=0,     //<distribution test
-    PRICING=1,          //<pricing test
-    GRADIENT=2,         //<gradient test
-    LEVMAR=3,           //<levmar test
-    RNG=4               //<rng test
-};
-/**arguments passed to -t option in order of tests*/
-const std::vector<std::string> arguments={"distr","pricing","levmar","RNG"};
+#include<map>
+
 /**
  * @brief tests the computation of the characteristic function and its partial derivatives
  * @sideeffect stdout
@@ -46,6 +38,12 @@ void levmar_test();
  * @throws abort if test fails
  */
 void rng_test();
+typedef void (*test_func)();
 
-/**addresses of the test_functions in order of tests*/
-void* test_functions[]={(void*)&distr_test,(void*)&pricing_test,(void*)&levmar_test,(void*)&rng_test};
+const std::map<std::string, test_func> test_eval {
+        {"distr", distr_test},
+        {"pricing", pricing_test},
+        {"gradient",gradient_test},
+        {"levmar", levmar_test},
+        {"rng", rng_test}
+};

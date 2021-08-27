@@ -69,11 +69,13 @@ namespace WebInterface
          * only call, when tradier API response to OPTIONS_CHAIN_URL can be found in this.buf
          * 
          * @return smart pointer to the list of all expiries in string in Y-m-d format
-         * @param opt_chain options chain in which to insert the information in buf.buf 
+         * @param opt_chain options chain in which to insert the information in buf.buf
+         * @param vol_type either volume for trading volume or open_interest for trades outstanding
+         * @param vol_n number of contracts specified vol_type
          * @sideeffect update opt_chain
          * @throws APIError if tradier API response does not satisfy JSON format corresponding to OPTIONS_CHAIN_URL request
          */
-        void parse_option_chain(options_chain& opt_chain);
+        void parse_option_chain(options_chain& opt_chain,const char* vol_type, int vol_n);
         /**
          * private method to parse the stock quote obtained through tradier API
          * 
@@ -90,10 +92,12 @@ namespace WebInterface
              * 
              * Calls download_to_buf, then parse_option_chain on every single expiry_date  
              * @param underlying name of underlying
+             * @param vol_type either volume for trading volume or open_interest for trades outstanding
+             * @param vol_n number of contracts specified vol_type
              * @return list of options_chain returned by parse_option_chain
              * @throws std::runtime_error if curl can not be initialized
              */
-            std::list<options_chain>* get_all_option_chains(const std::string& underlying);
+            std::list<options_chain>* get_all_option_chains(const std::string& underlying,const char* vol_type, int vol_n);
             /**
              * public method to obtain the value of any given stock listing. 
              * 

@@ -10,56 +10,89 @@
 #include "UnitTest.h"
 #include "WebAPI.h"
 #include"BSM.h"
+#include"Main.h"
 #include"HCalibration.h"
-
-#define MY_TOKEN "RVjzAiRnplMr78OblRHnVOvmb2SA"
-const char help[]="HestonExotics [{-a <underlying> <volume type> <# volume>}...] [{-c <underlying> <volume type> <# volume>}...] [{-p <underlying> <days to expiration> <option type> <strike>}...] [{-t <test>}...] [-h]";
-
-//ffloat call_price(const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
+#include<map>
+const std::string token="RVjzAiRnplMr78OblRHnVOvmb2SA";
+const std::map<std::string, program_option> arg_eval {
+        { "-c", CALIBRATE },
+        { "--calibrate", CALIBRATE},
+        { "-p", PRICE },
+        {"--price", PRICE},
+        {"-d", DOWNLOAD},
+        {"--download",DOWNLOAD},
+        {"-t", TEST},
+        {"--test",TEST},
+        {"-h",HELP},
+        {"--help", HELP}
+};
+#define DEFAULT_VOL_TYPE "open_interest"
+#define DEFAULT_VOL 0
 int main(int argc, char *argv[]) {
-    std::string tmp_token(MY_TOKEN); // initialized on the stack s.t. reference is not temporary and comprimised.
-    auto Getter=std::make_unique<WebInterface::WebAPI>(tmp_token);
-    if (argc >=2 && std::string(*(argv+1)) == "quote"){
-        ffloat S=Getter->get_stock_quote(std::string(*(argv+2)));
-        //std::cout<<std::string(*(argv+2))<<"price: \t"<<S<<'\n';
-        std::list<options_chain>* all_chains=Getter->get_all_option_chains(std::string(*(argv+2)));
-        std::cout<<"Options data downloaded and parsed\n";
-        calibrate(S,*all_chains);
-        delete all_chains;
-    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "distr"){
-        distr_test();
-    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "pricing"){
-        pricing_test();
-    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "gradient"){
-        gradient_test();
-    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "levmar"){
-        levmar_test();
-    }else if (argc ==3 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "rng"){
-        rng_test();
-    }else if (argc ==4 && std::string(*(argv+1)) == "test" && std::string(*(argv+2)) == "tradier"){
-        ffloat S=Getter->get_stock_quote(std::string(*(argv+3)));
-        std::list<options_chain>* all_chains=Getter->get_all_option_chains(std::string(*(argv+3)));
-        std::cout << std::fixed << std::setprecision(5) << std::setfill('0');
-        for(const options_chain& opt_chain: *all_chains) for(const option& opt: *(opt_chain.options))
-            std::cout<<"S: "<<S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
-        delete all_chains;
-    }/*
-    std::string input;
-    std::cout<<"Enter S: ";
-    std::getline (std::cin,input);
-    ffloat S=std::stod(input);
-    std::cout<<"Enter K: ";
-    std::getline (std::cin,input);
-    ffloat K=std::stod(input);
-    std::cout<<"Enter r: ";
-    std::getline (std::cin,input);
-    ffloat r=std::stod(input);
-    std::cout<<"Enter sigma: ";
-    std::getline (std::cin,input);
-    ffloat sigma=std::stod(input);
-    std::cout<<"Enter time: ";
-    std::getline (std::cin,input);
-    double T=std::stod(input);
-    std::cout<<"call price: "<< call_price(S,K,r,sigma,T)<<'\n';*/
+    int cur_arg=1;
+    char* vol;
+    int vol_n;
+    while(cur_arg<argc-1){
+        auto iter=arg_eval.find(std::string(argv[cur_arg]));
+        if(iter==arg_eval.end()) throw SynapsisError();
+        switch(iter->second){
+            case(CALIBRATE):{
+                if(cur_arg==argc-3||cur_arg==argc-1) throw SynapsisError();
+                std::string underlying=std::string(argv[cur_arg+1]);
+                if(cur_arg==argc-2||(cur_arg<argc-2&&argv[cur_arg+2][0]=='-')){
+                    vol=(char*)DEFAULT_VOL_TYPE;
+                    vol_n=DEFAULT_VOL;
+                    cur_arg+=2;
+                } else try{
+                    vol=argv[cur_arg+2];
+                    vol_n=std::stoi(argv[cur_arg+3]);
+                    cur_arg+=4;
+                }catch(std::out_of_range const&){ throw SynapsisError();}
+                auto Getter=std::make_unique<WebInterface::WebAPI>(token);
+                ffloat S=Getter->get_stock_quote(underlying);
+                std::list<options_chain>* all_chains=Getter->get_all_option_chains(underlying,vol,vol_n);
+                std::cout<<"Options data downloaded and parsed\n";
+                calibrate(S,*all_chains);
+                delete all_chains;
+                break;
+            }
+            case(PRICE):{
+                break;
+            }
+            case(DOWNLOAD):{
+                if(cur_arg==argc-3||cur_arg==argc-1) throw SynapsisError();
+                std::string underlying=std::string(argv[cur_arg+1]);
+                if(cur_arg==argc-2||(cur_arg<argc-2&&argv[cur_arg+2][0]=='-')){
+                    vol=(char*)DEFAULT_VOL_TYPE;
+                    vol_n=DEFAULT_VOL;
+                    cur_arg+=2;
+                } else try{
+                    vol=argv[cur_arg+2];
+                    vol_n=std::stoi(argv[cur_arg+3]);
+                    cur_arg+=4;
+                }catch(std::out_of_range const&){ throw SynapsisError();}
+                auto Getter=std::make_unique<WebInterface::WebAPI>(token);
+                ffloat S=Getter->get_stock_quote(underlying);
+                std::list<options_chain>* all_chains=Getter->get_all_option_chains(underlying,vol,vol_n);
+                std::cout << std::fixed << std::setprecision(5) << std::setfill('0');
+                for(const options_chain& opt_chain: *all_chains) for(const option& opt: *(opt_chain.options))
+                std::cout<<"S: "<<S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
+                delete all_chains;
+                cur_arg+=2;
+                break;
+            }
+            case(TEST):{
+                auto iter2=test_eval.find(argv[cur_arg+1]);
+                if(cur_arg==argc-1||iter2==test_eval.end()) throw SynapsisError();
+                iter2->second();
+                cur_arg+=2;
+                break;
+            }
+            case(HELP):{
+                cur_arg++;
+                break;
+            }
+        }
+    }
     return 0;
 }
