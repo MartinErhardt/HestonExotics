@@ -78,4 +78,4 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
  * @return smart pointer to new heston model parameters
  * @throws std::runtime_error if levmar fails for various reasons
  */
-std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data);
+HParams calibrate(const ffloat S,const std::list<options_chain>& market_data);

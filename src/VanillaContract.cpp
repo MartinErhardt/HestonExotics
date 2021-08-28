@@ -7,7 +7,7 @@
 
 #include"HSimulation.cpp"
 #include"HSimulation.h"
-#include"AsianContract.h"
+#include"VanillaContract.h"
 
-template class HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>;
-template class HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive>;
+template class HSimulation::HQEAnderson<ffloat,EuropeanCallNonAdaptive>;
+template class HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>;

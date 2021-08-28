@@ -56,7 +56,7 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     //std::cout<<"share of underpriced: "<<static_cast<ffloat>(underpriced)/n_observations<<'\n';
 }
 
-std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>& market_data){
+HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
     adata_s adata={S,nullptr,*(new std::list<expiry_data>())};
     //HDistribution current_distribution;
     //std::shared_ptr<SWIFT> current;
@@ -109,8 +109,8 @@ std::unique_ptr<HParams> calibrate(const ffloat S,const std::list<options_chain>
                                 {"7 - stopped by invalid (i.e. NaN or Inf) \"func\" values; a user error"}};
     int iter=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p, x, 5, n_observations_cur, 100, opts, info, NULL, NULL, (void*) &adata);
     if(iter<0) throw std::runtime_error("levmar failed!");
-    auto to_calib=std::unique_ptr<HParams>(new HParams({p[0],p[1],p[2],p[3],p[4]}));
-    std::cout<<"# iter: "<<iter<<"\tv_0: "<<to_calib->v_0<<"\tv_m: "<<to_calib->v_m<<"\trho: "<<to_calib->rho<<"\tkappa: "<<to_calib->kappa<<"\tsigma: "<<to_calib->sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<msg[info[6]-1]<<'\n';
+    HParams to_calib={p[0],p[1],p[2],p[3],p[4]};
+    std::cout<<"# iter: "<<iter<<"\tv_0: "<<to_calib.v_0<<"\tv_m: "<<to_calib.v_m<<"\trho: "<<to_calib.rho<<"\tkappa: "<<to_calib.kappa<<"\tsigma: "<<to_calib.sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<msg[info[6]-1]<<'\n';
     if(info[6]!=6.&&info[6]!=2) throw std::runtime_error("levmar failed! ");
     return to_calib;
 }

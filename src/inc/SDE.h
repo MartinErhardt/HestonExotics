@@ -19,8 +19,8 @@ template<const unsigned int d> class SDE {
         //using SchemeEvoPolicy::evolution;
     protected:
         RNG * rng;
-        SDE_state<d> state;
     public:
+        SDE_state<d> state;
         SDE(const SDE_state<d>& init_cond, RNG*init_rng):rng(init_rng),state(init_cond){}
         //SDE & operator++() { evolution(this->state,(rng->buf_cur+=d),step_width(this->state)); return *this;}
         //SDE& operator=(const SDE_state<d> new_state) {state=new_state; return *this;}

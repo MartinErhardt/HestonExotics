@@ -38,6 +38,12 @@ void levmar_test();
  * @throws abort if test fails
  */
 void rng_test();
+/**
+ * @brief tests the quadratic exponential (QE) path simulation
+ * @sideeffect stdout
+ * @throws abort if test fails
+ */
+void simulation_test();
 typedef void (*test_func)();
 
 const std::map<std::string, test_func> test_eval {
@@ -45,5 +51,6 @@ const std::map<std::string, test_func> test_eval {
         {"pricing", pricing_test},
         {"gradient",gradient_test},
         {"levmar", levmar_test},
-        {"rng", rng_test}
+        {"rng", rng_test},
+        {"simulation",simulation_test}
 };

@@ -9,8 +9,8 @@ enum program_option{
     TEST=3,
     HELP=4
 };
-const char help_info[]="hexo [{-c <underlying> [<volume type> <# volume>]}...] [{-d <underlying> [<volume type> <# volume>]}...] [-h] [{-p <underlying> <option type> {all|<days to expiration> <strike>} }...] [{-t <test>}...]";
-struct SynapsisError : public std::exception
+const char help_info[]="hexo [{-c <underlying> [<volume type> <# volume>]}...] [{-d <underlying> [<volume type> <# volume>]}...] [{-p <option type> {all <underlying> [<volume type> <# volume>]|<underlying> <days to expiration> <strike>} }...] [{-t <test>}...] [-h]";
+struct SynopsisError : public std::exception
 {
     const char * what () const throw ()
     {

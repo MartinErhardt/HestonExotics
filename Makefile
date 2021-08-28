@@ -9,6 +9,7 @@ AS241_OBJ=bin/as241.o
 FC=gfortran
 INCS= -I src/inc -I shishua -I levmar-2.6
 MACROS= -DFP_SIZE=8
+
 #patch < ~/Projekt/HestonExotics/levmar_patch.diff
 ifeq ($(CXX), dpcpp)
 	FFLAGS= -std=f2008ts -fdefault-real-8

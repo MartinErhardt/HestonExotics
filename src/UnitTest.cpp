@@ -1,6 +1,8 @@
 #include<complex>
 #include<vector>
 #include"HDistribution.h"
+#include"VanillaContract.h"
+#include"HSimulation.h"
 typedef std::numeric_limits< double > dbl;
 using namespace std::complex_literals;
 
@@ -548,4 +550,23 @@ void rng_test(){
     std::cout<<"emp_uniform_error: "<<std::fabs(emp_uniform-1./12.)<<"\tmean_uniform_error: "<<std::fabs(mean_uniform-.5)<<"\temp_gaussian_error: "<<std::fabs(emp_gaussian-1.)<<"\tmean_gaussian_error: "<<std::fabs(mean_gaussian-0.)<<std::endl;
     assert(std::fabs(emp_gaussian-1.)<RNG_TOLERANCE&&std::fabs(mean_gaussian-0.)<RNG_TOLERANCE&&
             std::fabs(mean_uniform-.5)<RNG_TOLERANCE&&std::fabs(emp_uniform-1./12.)<RNG_TOLERANCE);
+}
+void simulation_test(){
+    std::vector<ffloat> deltas={1/32,1/16,1/8,1/4,1/2,1};
+    std::vector<ffloat> strikes={70.,100.,140.};
+    std::vector<HParams> ps={{0.04,0.04,-0.9, 0.4,1.},
+                             {0.04,0.04,-0.5, 0.3,1.},
+                             {0.09,0.09,-0.3, 1. ,1.}};
+    std::vector<ffloat> years={5.,10.,15.};
+    for(int i=0;i<3;i++){
+        std::cout<<"batch i: "<<i<<std::endl;
+        std::list<options_chain>all_chains;
+        all_chains.emplace_back(years[i]/trading_days,years[i]);
+        options_chain opts=*all_chains.begin();
+        for(ffloat strike: strikes) opts.options->push_back({0.,0.,strike,0});
+        for(ffloat delta: deltas){
+            HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>my_pricing_tool(1);
+            my_pricing_tool.price(ps[i],100,all_chains,1e+6,3,years[i]/delta);
+        }
+    }
 }

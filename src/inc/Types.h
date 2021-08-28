@@ -40,12 +40,22 @@ typedef struct OptionsChain{
     ffloat time_to_expiry;          //<time_to_expiry (in years)
     ffloat max_strike;              //< minimum strike of all options
     ffloat min_strike;              //< maximum strike of all options
+    bool copied_instance;
     OptionsChain(unsigned int days_until,ffloat time_until){
         options=new std::vector<option>();
         min_strike=std::numeric_limits<ffloat>::max();
         max_strike=std::numeric_limits<ffloat>::lowest();
         days_to_expiry=days_until;
         time_to_expiry=time_until;
+        copied_instance=false;
     }
-    ~OptionsChain(){delete options;}
+    OptionsChain(const OptionsChain& to_copy){
+        options=to_copy.options;
+        min_strike=to_copy.min_strike;
+        max_strike=to_copy.max_strike;
+        days_to_expiry=to_copy.min_strike;
+        time_to_expiry=to_copy.time_to_expiry;
+        copied_instance=true;
+    }
+    ~OptionsChain(){if(!copied_instance)delete options;}
 }options_chain;
