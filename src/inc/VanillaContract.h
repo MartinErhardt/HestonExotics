@@ -20,15 +20,20 @@ public:
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
     ffloat step_width(const SDE_state<2>& state){return init_step_size;}
-    void accumulate_value(const SDE_state<2>& state){}
+//#pragma GCC diagnostic pop
+    void accumulate_value(const SDE_state<2>& state){
+//        std::cout<<"t: "<<state.cur_time<<"\tprev t: "<<state.prev_time<<"\tX: "<<state.cur[HSimulation::X]<<"\tV:"<<state.cur[HSimulation::V]<<std::endl;
+    }
 #pragma GCC diagnostic pop
     void accumulate_final_value(const SDE_state<2>& state){
-        final_value=state.cur[HSimulation::X];
+        final_value=state.prev[HSimulation::X]+(state.cur[HSimulation::X]-state.prev[HSimulation::X])*(earliest_unpriced_expi-state.prev_time)
+                                                                /init_step_size;
     }
     void update_earliest(ffloat earliest_expiry,ffloat min_strike){
         init_step_size=earliest_expiry/min_strike;
         earliest_unpriced_expi=earliest_expiry;
     }
+    void reset(){}
     ffloat final_payoff(ffloat strike){
         return std::max(0.,final_value-strike);
     }

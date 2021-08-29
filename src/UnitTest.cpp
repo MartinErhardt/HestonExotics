@@ -535,7 +535,7 @@ void rng_test(){
     printf("\r[%s] 100%%\n",prog_bar);
     mean_uniform/=SAMPLE_SIZE;
     mean_gaussian/=SAMPLE_SIZE;
-    RNG shishua2(BLOCK_SIZE, 1); //reinitialize shishua since RNG is deterministic we can do this and will get the exact same (pseudo) random number
+    RNG shishua2(BLOCK_SIZE, 1); //reinitialize shishua since RNG is deterministic we can do this and obtain the exact same (pseudo) random number
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){
         double uni_rand=shishua2.get_urand();
         double gaussian_rand=shishua2.get_grand();
@@ -552,11 +552,18 @@ void rng_test(){
             std::fabs(mean_uniform-.5)<RNG_TOLERANCE&&std::fabs(emp_uniform-1./12.)<RNG_TOLERANCE);
 }
 void simulation_test(){
-    std::vector<ffloat> deltas={1/32,1/16,1/8,1/4,1/2,1};
+    std::vector<ffloat> deltas={1,1/32,1/16,1/8,1/4,1/2,1};
     std::vector<ffloat> strikes={70.,100.,140.};
     std::vector<HParams> ps={{0.04,0.04,-0.9, 0.4,1.},
                              {0.04,0.04,-0.5, 0.3,1.},
                              {0.09,0.09,-0.3, 1. ,1.}};
+    std::vector<std::vector<ffloat>> QE_error={{-1.022,0.077,0.853},
+                                            {-0.311,0.023,-0.172},
+                                            {-0.049,0.004,0.003},
+                                            {-0.002,0.002,0.006},
+                                            {0.004, 0.,0.004},
+                                            {-0.009,0.,-0.02}
+    }
     std::vector<ffloat> years={5.,10.,15.};
     for(int i=0;i<3;i++){
         std::cout<<"batch i: "<<i<<std::endl;
@@ -566,7 +573,9 @@ void simulation_test(){
         for(ffloat strike: strikes) opts.options->push_back({0.,0.,strike,0});
         for(ffloat delta: deltas){
             HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>my_pricing_tool(1);
-            my_pricing_tool.price(ps[i],100,all_chains,1e+6,3,years[i]/delta);
+            std::vector<ffloat>results=my_pricing_tool.price(ps[i],100,all_chains,1,3,years[i]/delta);
+            //TODO
+            //for(int j;j<strikes.size();j++) std::cout<<"error: "<<results[j]<<std::endl;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace HSimulation{
         using Scheme::step_width;
         using Scheme::accumulate_value;
         using Scheme::accumulate_final_value;
+        using Scheme::reset;
         using Scheme::update_earliest;
         using Scheme::final_payoff;
         using SDE::operator->;
@@ -47,20 +48,21 @@ namespace HSimulation{
             ffloat gamma_2=.5;
             ffloat discount=std::exp(-kappa*delta);
             ffloat m=theta+(state.cur[V]-theta)*discount;
-            ffloat sp2=state.cur[V]*eps*eps*discount/kappa*(1-discount)+theta*eps*eps/(2*kappa)*(1.-discount)*(1.-discount);
+            ffloat sp2=std::fabs(state.cur[V]*eps*eps*discount/kappa*(1-discount)+theta*eps*eps/(2*kappa)*(1.-discount)*(1.-discount));
             ffloat Psi=sp2/(m*m);
-            ffloat p=(Psi-1)/(Psi+1);
-            ffloat beta=2/(m*(Psi+1));
-            ffloat bp2=2/Psi-1+std::sqrt(2/Psi*(2/Psi-1));
-            ffloat b=std::sqrt(bp2);
-            ffloat a=m/(1+bp2);
             state.prev[V]=state.cur[V];
-            if(Psi>PSI_C){
+            if(Psi<PSI_C){
+                ffloat bp2=2/Psi-1+std::sqrt(2/Psi*(2/Psi-1));
+                ffloat b=std::sqrt(bp2);
+                ffloat a=m/(1+bp2);
                 ffloat Z_V=rng->get_grand();
                 state.cur[V]=a*(b+Z_V)*(b+Z_V);
             } else{
+                ffloat p=(Psi-1)/(Psi+1);
+                ffloat beta=2/(m*(Psi+1));
                 ffloat U_V=rng->get_urand();
                 state.cur[V]=p<U_V? std::log((1-p)/(1-U_V))/beta:0.;
+                //std::cout<<"p<U_V: "<<(p<U_V)<<"\tV:"<<state.cur[V];
             }
             ffloat K_0=-rho*kappa*theta/eps*delta;
             ffloat K_1=gamma_1*delta*(kappa*rho/eps-.5)-rho/eps;
@@ -72,9 +74,20 @@ namespace HSimulation{
             state.cur[X]=std::exp(log_X);
             state.prev_time=state.cur_time;
             state.cur_time+=delta;
+            //std::cout<<"delta"<<delta<<"\tdiscount: "<<discount<<"\tm: "<<m<<"\tsp2: "<<sp2<<"\tPsi"<<Psi<<"\tp: "<<p<<"\tbeta: "<<beta<<"\tbp2: "<<bp2<<"\tb: "<<b<<"\ta: "<<a<<"\tK_0: "<<K_0<<"\tK_1"<<K_1<<"\tK_2"<<K_2<<"\tK_3"<<K_3<<"\tK_4"<<K_4<<"\tlog_X"<<log_X<<"\tprev X: "<<state.prev[X]<<"\tcur X: "<<state.cur[X]<<"\tprev V: "<<state.prev[V]<<"\tcur V: "<<state.cur[V]<<std::endl;
             return *this;
         }
-        HQEAnderson<accumulate_t,Scheme>& operator=(const SDE_state<2> new_state) {state=new_state; return *this;}
+        HQEAnderson<accumulate_t,Scheme>& operator=(const SDE_state<2> new_state) {
+            state.cur[X]=new_state.cur[X];
+            state.cur[V]=new_state.cur[V];
+            state.prev[V]=new_state.prev[V];
+            state.prev[X]=new_state.prev[X];
+            log_X=std::log(state.cur[X]);
+            state.cur_time=new_state.cur_time;
+            state.prev_time=new_state.prev_time;
+            //std::cout<<"X: "<<state.cur[X]<<"\tprev X: "<<state.prev[X]<<"\tV: "<<state.cur[V]<<"\tprev V: "<<state.prev[V]<<std::endl; 
+            return *this;
+        }
     };
     /**
      * @brief template to simulate the Heston model SDE using the Quadratic Exponential (QE) method introduced by Anderson.

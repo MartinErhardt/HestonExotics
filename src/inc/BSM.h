@@ -24,3 +24,4 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains);
  * @return weighted average of implied volatilty
  */
 ffloat imp_vol(const ffloat S, const option& opt,ffloat expi);
+ffloat call_price(const ffloat S, const ffloat K, const ffloat sigma, const double T);
