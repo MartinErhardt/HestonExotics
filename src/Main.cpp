@@ -74,7 +74,7 @@ int main(int argc, char *argv[]) {
                     cur_arg+=2;
                     underlying_data ddata=get_ddata(argc,argv,&cur_arg,&vol,&vol_n);
                     HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive>my_pricing_tool(1);
-                    std::vector<ffloat>& results=*my_pricing_tool.price(calibrate(ddata.S,*ddata.all_chains),ddata.S,*ddata.all_chains,1e+3,length(*ddata.all_chains),1e+3);
+                    std::vector<ffloat>& results=*my_pricing_tool.price(calibrate(ddata.S,*ddata.all_chains),ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
                     unsigned int i=0;
                     for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: *(opt_chain.options))
                         std::cout<<"S: "<<std::setw(10) << std::right

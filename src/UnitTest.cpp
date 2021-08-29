@@ -563,7 +563,7 @@ void simulation_test(){
                                             {-0.002,0.002,0.006},
                                             {0.004, 0.,0.004},
                                             {-0.009,0.,-0.02}
-    }
+    };
     std::vector<ffloat> years={5.,10.,15.};
     for(int i=0;i<3;i++){
         std::cout<<"batch i: "<<i<<std::endl;
@@ -573,7 +573,10 @@ void simulation_test(){
         for(ffloat strike: strikes) opts.options->push_back({0.,0.,strike,0});
         for(ffloat delta: deltas){
             HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>my_pricing_tool(1);
-            std::vector<ffloat>results=my_pricing_tool.price(ps[i],100,all_chains,1,3,years[i]/delta);
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-variable"
+            std::vector<ffloat>& results=*my_pricing_tool.price(ps[i],100,all_chains,1,3,years[i]/delta);
+#pragma GCC diagnostic pop
             //TODO
             //for(int j;j<strikes.size();j++) std::cout<<"error: "<<results[j]<<std::endl;
         }
