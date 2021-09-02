@@ -44,6 +44,7 @@ void rng_test();
  * @throws abort if test fails
  */
 void simulation_test();
+void db_test();
 typedef void (*test_func)();
 
 const std::map<std::string, test_func> test_eval {
@@ -52,5 +53,6 @@ const std::map<std::string, test_func> test_eval {
         {"gradient",gradient_test},
         {"levmar", levmar_test},
         {"rng", rng_test},
-        {"simulation",simulation_test}
+        {"simulation",simulation_test},
+        {"database",db_test}
 };

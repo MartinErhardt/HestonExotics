@@ -6,10 +6,8 @@
 #include <list>
 #include <iostream>
 
-
 ffloat norm_cdf(const ffloat value);
 ffloat d_j(const int j, const ffloat S, const ffloat K, const ffloat r, const ffloat sigma, const double T);
-
 
 #define BSM_BISECTION_PRECISION 1e-6
 ffloat norm_cdf(ffloat value){

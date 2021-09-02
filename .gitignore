@@ -4,6 +4,7 @@ HestonExotics
 HestonExotics_icc
 hexo
 doxygen_conf
+*.db
 doxygen_conf.rej
 levmar-2.6/
 levmar-2.6.tgz

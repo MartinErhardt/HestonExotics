@@ -14,17 +14,17 @@ MACROS= -DFP_SIZE=8
 ifeq ($(CXX), dpcpp)
 	FFLAGS= -std=f2008ts -fdefault-real-8
 	CXXFLAGS = $(INCS) -Wpedantic -Wall -Wextra -std=c++17 -oFast -fopenmp -march=native -DFASTMATH -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -DEIGEN_USE_MKL_ALL $(MACROS)
-	LDFLAGS = -lstdc++  -lcurl -llevmar -I levmar-2.6 -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -L./levmar-2.6 -llevmar
+	LDFLAGS = -lstdc++  -lcurl -lsqlite3 -llevmar -I levmar-2.6 -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -L./levmar-2.6 -llevmar
 else
 	CXX = g++
 	ifeq ($(DBG), true)
 	    FFLAGS= -std=f2008ts -fdefault-real-8
-	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Werror -Wextra -std=c++17 -g -fopenmp  -march=native $(MACROS)
+	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Wextra -std=c++17 -g -fopenmp  -march=native $(MACROS)
 	else
 	    FFLAGS=  -std=f2008ts -fdefault-real-8 -flto
 	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Wextra -std=c++17  -fopenmp -oFast  -march=native -ffloat-store -DFASTMATH -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules $(MACROS) -flto #-fsingle-precision-constant -fprofile-generate;
 	endif
-	LDFLAGS = -lgfortran -lcurl -lfftw3 -fopenmp -flto -lblas -llapack -L./levmar-2.6 -llevmar  #-lgcov --coverage 
+	LDFLAGS = -lgfortran -lcurl -lsqlite3 -lfftw3 -fopenmp -flto -lblas -llapack -L./levmar-2.6 -llevmar  #-lgcov --coverage 
 endif
 
 all: | bin_dirs hexo

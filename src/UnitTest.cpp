@@ -3,6 +3,8 @@
 #include"HDistribution.h"
 #include"VanillaContract.h"
 #include"HSimulation.h"
+#include"DB.h"
+
 typedef std::numeric_limits< double > dbl;
 using namespace std::complex_literals;
 
@@ -581,4 +583,10 @@ void simulation_test(){
             //for(int j;j<strikes.size();j++) std::cout<<"error: "<<results[j]<<std::endl;
         }
     }
+}
+void db_test(){
+    DB::ParamsDB params_db;
+    const char stock_name[]="AMZN";
+    HParams p={0.,0.,0.,0.,0.};
+    params_db.insertupdate(&p,stock_name);
 }

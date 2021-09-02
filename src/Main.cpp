@@ -14,6 +14,7 @@
 #include"HCalibration.h"
 #include"HSimulation.h"
 #include"AsianContract.h"
+#include"DB.h"
 #include<map>
 const std::string token="RVjzAiRnplMr78OblRHnVOvmb2SA";
 const std::map<std::string, program_option> arg_eval {
@@ -64,22 +65,34 @@ int main(int argc, char *argv[]) {
         if(iter==arg_eval.end()) throw SynopsisError();
         switch(iter->second){
             case(CALIBRATE):{
+                DB::ParamsDB params_db;
+                char* stock_name=argv[cur_arg+1];
                 underlying_data ddata=get_ddata(argc,argv,&cur_arg,&vol,&vol_n);
                 std::cout<<"Options data downloaded and parsed\n";
-                calibrate(ddata.S,*ddata.all_chains);
+                HParams found_params=calibrate(ddata.S,*ddata.all_chains);
+                params_db.insertupdate(&found_params,stock_name);
                 break;
             }
             case(PRICE):{
                 if((cur_arg==argc-4||cur_arg==argc-6)&&std::string(argv[cur_arg+2])=="all"&&std::string(argv[cur_arg+1])=="asian"){
+                    DB::ParamsDB params_db;
+                    HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive>my_pricing_tool(1);
+                    HParams p;
+                    char* stock_name=argv[cur_arg+3];
                     cur_arg+=2;
                     underlying_data ddata=get_ddata(argc,argv,&cur_arg,&vol,&vol_n);
-                    HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive>my_pricing_tool(1);
-                    std::vector<ffloat>& results=*my_pricing_tool.price(calibrate(ddata.S,*ddata.all_chains),ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
-                    unsigned int i=0;
-                    for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: *(opt_chain.options))
-                        std::cout<<"S: "<<std::setw(10) << std::right
-            << std::setfill(' ') << std::fixed
-            << std::setprecision(2)<<ddata.S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tasian-option-price: "<<results[i++]<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(ddata.S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<ddata.S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
+                    try{ p=params_db.fetch(stock_name);}
+                    catch(DB::DBException &e){ 
+                        p=calibrate(ddata.S,*ddata.all_chains); 
+                        params_db.insertupdate(&p,stock_name);
+                    }
+                    std::cout<<"params, v0: "<<p.v_0<<"\tv_m: "<<p.v_m<<"\trho: "<<p.rho<<"\tkappa: "<<p.kappa<<"\tsigma: "<<p.sigma<<std::endl;
+                    std::vector<ffloat>& results=*my_pricing_tool.price(p,ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
+                        unsigned int i=0;
+                        for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: *(opt_chain.options))
+                            std::cout<<"S: "<<std::setw(10) << std::right
+                            << std::setfill(' ') << std::fixed
+                            << std::setprecision(2)<<ddata.S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tasian-option-price: "<<results[i++]<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(ddata.S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<ddata.S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
                 } else throw SynopsisError();
                 break;
             }
