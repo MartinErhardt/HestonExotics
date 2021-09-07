@@ -1,6 +1,6 @@
 #include"HDistribution.h"
 #include"BSM.h"
-#include <cmath>
+#include "my_math.h"
 #include<complex.h>
 #include<cstdlib>
 #include<iostream>

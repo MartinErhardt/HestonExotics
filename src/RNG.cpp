@@ -9,9 +9,14 @@ extern "C" double ppnd16(double *,int*);
 RNG::RNG(size_t size,unsigned int seed){
     my_seed[0]=seed;
     if((size*sizeof(ffloat))&(ALIGN-1)) throw std::runtime_error("RNG: init size does not satisfy alignment");
-    buf_start_u=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));
+#ifdef __MINGW64__
+    buf_start_g=(ffloat*)_aligned_malloc(size*sizeof(ffloat),ALIGN);    
+	buf_start_u=(ffloat*)_aligned_malloc(size*sizeof(ffloat),ALIGN);
+#elif defined(__GNUC__)
+    buf_start_g=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));    
+	buf_start_u=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));
+#endif
     buf_end_u=buf_start_u+size;
-    buf_start_g=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));
     buf_end_g=buf_start_g+size;
     prng_init(&s, my_seed);
     buf_cur_u=setup_u(buf_start_u,buf_end_u);

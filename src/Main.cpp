@@ -5,7 +5,7 @@
 #ifndef WIN32
 #include <unistd.h>
 #endif
-#include <curl/curl.h>
+//#include <curl/curl.h>
 #include<list>
 #include "UnitTest.h"
 #include "WebAPI.h"

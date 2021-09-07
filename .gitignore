@@ -3,6 +3,7 @@ simdjson.cpp
 HestonExotics
 HestonExotics_icc
 hexo
+hexo.exe
 doxygen_conf
 *.db
 doxygen_conf.rej
