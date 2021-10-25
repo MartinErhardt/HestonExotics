@@ -194,7 +194,7 @@ std::unique_ptr<adata_s> get_adata(const double S, const std::vector<double>& ex
             new_opt->volume=1;
             new_opt->strike=c;
             new_opt->price=1.;
-            opt_chain->options->push_back(*new_opt);
+            opt_chain->options.push_back(*new_opt);
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
@@ -572,7 +572,7 @@ void simulation_test(){
         std::list<options_chain>all_chains;
         all_chains.emplace_back(years[i]/trading_days,years[i]);
         options_chain opts=*all_chains.begin();
-        for(ffloat strike: strikes) opts.options->push_back({0.,0.,strike,0});
+        for(ffloat strike: strikes) opts.options.push_back({0.,0.,strike,0});
         for(ffloat delta: deltas){
             HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>my_pricing_tool(1);
 #pragma GCC diagnostic push

@@ -53,7 +53,7 @@ underlying_data get_ddata(int argc, char* argv[], int* cur_arg,char**vol,int* vo
 }
 unsigned int length(const std::list<options_chain>& all_chains){
     unsigned int ret_val=0;
-    for(const options_chain& opt_chain: all_chains) ret_val+=opt_chain.options->size();
+    for(const options_chain& opt_chain: all_chains) ret_val+=opt_chain.options.size();
     return ret_val;
 }
 int main(int argc, char *argv[]) {
@@ -89,7 +89,7 @@ int main(int argc, char *argv[]) {
                     std::cout<<"params, v0: "<<p.v_0<<"\tv_m: "<<p.v_m<<"\trho: "<<p.rho<<"\tkappa: "<<p.kappa<<"\tsigma: "<<p.sigma<<std::endl;
                     std::vector<ffloat>& results=*my_pricing_tool.price(p,ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
                         unsigned int i=0;
-                        for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: *(opt_chain.options))
+                        for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: opt_chain.options)
                             std::cout<<"S: "<<std::setw(10) << std::right
                             << std::setfill(' ') << std::fixed
                             << std::setprecision(2)<<ddata.S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tasian-option-price: "<<results[i++]<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(ddata.S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<ddata.S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';
@@ -98,7 +98,7 @@ int main(int argc, char *argv[]) {
             }
             case(DOWNLOAD):{
                 underlying_data ddata=get_ddata(argc,argv,&cur_arg,&vol,&vol_n);
-                for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: *(opt_chain.options))
+                for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: opt_chain.options)
                     std::cout<<"S: "<<std::setw(10) << std::right
             << std::setfill(' ') << std::fixed
             << std::setprecision(2)<<ddata.S<<"\tstrike: "<<opt.strike<<"\tbid: "<<opt.bid<<"\task: "<<opt.price<<"\tvolume: "<<opt.volume<<"\timp vol: "<<imp_vol(ddata.S,opt,opt_chain.time_to_expiry)<<"\tlb: "<<ddata.S-std::exp(-yearly_risk_free*opt_chain.time_to_expiry)*opt.strike<<"\texpiry time: "<<opt_chain.time_to_expiry*trading_days<<'\n';

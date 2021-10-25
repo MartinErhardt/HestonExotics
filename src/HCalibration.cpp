@@ -38,7 +38,7 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
     update_adata(p,my_adata);
     ffloat* jac2=jac;
     for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts_grad(*exp_data.distr,my_adata->S,exp_data.opts, &jac2,jac+n_observations*m);
-    if(jac2<jac+n_observations*m) throw std::runtime_error("Gradient buffer too large");
+    assert(jac2>=jac+n_observations*m);
 }
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-parameter"
@@ -49,7 +49,7 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     update_adata(p,my_adata);
     ffloat* x2=x;
     for(auto &exp_data : my_adata->exp_list){ exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);}
-    if(x2<x+n_observations) throw std::runtime_error("Pricing buffer too large");
+    assert(x2>=x+n_observations);
     //std::cout<<*my_adata;
     //unsigned int underpriced=0;
     //if(my_adata->real_prices) for(x2=x;x2<x+n_observations;x2++) if(*x2<my_adata->real_prices[x2-x]) underpriced++;
@@ -74,8 +74,8 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
     std::cout<<"start levmar setup\n";
     for(const auto &opts: market_data){
         //if(opts->time_to_expiry<=EXP_LB) continue;
-        if(opts.options->size()>0){
-            n_observations_cur+=opts.options->size();
+        if(opts.options.size()>0){
+            n_observations_cur+=opts.options.size();
             HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry,0.0005);
             swift_parameters new_swift_parameters(*new_distr,S,opts);
             //if (current==nullptr|| new_swift_parameters->m>current->my_params.m || new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J){
@@ -90,7 +90,7 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
     //std::cout<<"allocate x\n";
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*(n_observations_cur+1));
     ffloat * x2=x;
-    for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++) for(auto e :*opts->options) *(x2++)=e.price;
+    for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++) for(auto e :opts->options) *(x2++)=e.price;
     adata.real_prices=x;
     std::cout<<"setup completed\t# observations: "<<n_observations_cur<<'\n';
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
@@ -118,7 +118,7 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
 std::ostream& operator<<(std::ostream& out, adata_s const& as){
     //ffloat * cur_price=as.real_prices;
     for(auto& ed:as.exp_list){
-        for(option& o: *ed.opts.options){
+        for(const option& o: *&ed.opts.options){
             out<<"S: "<<as.S//<<"\temp price"<<*(cur_price++)
             <<"\task: "<<o.price<<"\tbid: "<<o.bid<<"\tstrike: "<<o.strike<<"\tvolume: "<<o.volume<<"\tdays left: "<<ed.distr->tau<<std::endl;
         }

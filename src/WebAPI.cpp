@@ -79,7 +79,7 @@ void WebAPI::parse_option_chain(options_chain& opt_chain,const char* vol_type, i
             new_opt->strike=static_cast<ffloat>(strike_obj.get_double());
             new_opt->price=static_cast<ffloat>(price_obj.get_double());
             new_opt->bid=static_cast<ffloat>(opt["bid"].get_double());
-            opt_chain.options->push_back(*new_opt);
+            opt_chain.options.push_back(*new_opt);
             opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
             opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
         }
@@ -111,7 +111,7 @@ std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& under
         std::cout<<"Parse all options expiring on "<<date<<"...";
         parse_option_chain(new_opt_chain,vol_type,vol_n);
         std::cout<<"Done\n";
-        all_chains->push_back(new_opt_chain);
+        all_chains->push_back(std::move(new_opt_chain));
     }
     return all_chains;
 }

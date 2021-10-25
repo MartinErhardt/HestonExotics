@@ -54,7 +54,7 @@ ffloat avg_imp_vol(const ffloat S, const std::list<options_chain>& all_chains){
     double imp_v;
     for(std::list<options_chain>::const_iterator cur_chain = all_chains.begin(); cur_chain != all_chains.end(); cur_chain++){
         //if(cur_chain->time_to_expiry<=EXP_LB) continue;
-        for(const option& opt: *cur_chain->options){
+        for(const option& opt: cur_chain->options){
             if((imp_v=imp_vol(S,opt,cur_chain->time_to_expiry))>=0){
                 avg_vol+=opt.volume*imp_v;
                 denom+=opt.volume;

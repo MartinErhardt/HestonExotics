@@ -35,27 +35,28 @@ typedef struct{
  * @brief struct encapsulating all parameters of call option to the same expiry date and underlying, which are called a options chain.
  */
 typedef struct OptionsChain{
-    std::vector<option> *options;
+    std::vector<option> options;
     unsigned int days_to_expiry;    //< days to expiry
     ffloat time_to_expiry;          //<time_to_expiry (in years)
     ffloat max_strike;              //< minimum strike of all options
     ffloat min_strike;              //< maximum strike of all options
     bool copied_instance;
     OptionsChain(unsigned int days_until,ffloat time_until){
-        options=new std::vector<option>();
         min_strike=std::numeric_limits<ffloat>::max();
         max_strike=std::numeric_limits<ffloat>::lowest();
         days_to_expiry=days_until;
         time_to_expiry=time_until;
-        copied_instance=false;
+        //copied_instance=false;
     }
-    OptionsChain(const OptionsChain& to_copy){
-        options=to_copy.options;
-        min_strike=to_copy.min_strike;
-        max_strike=to_copy.max_strike;
-        days_to_expiry=to_copy.min_strike;
-        time_to_expiry=to_copy.time_to_expiry;
-        copied_instance=true;
+    OptionsChain(OptionsChain& copy_from){std::cout<<"yuck!"<<std::endl;}
+    OptionsChain(OptionsChain&& move_from){
+        options=move(move_from.options);
+        days_to_expiry=move_from.days_to_expiry;
+        time_to_expiry=move_from.time_to_expiry;
+        max_strike=move_from.max_strike;
+        min_strike=move_from.min_strike;
+        move_from.min_strike=std::numeric_limits<ffloat>::max();
+        move_from.max_strike=std::numeric_limits<ffloat>::lowest();
     }
-    ~OptionsChain(){if(!copied_instance)delete options;}
+    //~OptionsChain(){if(!copied_instance)delete options;}
 }options_chain;

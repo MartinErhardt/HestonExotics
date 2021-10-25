@@ -24,9 +24,9 @@ std::vector<ffloat>* PricingTool<accumulate_t,Scheme>::price(const HParams& p, c
             while(heston_sde>=earliest_unpriced->time_to_expiry&&opts_priced<n_opts){
                 unsigned int opt_index=0;
                 heston_sde.accumulate_final_value(heston_sde.state);
-                for(const auto& opt:*earliest_unpriced->options)
+                for(const auto& opt:earliest_unpriced->options)
                     prices[opts_priced+(opt_index++)]+=heston_sde.final_payoff(opt.strike)/n_simulations;
-                if((opts_priced=opts_priced+earliest_unpriced->options->size())<n_opts)
+                if((opts_priced=opts_priced+earliest_unpriced->options.size())<n_opts)
                     heston_sde.update_earliest((++earliest_unpriced)->time_to_expiry,steps);
             }
             heston_sde.accumulate_value(heston_sde.state);

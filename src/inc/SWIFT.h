@@ -88,7 +88,7 @@ class SWIFT{
 public:
     const swift_parameters my_params; //< constant parameters
 private:
-    std::vector<std::complex<ffloat>>& density_coeffs; //<note that contrary to the usual intuition with references this reference is owned by the instance of this class itself not some other part of the program. This is done to allow usage of the overloaded [] operator.
+    std::vector<std::complex<ffloat>> density_coeffs; //<note that contrary to the usual intuition with references this reference is owned by the instance of this class itself not some other part of the program. This is done to allow usage of the overloaded [] operator.
     /**
      * @brief Private CacheEntry datatype
      * Stores Pricing and Gradient information in 6xto_price.options Eigen matrix
@@ -107,7 +107,7 @@ private:
         CacheEntry(const HDistribution& distr,const SWIFT& swift_obj, const options_chain& to_price_init,const ffloat stock_price);
         //~CacheEntry();
     } cache_entry;
-    std::list<cache_entry>& results_cache;//<note that contrary to the usual intuition with references this reference is owned by the instance of this class itself not some other part of the program.
+    std::list<cache_entry> results_cache;//<note that contrary to the usual intuition with references this reference is owned by the instance of this class itself not some other part of the program.
     /**
      * private method returning a pointer to the cache_entry in which pricing and gradient information is stored if available and returns a null pointer otherwise
      * 
@@ -162,8 +162,4 @@ public:
      * @sideeffect out_array is filled with the gradient of the options in opt.options as determined by the SWIFT method in exactly the order to be found there. Furthermore *out_array is updated to point at the first unwritten entry before end. The various components are ordered as in HParams.
      */
     void price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out_array,ffloat*end);
-    /**
-     * Destructor: frees results_cache and density_coeffs
-     */
-    ~SWIFT();
 };

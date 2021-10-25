@@ -34,7 +34,7 @@ SwiftParameters::SwiftParameters(const HDistribution& distr,const ffloat stock_p
     J=std::exp2(iota_density-1);
 }
 
-SWIFT::SWIFT(const swift_parameters& init_params) : my_params(swift_parameters(init_params)), density_coeffs(*(new std::vector<std::complex<ffloat>>(init_params.J))),results_cache(*(new std::list<cache_entry>())) {
+SWIFT::SWIFT(const swift_parameters& init_params) : my_params(swift_parameters(init_params)), density_coeffs(init_params.J) {
     auto const& [m, exp2_m,sqrt_exp2_m, lower,upper, k_1,k_2,J] = my_params;
     int i;
     unsigned int j;
@@ -83,14 +83,14 @@ SWIFT::cache_entry * SWIFT::get_precached(const HDistribution& distr,const ffloa
 void SWIFT::price_opts(const HDistribution& distr,const ffloat S, const options_chain& opts,ffloat** out,ffloat* end){
     unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(i=0;i<opts.options->size()&&(*out)<end;i++) *((*out)++)=precached->results(0,i).real();
-    if(i<opts.options->size()) throw std::runtime_error((std::string("Pricing buffer too small i: ")+ std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options->size())).c_str());
+    for(i=0;i<opts.options.size()&&(*out)<end;i++) *((*out)++)=precached->results(0,i).real();
+    assert(i>=opts.options.size());
 }
 void SWIFT::price_opts_grad(const HDistribution& distr,const ffloat S, const options_chain& opts, ffloat** out,ffloat* end){
     unsigned int i;
     cache_entry* precached=get_precached(distr,S,opts);
-    for(i=0;i<opts.options->size()&&(*out)<end;i++) for(unsigned int j=1;j<6;j++) *((*out)++)=precached->results(j,i).real();
-    if(i<opts.options->size()) throw std::runtime_error((std::string("Gradient buffer too small i: ")+std::to_string(i)+std::string("\t# strikes: ")+std::to_string(opts.options->size())).c_str());
+    for(i=0;i<opts.options.size()&&(*out)<end;i++) for(unsigned int j=1;j<6;j++) *((*out)++)=precached->results(j,i).real();
+    assert(i>=opts.options.size());
 }
 void SWIFT::flush_cache(){
     results_cache.clear();
@@ -99,23 +99,18 @@ SWIFT::CacheEntry::CacheEntry(const HDistribution& distr, const SWIFT& swift_obj
     unsigned int swift_J=swift_obj.my_params.J;
     ffloat discount=std::exp(-distr.risk_free*distr.tau);
     MatC pricing_matrix(6,swift_J);
-    MatC to_price_matrix(swift_J,to_price.options->size());
+    MatC to_price_matrix(swift_J,to_price.options.size());
     for(unsigned int i=0;i<swift_J;i++){
         std::vector<std::complex<ffloat>> chf_chf_grad_val=distr.chf_chf_grad(swift_obj.my_params.u(i));
         for(int j=0;j<6;j++) pricing_matrix(j,i)=chf_chf_grad_val[j]*swift_obj.density_coeffs[i];
     }
     unsigned int j=0;
-    for(const option& opt: *to_price.options){
+    for(const option& opt: to_price.options){
         ffloat x=distr.risk_free*distr.tau+std::log(stock_price/opt.strike);
         for(unsigned int i=0;i<swift_J;i++) to_price_matrix(i,j)=discount*opt.strike*std::exp(-1i*swift_obj.my_params.u(i)*x);
         j++;
     }
     results=pricing_matrix*to_price_matrix;
-}
-
-SWIFT::~SWIFT(){
-    delete &density_coeffs;
-    delete &results_cache;
 }
 std::ostream& operator<<(std::ostream& out, SwiftParameters const& sp)
 {
