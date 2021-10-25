@@ -8,7 +8,7 @@
 hexo
 ===============================================
 Tool for pricing exotic options in the Heston model
-# Installation
+### Installation
 The project can be compiled and installed using (GNU-)make.
 ```
 $ make [-j4] [CXX=dpcpp|g++]
@@ -16,11 +16,11 @@ $ make [-j4] [CXX=dpcpp|g++]
 $ make doc
 /** compile documentation and install into doc/html/index.html*/
 ```
-# Known issues
+### Known issues
 - RNG generation is 3x faster when using Intel compiler(further profiling/disassembly required)
 - standard out is locked by curl when downloading
 - if compiled in MinGW64 standard
-# Dependencies
+### Dependencies
 - blas
 - curl
 - eigen3
