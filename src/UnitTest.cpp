@@ -185,7 +185,10 @@ double p[5]={
     1.            // sigma
 };
 std::unique_ptr<adata_s> get_adata(const double S, const std::vector<double>& expiries_arg,const std::vector<std::vector<double>>& strikes_arg, const HParams heston_params,bool predefined){
-    std::unique_ptr<adata_s> adata=std::unique_ptr<adata_s>(new adata_s{S,nullptr,*(new std::list<expiry_data>())});
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers" // initialize exp_list as empty list per default
+    std::unique_ptr<adata_s> adata=std::unique_ptr<adata_s>(new adata_s{S});
+#pragma GCC diagnostic pop
     for (unsigned int i = 0; i < expiries_arg.size(); ++i){
         std::vector<ffloat> cur=strikes_arg[i];
         options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries_arg[i])/trading_days,expiries_arg[i]);
@@ -521,6 +524,7 @@ void rng_test(){
     ffloat emp_uniform=0.;
     ffloat mean_gaussian=0.;
     ffloat emp_gaussian=0.;
+    clock_t start_time=clock();
     std::cout<<"Start RNG test, sample size: "<<SAMPLE_SIZE<<", block size: "<<BLOCK_SIZE<<std::endl;
     //ffloat* uniform_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
     //ffloat* gaussian_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
@@ -547,8 +551,9 @@ void rng_test(){
     printf("\r[%s] 100%%\n",prog_bar);
     emp_uniform/=(SAMPLE_SIZE-1);
     emp_gaussian/=(SAMPLE_SIZE-1);
+    clock_t end_time=clock();
     std::cout<<"emp_uniform: "<<emp_uniform<<"\tmean_uniform: "<<mean_uniform<<"\temp_gaussian: "<<emp_gaussian<<"\tmean_gaussian: "<<mean_gaussian<<std::endl;
-    std::cout<<"emp_uniform_error: "<<std::fabs(emp_uniform-1./12.)<<"\tmean_uniform_error: "<<std::fabs(mean_uniform-.5)<<"\temp_gaussian_error: "<<std::fabs(emp_gaussian-1.)<<"\tmean_gaussian_error: "<<std::fabs(mean_gaussian-0.)<<std::endl;
+    std::cout<<"emp_uniform_error: "<<std::fabs(emp_uniform-1./12.)<<"\tmean_uniform_error: "<<std::fabs(mean_uniform-.5)<<"\temp_gaussian_error: "<<std::fabs(emp_gaussian-1.)<<"\tmean_gaussian_error: "<<std::fabs(mean_gaussian-0.)<<"\ttime: "<<((double)end_time-start_time)/CLOCKS_PER_SEC<<"s"<<std::endl;
     assert(std::fabs(emp_gaussian-1.)<RNG_TOLERANCE&&std::fabs(mean_gaussian-0.)<RNG_TOLERANCE&&
             std::fabs(mean_uniform-.5)<RNG_TOLERANCE&&std::fabs(emp_uniform-1./12.)<RNG_TOLERANCE);
 }

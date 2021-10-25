@@ -25,7 +25,6 @@ typedef ED expiry_data;
  */ 
 struct AS{
     ffloat S;                           //<price of underlying
-    ffloat* real_prices;                //<pointer to C-array of prices observed in the market(initialization optional)
     std::list<expiry_data> exp_list;   //<list of expiry data. Use of reference to allow overloaded [] opertor with resource owned by AS 
 };
 typedef AS adata_s;

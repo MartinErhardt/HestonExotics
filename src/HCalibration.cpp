@@ -59,7 +59,7 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
 HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers" // initialize exp_list as empty list per default
-    adata_s adata={S,nullptr}; 
+    adata_s adata={S}; 
 #pragma GCC diagnostic pop
     //HDistribution current_distribution;
     //std::shared_ptr<SWIFT> current;
@@ -93,7 +93,6 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*(n_observations_cur+1));
     ffloat * x2=x;
     for(std::list<options_chain>::const_iterator opts = market_data.begin(); opts != market_data.end(); opts++) for(auto e :opts->options) *(x2++)=e.price;
-    adata.real_prices=x;
     std::cout<<"setup completed\t# observations: "<<n_observations_cur<<'\n';
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
     opts[0]=LM_INIT_MU;
@@ -118,7 +117,6 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
 }
 
 std::ostream& operator<<(std::ostream& out, adata_s const& as){
-    //ffloat * cur_price=as.real_prices;
     for(auto& ed:as.exp_list){
         for(const option& o: *&ed.opts.options){
             out<<"S: "<<as.S//<<"\temp price"<<*(cur_price++)

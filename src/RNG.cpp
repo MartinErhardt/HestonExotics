@@ -9,6 +9,7 @@ extern "C" double ppnd16(double *,int*);
 RNG::RNG(size_t size,unsigned int seed){
     my_seed[0]=seed;
     if((size*sizeof(ffloat))&(ALIGN-1)) throw std::runtime_error("RNG: init size does not satisfy alignment");
+/**
 #ifdef __MINGW64__
     buf_start_g=(ffloat*)_aligned_malloc(size*sizeof(ffloat),ALIGN);    
 	buf_start_u=(ffloat*)_aligned_malloc(size*sizeof(ffloat),ALIGN);
@@ -16,6 +17,9 @@ RNG::RNG(size_t size,unsigned int seed){
     buf_start_g=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));    
 	buf_start_u=(ffloat*)aligned_alloc(ALIGN,size*sizeof(ffloat));
 #endif
+    **/
+    buf_start_g=new(std::align_val_t{ALIGN}) ffloat[size];
+    buf_start_u=new(std::align_val_t{ALIGN}) ffloat[size];
     buf_end_u=buf_start_u+size;
     buf_end_g=buf_start_g+size;
     prng_init(&s, my_seed);
@@ -34,11 +38,11 @@ ffloat* RNG::setup_g(){
     ffloat* x2=buf_start_g;
     do{ int ifault=0;
         *x2=ppnd16(x2,&ifault);
-        if(ifault) throw std::runtime_error("Quantile function failed!");
+        assert(!ifault)
     }while((++x2)!=buf_end_g);
     return buf_start_g;
 }
 RNG::~RNG(){
-    free(buf_start_g);
-    free(buf_start_u);
+    operator delete(buf_start_g, std::align_val_t{ALIGN});
+    operator delete(buf_start_u, std::align_val_t{ALIGN});
 }

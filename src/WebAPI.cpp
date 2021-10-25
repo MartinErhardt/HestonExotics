@@ -71,7 +71,6 @@ void WebAPI::parse_option_chain(options_chain& opt_chain,const char* vol_type, i
             &&(strike_obj.type()!=simdjson::ondemand::json_type::null)
             &&(price_obj.type()!=simdjson::ondemand::json_type::null)
             &&(current_vol>=vol_n)
-    //std::cout<<"\n# of options added "<<opt_chain.options.size()<<'\n';
         )
         {
             option * new_opt =new option();
