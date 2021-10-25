@@ -14,10 +14,9 @@
  */
 struct ED{
     const options_chain& opts;  //<European Call options to price using the SWIFT method
-    HDistribution* distr;       //<price distribution at the point of expiry of all the opts
-    SWIFT* pricing_method;      //<SWIFT method used to price opts
-    ED(const options_chain& opts,HDistribution* init_distr, SWIFT* init_pricing_method): opts(opts),distr(init_distr),pricing_method(init_pricing_method){}
-    ~ED(){delete distr; delete pricing_method;}
+    HDistribution distr;       //<price distribution at the point of expiry of all the opts
+    std::shared_ptr<SWIFT> pricing_method;      //<SWIFT method used to price opts
+    ED(const options_chain& opts,HDistribution init_distr, SWIFT* init_pricing_method): opts(opts),distr(init_distr),pricing_method(init_pricing_method){}
 };
 typedef ED expiry_data;
 
@@ -27,8 +26,7 @@ typedef ED expiry_data;
 struct AS{
     ffloat S;                           //<price of underlying
     ffloat* real_prices;                //<pointer to C-array of prices observed in the market(initialization optional)
-    std::list<expiry_data>& exp_list;   //<list of expiry data. Use of reference to allow overloaded [] opertor with resource owned by AS 
-    ~AS(){delete &exp_list;}            //moved when push_back 
+    std::list<expiry_data> exp_list;   //<list of expiry data. Use of reference to allow overloaded [] opertor with resource owned by AS 
 };
 typedef AS adata_s;
 /**

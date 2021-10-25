@@ -78,10 +78,7 @@ namespace HSimulation{
             return *this;
         }
         HQEAnderson<accumulate_t,Scheme>& operator=(const SDE_state<2> new_state) {
-            state.cur[X]=new_state.cur[X];
-            state.cur[V]=new_state.cur[V];
-            state.prev[V]=new_state.prev[V];
-            state.prev[X]=new_state.prev[X];
+            state=new_state;
             log_X=std::log(state.cur[X]);
             state.cur_time=new_state.cur_time;
             state.prev_time=new_state.prev_time;
@@ -95,9 +92,9 @@ namespace HSimulation{
      * This uses an approach called Policy-based design. Scheme is another class that contains a function called step_width. Using this function we can avoid implementing any function step_width and customize step_width as if it was a virtual function. Furthermore this leads to a much better performance.
      */
     template<typename accumulate_t, class Scheme>class PricingTool{
-        RNG* my_rng;
+        RNG my_rng;
     public:
-        PricingTool(const unsigned int thread_i):my_rng(new RNG(RAND_BUF_SIZE,(1<<thread_i))){};
+        PricingTool(const unsigned int thread_i):my_rng(RAND_BUF_SIZE,(1<<thread_i)){};
         /**
         * @brief prices all options in all of the options chains in all_chains using the trapezoidal rule
         * 
@@ -113,7 +110,6 @@ namespace HSimulation{
         */
         std::vector<ffloat>* price(const HParams& p, const ffloat S,const std::list<options_chain>& all_chains,
                                                 unsigned int n_simulations, unsigned int n_opts,unsigned int min_steps);
-        ~PricingTool(){delete my_rng;};
     };
 }
 

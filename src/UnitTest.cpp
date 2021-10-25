@@ -198,11 +198,10 @@ std::unique_ptr<adata_s> get_adata(const double S, const std::vector<double>& ex
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
-        HDistribution *new_distr=new HDistribution(heston_params,expiries_arg[i],0.02);
-        swift_parameters dynamic_parameters(*new_distr,adata->S,*opt_chain);
+        HDistribution new_distr(heston_params,expiries_arg[i],0.02);
+        swift_parameters dynamic_parameters(new_distr,adata->S,*opt_chain);
         swift_parameters& new_swift_parameters=predefined ? params[i] : dynamic_parameters;
-        SWIFT* pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
-        adata->exp_list.emplace_back(*opt_chain,new_distr,pricing_method);
+        adata->exp_list.emplace_back(*opt_chain,new_distr,new SWIFT(new_swift_parameters));
     }
     return adata;
 }
@@ -571,7 +570,7 @@ void simulation_test(){
         std::cout<<"batch i: "<<i<<std::endl;
         std::list<options_chain>all_chains;
         all_chains.emplace_back(years[i]/trading_days,years[i]);
-        options_chain opts=*all_chains.begin();
+        options_chain& opts=*all_chains.begin();
         for(ffloat strike: strikes) opts.options.push_back({0.,0.,strike,0});
         for(ffloat delta: deltas){
             HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>my_pricing_tool(1);

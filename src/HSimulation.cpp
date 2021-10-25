@@ -9,7 +9,7 @@ std::vector<ffloat>* PricingTool<accumulate_t,Scheme>::price(const HParams& p, c
                                         const std::list<options_chain>& all_chains,
                                         unsigned int n_simulations, unsigned int n_opts,unsigned int steps){
     const SDE_state<2> initial_state={{S,p.v_0},{S,p.v_0},.0,.0};
-    HQEAnderson<accumulate_t,Scheme> heston_sde(p,all_chains.begin()->time_to_expiry/steps,my_rng,initial_state);
+    HQEAnderson<accumulate_t,Scheme> heston_sde(p,all_chains.begin()->time_to_expiry/steps,&my_rng,initial_state);
     std::vector<ffloat>& prices=*(new std::vector<ffloat>(n_opts));
     //TODO assert all_chains ordered by expiry
     //TODO assert n_opts # of all options

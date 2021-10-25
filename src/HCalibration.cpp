@@ -12,14 +12,14 @@ void update_adata(ffloat *p, adata_s * adata){
     const HParams new_params={p[0],p[1],p[2],p[3],p[4]};
     //std::shared_ptr<SWIFT> current=nullptr; delete
     for(auto &exp_data : adata->exp_list){
-        if(!(exp_data.distr->p==new_params)){
+        if(!(exp_data.distr.p==new_params)){
             exp_data.pricing_method->flush_cache();
             //std::cout<<"delete distr\n";
-            exp_data.distr->p=new_params;//}
+            exp_data.distr.p=new_params;//}
             //std::cout<<"new params at: "<<&(exp_data.distr->p)<<"\tv_0: "<<exp_data.distr->p.v_0<<"\tv_m: "<<exp_data.distr->p.v_m<<"\trho: "<<exp_data.distr->p.rho<<"\tkappa"<<exp_data.distr->p.kappa<<"\tsigma: "<<exp_data.distr->p.sigma<<'\n';
         //std::cout<<"cur params at: "<<&(exp_data.distr->p)<<"\tv_0: "<<(float)exp_data.distr->p.v_0<<"\tv_m: "<<exp_data.distr->p.v_m<<"\trho: "<<exp_data.distr->p.rho<<"\tkappa"<<exp_data.distr->p.kappa<<"\tsigma: "<<exp_data.distr->p.sigma<<'\n';
         //std::cout<<"new SWIFT\n";
-        swift_parameters new_swift_parameters(*exp_data.distr,adata->S,exp_data.opts);
+        swift_parameters new_swift_parameters(exp_data.distr,adata->S,exp_data.opts);
         //if (new_swift_parameters->m>exp_data.pricing_method->my_params.m 
             //||new_swift_parameters->J<NEWOLD_METHOD_RATIO*exp_data.pricing_method->my_params.J
         //){
@@ -27,8 +27,8 @@ void update_adata(ffloat *p, adata_s * adata){
         //    if(current==nullptr||new_swift_parameters->m>current->my_params.m ||new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J)
         //        current=std::make_shared<SWIFT>(*new_swift_parameters);
             //std::cout<<"old m: "<<new_swift_parameters->m<<"\tnew m: "<<exp_data.pricing_method->my_params.m<<'\n'; 
-            delete exp_data.pricing_method;
-            exp_data.pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
+            //delete exp_data.pricing_method;
+            exp_data.pricing_method=std::shared_ptr<SWIFT>(new SWIFT(new_swift_parameters));//std::shared_ptr(current);
         }
     }
 }
@@ -37,7 +37,7 @@ void get_jacobian_for_levmar(ffloat *p, ffloat *jac, int m, int n_observations, 
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
     ffloat* jac2=jac;
-    for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts_grad(*exp_data.distr,my_adata->S,exp_data.opts, &jac2,jac+n_observations*m);
+    for(auto &exp_data : my_adata->exp_list) exp_data.pricing_method->price_opts_grad(exp_data.distr,my_adata->S,exp_data.opts, &jac2,jac+n_observations*m);
     assert(jac2>=jac+n_observations*m);
 }
 #pragma GCC diagnostic push
@@ -48,7 +48,7 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
     adata_s * my_adata=static_cast<adata_s*>(adata);
     update_adata(p,my_adata);
     ffloat* x2=x;
-    for(auto &exp_data : my_adata->exp_list){ exp_data.pricing_method->price_opts(*exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);}
+    for(auto &exp_data : my_adata->exp_list){ exp_data.pricing_method->price_opts(exp_data.distr,my_adata->S,exp_data.opts, &x2,x+n_observations);}
     assert(x2>=x+n_observations);
     //std::cout<<*my_adata;
     //unsigned int underpriced=0;
@@ -57,7 +57,10 @@ void get_prices_for_levmar(ffloat *p, ffloat *x, int m, int n_observations, void
 }
 
 HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
-    adata_s adata={S,nullptr,*(new std::list<expiry_data>())};
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers" // initialize exp_list as empty list per default
+    adata_s adata={S,nullptr}; 
+#pragma GCC diagnostic pop
     //HDistribution current_distribution;
     //std::shared_ptr<SWIFT> current;
     ffloat avg_iv=avg_imp_vol(S, market_data);
@@ -76,15 +79,14 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
         //if(opts->time_to_expiry<=EXP_LB) continue;
         if(opts.options.size()>0){
             n_observations_cur+=opts.options.size();
-            HDistribution *new_distr=new HDistribution({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry,0.0005);
-            swift_parameters new_swift_parameters(*new_distr,S,opts);
+            HDistribution new_distr({p[0],p[1],p[2],p[3],p[4]},opts.time_to_expiry,0.0005);
+            swift_parameters new_swift_parameters(new_distr,S,opts);
             //if (current==nullptr|| new_swift_parameters->m>current->my_params.m || new_swift_parameters->J<NEWOLD_METHOD_RATIO*current->my_params.J){
                 //std::cout<<"is here the free1?\n";
                 //current=std::make_shared<SWIFT>(*new_swift_parameters);
                 //std::cout<<"is here the free?\n";
             //}
-            SWIFT* pricing_method=new SWIFT(new_swift_parameters);//std::shared_ptr(current);
-            adata.exp_list.emplace_back(opts,new_distr,pricing_method);
+            adata.exp_list.emplace_back(opts,new_distr,new SWIFT(new_swift_parameters));
         }
     }
     //std::cout<<"allocate x\n";
@@ -120,7 +122,7 @@ std::ostream& operator<<(std::ostream& out, adata_s const& as){
     for(auto& ed:as.exp_list){
         for(const option& o: *&ed.opts.options){
             out<<"S: "<<as.S//<<"\temp price"<<*(cur_price++)
-            <<"\task: "<<o.price<<"\tbid: "<<o.bid<<"\tstrike: "<<o.strike<<"\tvolume: "<<o.volume<<"\tdays left: "<<ed.distr->tau<<std::endl;
+            <<"\task: "<<o.price<<"\tbid: "<<o.bid<<"\tstrike: "<<o.strike<<"\tvolume: "<<o.volume<<"\tdays left: "<<ed.distr.tau<<std::endl;
         }
         std::cout<<ed.pricing_method->my_params;
     }
