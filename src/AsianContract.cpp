@@ -10,4 +10,4 @@
 #include"AsianContract.h"
 
 template class HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>;
-template class HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive>;
+template class HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>>;

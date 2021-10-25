@@ -13,7 +13,7 @@ template<const unsigned int d> struct SDE_state {
     ffloat prev_time;   //<previous time (before discretized time step)
 };
 /**
- * @brief This is a extremely thin layer of abstraction simply there to encode iterator propertis and initialize the prng.
+ * @brief This is a extremely thin layer of abstraction, simply there to encode iterator propertis and initialize the prng.
  */
 template<const unsigned int d> class SDE {
         //using SchemeEvoPolicy::evolution;

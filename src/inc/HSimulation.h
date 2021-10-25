@@ -18,22 +18,22 @@ namespace HSimulation{
      * 
      * This uses an approach called Policy-based design. Scheme is another class that contains a function called step_width. Using this function we can avoid implementing any function step_width and customize step_width as if it was a virtual function. Furthermore this leads to a much better performance.
      */
-    template<typename accumulate_t,class Scheme> class HQEAnderson : Scheme,SDE<2>{
+    template<typename accumulate_t,class OptionPolicy> class HQEAnderson : OptionPolicy,SDE<2>{
         ffloat log_X;
         const HParams params;    
     public:
-        using Scheme::step_width;
-        using Scheme::accumulate_value;
-        using Scheme::accumulate_final_value;
-        using Scheme::reset;
-        using Scheme::update_earliest;
-        using Scheme::final_payoff;
+        using OptionPolicy::step_width;
+        using OptionPolicy::accumulate_value;
+        using OptionPolicy::accumulate_final_value;
+        using OptionPolicy::reset;
+        using OptionPolicy::update_earliest;
+        using OptionPolicy::final_payoff;
         using SDE::operator->;
         using SDE::operator*;
         using SDE::operator>=;
         using SDE::operator++;
         using SDE::state;
-        HQEAnderson(const HParams& params_init,accumulate_t scheme_params_init, RNG*rng, const SDE_state<2> init_cond) : Scheme(scheme_params_init),SDE<2>(init_cond,rng),log_X(std::log(init_cond.cur[0])),params(params_init){}
+        HQEAnderson(const HParams& params_init,accumulate_t option_policy_init, RNG*rng, const SDE_state<2> init_cond) : OptionPolicy(option_policy_init),SDE<2>(init_cond,rng),log_X(std::log(init_cond.cur[0])),params(params_init){}
         /**
          * @brief implements a step of the Quadratic Exponential (QE) method to simulate the Heston SDE, first described by Anderson
          * 
@@ -77,7 +77,7 @@ namespace HSimulation{
             //std::cout<<"delta"<<delta<<"\tdiscount: "<<discount<<"\tm: "<<m<<"\tsp2: "<<sp2<<"\tPsi"<<Psi<<"\tp: "<<p<<"\tbeta: "<<beta<<"\tbp2: "<<bp2<<"\tb: "<<b<<"\ta: "<<a<<"\tK_0: "<<K_0<<"\tK_1"<<K_1<<"\tK_2"<<K_2<<"\tK_3"<<K_3<<"\tK_4"<<K_4<<"\tlog_X"<<log_X<<"\tprev X: "<<state.prev[X]<<"\tcur X: "<<state.cur[X]<<"\tprev V: "<<state.prev[V]<<"\tcur V: "<<state.cur[V]<<std::endl;
             return *this;
         }
-        HQEAnderson<accumulate_t,Scheme>& operator=(const SDE_state<2> new_state) {
+        HQEAnderson<accumulate_t,OptionPolicy>& operator=(const SDE_state<2> new_state) {
             state=new_state;
             log_X=std::log(state.cur[X]);
             state.cur_time=new_state.cur_time;
@@ -91,7 +91,7 @@ namespace HSimulation{
      * 
      * This uses an approach called Policy-based design. Scheme is another class that contains a function called step_width. Using this function we can avoid implementing any function step_width and customize step_width as if it was a virtual function. Furthermore this leads to a much better performance.
      */
-    template<typename accumulate_t, class Scheme>class PricingTool{
+    template<class Scheme>class PricingTool{
         RNG my_rng;
     public:
         PricingTool(const unsigned int thread_i):my_rng(RAND_BUF_SIZE,(1<<thread_i)){};

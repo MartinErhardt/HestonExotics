@@ -39,4 +39,4 @@ public:
     }
 };
 extern HSimulation::HQEAnderson<ffloat,EuropeanCallNonAdaptive> explicit_HQEAnderson_EuropeanCallNonAdaptive;
-extern HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive> explicit_PricingTool_EuropeanCallNonAdaptive;
+extern HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,EuropeanCallNonAdaptive>> explicit_PricingTool_EuropeanCallNonAdaptive;

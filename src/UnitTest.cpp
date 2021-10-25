@@ -578,7 +578,7 @@ void simulation_test(){
         options_chain& opts=*all_chains.begin();
         for(ffloat strike: strikes) opts.options.push_back({0.,0.,strike,0});
         for(ffloat delta: deltas){
-            HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>my_pricing_tool(1);
+            HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,EuropeanCallNonAdaptive>>my_pricing_tool(1);
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wunused-variable"
             std::vector<ffloat>& results=*my_pricing_tool.price(ps[i],100,all_chains,1,3,years[i]/delta);

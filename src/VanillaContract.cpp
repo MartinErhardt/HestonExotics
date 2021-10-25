@@ -10,4 +10,4 @@
 #include"VanillaContract.h"
 
 template class HSimulation::HQEAnderson<ffloat,EuropeanCallNonAdaptive>;
-template class HSimulation::PricingTool<ffloat,EuropeanCallNonAdaptive>;
+template class HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,EuropeanCallNonAdaptive>>;

@@ -2,13 +2,12 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at https://mozilla.org/MPL/2.0/. */
 #include"RNG.h"
-//#include"../as241.f"
-//extern "C" prng_state prng_init(SEEDTYPE seed[4]);
+
 extern "C" double ppnd16(double *,int*);
 
 RNG::RNG(size_t size,unsigned int seed){
     my_seed[0]=seed;
-    if((size*sizeof(ffloat))&(ALIGN-1)) throw std::runtime_error("RNG: init size does not satisfy alignment");
+    assert(!((size*sizeof(ffloat))&(ALIGN-1)));
 /**
 #ifdef __MINGW64__
     buf_start_g=(ffloat*)_aligned_malloc(size*sizeof(ffloat),ALIGN);    
@@ -38,7 +37,7 @@ ffloat* RNG::setup_g(){
     ffloat* x2=buf_start_g;
     do{ int ifault=0;
         *x2=ppnd16(x2,&ifault);
-        assert(!ifault)
+        assert(!ifault);
     }while((++x2)!=buf_end_g);
     return buf_start_g;
 }

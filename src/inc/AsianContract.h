@@ -47,4 +47,4 @@ public:
     }
 };
 extern HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive> explicit_HQEAnderson_AAsianCallNonAdaptive;
-extern HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive> explicit_PricingTool_AAsianCallNonAdaptive;
+extern HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>> explicit_PricingTool_AAsianCallNonAdaptive;

@@ -76,7 +76,7 @@ int main(int argc, char *argv[]) {
             case(PRICE):{
                 if((cur_arg==argc-4||cur_arg==argc-6)&&std::string(argv[cur_arg+2])=="all"&&std::string(argv[cur_arg+1])=="asian"){
                     DB::ParamsDB params_db;
-                    HSimulation::PricingTool<ffloat,AAsianCallNonAdaptive>my_pricing_tool(1);
+                    HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>>my_pricing_tool(1);
                     HParams p;
                     char* stock_name=argv[cur_arg+3];
                     cur_arg+=2;
