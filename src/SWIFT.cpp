@@ -76,7 +76,7 @@ SWIFT::SWIFT(const swift_parameters& init_params) : my_params(swift_parameters(i
 SWIFT::cache_entry * SWIFT::get_precached(const HDistribution& distr,const ffloat S, const options_chain& opts){
     cache_entry* precached=nullptr; 
     const auto is_opts= [&opts] (const cache_entry& e) {return &e.to_price==&opts;};
-    if(!results_cache.size()||!is_opts(*(precached=&*find_if(results_cache.begin(), results_cache.end(), is_opts)))) //TODO test if this &* is local in scope
+    if(!results_cache.size()||!is_opts(*(precached=&*find_if(results_cache.begin(), results_cache.end(), is_opts))))
         precached=&results_cache.emplace_back(distr,*this,opts,S);
     return precached;
 }

@@ -1,3 +1,4 @@
+#ifndef NDEBUG
 #include<complex>
 #include<vector>
 #include"HDistribution.h"
@@ -99,10 +100,11 @@ std::vector<std::complex<double>> GetCuiGradient(HParams p, std::complex<double>
 #include"HCalibration.h"
 #include"BSM.h"
 #include"RNG.h"
+#include"UI.h"
 
 #include"levmar.h"
 #include<memory.h>
-//#define NDEBUG
+
 #define DISTR_TOLERANCE 1e-6
 #include<assert.h>
 void __assert_fail(const char * assertion, const char * file, unsigned int line, const char * function)
@@ -507,17 +509,10 @@ void levmar_test(){
     assert(diff<LEVMAR_TOLERANCE &&"Levmar test passed");
     std::cout<<"Levmar test passed"<<std::endl;
 }
+
 #define SAMPLE_SIZE (1<<28)
 #define BLOCK_SIZE (1<<20)
 #define RNG_TOLERANCE 1e-4
-#define PROG_BAR_WIDTH 100
-#define PROG_CHAR '#'
-void update_prog(char* prog_bar, unsigned int i){
-    double prog= ((double)i)/((double)SAMPLE_SIZE);
-    int visible_prog=(int)(prog*PROG_BAR_WIDTH);
-    printf("\r[%.*s%*s] %3d%%", visible_prog, prog_bar, PROG_BAR_WIDTH-visible_prog, " ",(int) (prog*100));
-    fflush(stdout);
-}
 void rng_test(){
     RNG shishua(BLOCK_SIZE, 1);
     ffloat mean_uniform=0.;
@@ -526,29 +521,26 @@ void rng_test(){
     ffloat emp_gaussian=0.;
     clock_t start_time=clock();
     std::cout<<"Start RNG test, sample size: "<<SAMPLE_SIZE<<", block size: "<<BLOCK_SIZE<<std::endl;
-    //ffloat* uniform_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
-    //ffloat* gaussian_array=(ffloat*) malloc(sizeof(ffloat)*SAMPLE_SIZE);
-    char prog_bar[PROG_BAR_WIDTH+1];
-    for(unsigned int i=0;i<PROG_BAR_WIDTH;i++) prog_bar[i]=PROG_CHAR;
-    prog_bar[PROG_BAR_WIDTH]='\0';
-    //std::cout<<"prog bar initialized"<<prog_bar<<std::endl;
+    UI::ProgressBar prog_gen1("RNG generation for sample mean: ",SAMPLE_SIZE);
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){
         mean_uniform+=shishua.get_urand();
         mean_gaussian+=shishua.get_grand();
-        if(!(i&((SAMPLE_SIZE>>7)-1))) update_prog(prog_bar,i);
+        if(!(i&((SAMPLE_SIZE>>7)-1))) prog_gen1.update(SAMPLE_SIZE>>7);
     }
-    printf("\r[%s] 100%%\n",prog_bar);
+    prog_gen1.finish();
     mean_uniform/=SAMPLE_SIZE;
     mean_gaussian/=SAMPLE_SIZE;
+    
+    UI::ProgressBar prog_gen2("RNG generation for mean variance: ",SAMPLE_SIZE);
     RNG shishua2(BLOCK_SIZE, 1); //reinitialize shishua since RNG is deterministic we can do this and obtain the exact same (pseudo) random number
     for(unsigned int i=0;i<SAMPLE_SIZE;i++){
         double uni_rand=shishua2.get_urand();
         double gaussian_rand=shishua2.get_grand();
         emp_uniform+=(uni_rand-mean_uniform)*(uni_rand-mean_uniform);
         emp_gaussian+=(gaussian_rand-mean_gaussian)*(gaussian_rand-mean_gaussian);
-        if(!(i&((SAMPLE_SIZE>>7)-1))) update_prog(prog_bar,i);
+        if(!(i&((SAMPLE_SIZE>>7)-1))) prog_gen2.update(SAMPLE_SIZE>>7);
     }
-    printf("\r[%s] 100%%\n",prog_bar);
+    prog_gen2.finish();
     emp_uniform/=(SAMPLE_SIZE-1);
     emp_gaussian/=(SAMPLE_SIZE-1);
     clock_t end_time=clock();
@@ -594,3 +586,12 @@ void db_test(){
     HParams p={0.,0.,0.,0.,0.};
     params_db.insertupdate(&p,stock_name);
 }
+#else
+void distr_test(){}
+void pricing_test(){}
+void gradient_test(){}
+void levmar_test(){}
+void rng_test(){}
+void simulation_test(){}
+void db_test(){}
+#endif

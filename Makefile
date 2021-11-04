@@ -19,7 +19,7 @@ endif
 ifeq ($(CXX), dpcpp)
 	FFLAGS= -std=f2008ts -fdefault-real-8
 	CXXFLAGS = $(INCS) -Wpedantic -Wall -Wextra -std=c++17 -oFast -fopenmp -march=native $(OPTMACROS) -ffast-math -fno-rounding-math -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -DEIGEN_USE_MKL_ALL $(MACROS)
-	LDFLAGS = -lstdc++  -lcurl -lsqlite3 -llevmar -I levmar-2.6 -lfftw3 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -L./levmar-2.6 -llevmar
+	LDFLAGS = -lstdc++  -lcurl -lsqlite3 -llevmar -I levmar-2.6 -lfftw3 -fopenmp -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -L./levmar-2.6 -llevmar
 else
 	CXX = g++
 	ifeq ($(DBG), true)
@@ -66,7 +66,7 @@ fclean:
 	rm -f $(SJSON_OBJ) $(AS241_OBJ)
 	rm bin/src/*
 loc:
-	find . -regextype posix-extended -regex "./src/.*(.h|.cpp|.f90)" | xargs wc -l
+	find . -regextype posix-extended -regex "./src/.*(.h|.cpp|.tpp|.f90)" | xargs wc -l
 doc: doxygen_conf
 	doxygen doxygen_conf
 doxygen_conf:

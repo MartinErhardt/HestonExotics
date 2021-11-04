@@ -76,7 +76,6 @@ int main(int argc, char *argv[]) {
             case(PRICE):{
                 if((cur_arg==argc-4||cur_arg==argc-6)&&std::string(argv[cur_arg+2])=="all"&&std::string(argv[cur_arg+1])=="asian"){
                     DB::ParamsDB params_db;
-                    HSimulation::PricingTool<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>>my_pricing_tool(1);
                     HParams p;
                     char* stock_name=argv[cur_arg+3];
                     cur_arg+=2;
@@ -87,7 +86,7 @@ int main(int argc, char *argv[]) {
                         params_db.insertupdate(&p,stock_name);
                     }
                     std::cout<<"params, v0: "<<p.v_0<<"\tv_m: "<<p.v_m<<"\trho: "<<p.rho<<"\tkappa: "<<p.kappa<<"\tsigma: "<<p.sigma<<std::endl;
-                    std::vector<ffloat>& results=*my_pricing_tool.price(p,ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
+                    std::vector<ffloat>& results=*price<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>>(p,ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
                         unsigned int i=0;
                         for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: opt_chain.options)
                             std::cout<<"S: "<<std::setw(10) << std::right
