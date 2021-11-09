@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
                         params_db.insertupdate(&p,stock_name);
                     }
                     std::cout<<"params, v0: "<<p.v_0<<"\tv_m: "<<p.v_m<<"\trho: "<<p.rho<<"\tkappa: "<<p.kappa<<"\tsigma: "<<p.sigma<<std::endl;
-                    std::vector<ffloat>& results=*price<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>>(p,ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
+                    std::vector<ffloat> results=price<HSimulation::HQEAnderson<ffloat,AAsianCallNonAdaptive>>(p,ddata.S,*ddata.all_chains,1e+5,length(*ddata.all_chains),1e+3);
                         unsigned int i=0;
                         for(const options_chain& opt_chain: *ddata.all_chains) for(const option& opt: opt_chain.options)
                             std::cout<<"S: "<<std::setw(10) << std::right

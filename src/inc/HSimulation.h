@@ -59,7 +59,7 @@ namespace HSimulation{
     * @throws abort if NDEBUG is enabled and all_chains are not in increasing order by expiry date
     */
     template<class Scheme>
-    std::vector<ffloat>* price(const HParams& p, const ffloat S,const std::list<options_chain>& all_chains,
+    std::vector<ffloat> price(const HParams& p, const ffloat S,const std::list<options_chain>& all_chains,
                                             unsigned int n_simulations, unsigned int n_opts,unsigned int min_steps);
 }
 
