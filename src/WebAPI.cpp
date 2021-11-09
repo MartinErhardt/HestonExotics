@@ -50,13 +50,13 @@ void WebAPI::download_to_buf(const std::string& url){
     if((res = curl_easy_perform(curl)) != CURLE_OK) throw std::runtime_error("curl failed in download_to_buf");
     //std::cout<<"WTF: "<<buf.buf<<'\n';
 }
-std::unique_ptr<std::list<std::string>> WebAPI::parse_expiries(){
+std::list<std::string> WebAPI::parse_expiries(){
     //std::cout<<buf.buf<< '\n';
-    auto expiries = std::unique_ptr<std::list<std::string>>(new std::list<std::string>);
+    std::list<std::string> expiries;
     auto doc = JSONParser.iterate(buf.buf, strlen(buf.buf), buf.size_buf+1+simdjson::SIMDJSON_PADDING);
     auto JSONList=doc.get_object()["expirations"];
     if(JSONList.type()==simdjson::ondemand::json_type::null) throw APIError(); // This happens if there have no valid underlying
-    for(auto date : JSONList["date"]) expiries->push_back(std::string(std::string_view(date)));
+    for(auto date : JSONList["date"]) expiries.push_back(std::string(std::string_view(date)));
     return expiries;
 }
 void WebAPI::parse_option_chain(options_chain& opt_chain,const char* vol_type, int vol_n){
@@ -91,15 +91,15 @@ ffloat WebAPI::parse_stock_quote(){
     if(price_obj.type()!=simdjson::ondemand::json_type::null) return static_cast<ffloat>(price_obj.get_double());
     else throw APIError();
 }
-std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& underlying,const char* vol_type, int vol_n){
-    auto all_chains=new std::list<options_chain>(); 
+std::list<options_chain> WebAPI::get_all_option_chains(const std::string& underlying,const char* vol_type, int vol_n){
+    std::list<options_chain> all_chains; 
     std::cout<<"Download expiries...";
     download_to_buf(EXP_URL(underlying));
     std::cout<<"Done\n";
     std::cout<<"Parse expiries...";
     auto expiries =parse_expiries();
     std::cout<<"Done\n";
-    for(const std::string& date : *expiries){
+    for(const std::string& date : expiries){
         unsigned int cur_days_to_date=days_to_date(date);
         ffloat cur_time_to_date = static_cast<ffloat>(days_to_date(date))/trading_days;
         if (cur_time_to_date<=EXP_LB) continue;
@@ -110,7 +110,7 @@ std::list<options_chain>* WebAPI::get_all_option_chains(const std::string& under
         std::cout<<"Parse all options expiring on "<<date<<"...";
         parse_option_chain(new_opt_chain,vol_type,vol_n);
         std::cout<<"Done\n";
-        all_chains->push_back(std::move(new_opt_chain));
+        all_chains.push_back(std::move(new_opt_chain));
     }
     return all_chains;
 }

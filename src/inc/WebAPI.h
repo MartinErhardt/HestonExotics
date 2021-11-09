@@ -62,7 +62,7 @@ namespace WebInterface
          * @return smart pointer to the list of all expiries given in the tradier API response in this.buf.buf with expiry dates in Y-m-d string format
          * @throws APIError if tradier API response does not satisfy JSON format corresponding to EXP_URL request
          */
-        std::unique_ptr<std::list<std::string>> parse_expiries();
+        std::list<std::string> parse_expiries();
         /**
          * private method to parse the list of options in the tradier JSON response to OPTIONS_CHAIN_URL
          * 
@@ -97,7 +97,7 @@ namespace WebInterface
              * @return list of options_chain returned by parse_option_chain
              * @throws std::runtime_error if curl can not be initialized
              */
-            std::list<options_chain>* get_all_option_chains(const std::string& underlying,const char* vol_type, int vol_n);
+            std::list<options_chain> get_all_option_chains(const std::string& underlying,const char* vol_type, int vol_n);
             /**
              * public method to obtain the value of any given stock listing. 
              * 
