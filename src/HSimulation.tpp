@@ -19,10 +19,10 @@ std::vector<ffloat> HSimulation::price(const HParams& p, const ffloat S,
                                 [](assert_increasing_s cum, auto const& it) {
                                     return assert_increasing_s({cum.exp_date_increasing&&cum.prev_exp_date<it.time_to_expiry,it.time_to_expiry});
                                 }).exp_date_increasing);
-    std::vector<ffloat> prices=*(new std::vector<ffloat>(n_opts));
+    std::vector<ffloat> prices(n_opts);
 #pragma omp parallel
 {
-    std::vector<ffloat> local_prices=*(new std::vector<ffloat>(n_opts));
+    std::vector<ffloat> local_prices(n_opts);
     const SDE_state<2> initial_state={{S,p.v_0},{S,p.v_0},.0,.0};
     const unsigned int local_sims=n_simulations/omp_get_num_threads();
     RNG local_rng(RAND_BUF_SIZE,(1<<omp_get_thread_num()));
