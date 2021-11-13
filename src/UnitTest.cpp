@@ -186,29 +186,34 @@ double p[5]={
     1.,            // kappa
     1.            // sigma
 };
-std::unique_ptr<adata_s> get_adata(const double S, const std::vector<double>& expiries_arg,const std::vector<std::vector<double>>& strikes_arg, const HParams heston_params,bool predefined){
+adata_s get_adata(const double S, const std::vector<double>& expiries_arg,const std::vector<std::vector<double>>& strikes_arg, const HParams heston_params,bool predefined){
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wmissing-field-initializers" // initialize exp_list as empty list per default
-    std::unique_ptr<adata_s> adata=std::unique_ptr<adata_s>(new adata_s{S});
+    adata_s adata{S};
 #pragma GCC diagnostic pop
     for (unsigned int i = 0; i < expiries_arg.size(); ++i){
         std::vector<ffloat> cur=strikes_arg[i];
         options_chain * opt_chain=new options_chain(static_cast<unsigned int>(expiries_arg[i])/trading_days,expiries_arg[i]);
         for(auto c: cur){
-            option * new_opt =new option();
-            new_opt->volume=1;
-            new_opt->strike=c;
-            new_opt->price=1.;
-            opt_chain->options.push_back(*new_opt);
+            option new_opt{};
+            new_opt.volume=1;
+            new_opt.strike=c;
+            new_opt.price=1.;
+            opt_chain->options.push_back(new_opt);
         }
         opt_chain->min_strike=cur[0];
         opt_chain->max_strike=cur[cur.size()-1];
         HDistribution new_distr(heston_params,expiries_arg[i],0.02);
-        swift_parameters dynamic_parameters(new_distr,adata->S,*opt_chain);
+        swift_parameters dynamic_parameters(new_distr,adata.S,*opt_chain);
         swift_parameters& new_swift_parameters=predefined ? params[i] : dynamic_parameters;
-        adata->exp_list.emplace_back(*opt_chain,new_distr,new SWIFT(new_swift_parameters));
+        adata.exp_list.emplace_back(*opt_chain,new_distr,new SWIFT(new_swift_parameters));
     }
     return adata;
+}
+void delete_adata(adata_s& adata){
+    for(auto &e:adata.exp_list){
+        delete &e.opts;
+    }
 }
 #define PRICING_TOLERANCE 1e-9
 void pricing_test(){
@@ -254,9 +259,9 @@ void pricing_test(){
         0.10163212168506526,
         0.052461532814837883,
         0.032268432242168528};
-    std::unique_ptr<adata_s> adata_ptr=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]}, true);
+    adata_s adata=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]}, true);
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);
-    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &(*adata_ptr));
+    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &adata);
     for(int i=0;i<40;i++){
         double error=std::fabs(x[i]-prices[i]);
         std::cout<<"x: "<<x[i]<<"\tp: "<<prices[i]<<"\tdiff: "<<error<<'\n';
@@ -264,6 +269,8 @@ void pricing_test(){
     }
     assert(diff<PRICING_TOLERANCE);
     std::cout<<"Pricing test passed"<<std::endl;
+    delete_adata(adata);
+    free(x);
 }
 #define GRADIENT_TOLERANCE 1e-9
 void gradient_test(){
@@ -469,9 +476,9 @@ void gradient_test(){
                                 0.040232991901821259,
                                 0.22181984888582221};
     std::vector<ffloat> index_map={4,1,3,0,2};
-    std::unique_ptr<adata_s> adata_ptr=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]},true);
+    adata_s adata=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]},true);
     ffloat * jac=(ffloat*) malloc(sizeof(ffloat)*200);
-    get_jacobian_for_levmar(&p[0], jac, 5, 40, (void *) &(*adata_ptr));
+    get_jacobian_for_levmar(&p[0], jac, 5, 40, (void *) &adata);
     for(int i=0;i<40;i++){
         double error=0.;
         for(int j=0;j<5;j++) error+=std::fabs(grad[5*i+index_map[j]]-jac[5*i+j]);
@@ -485,13 +492,15 @@ void gradient_test(){
     }
     assert(diff<GRADIENT_TOLERANCE);
     std::cout<<"Gradient test passed"<<std::endl;
+    free(jac);
+    delete_adata(adata);
 }
 #define LEVMAR_TOLERANCE 1e-2
 void levmar_test(){
     double p2[5];
-    std::unique_ptr<adata_s> adata_ptr=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]},false);
+    adata_s adata=get_adata(1.,expiries, strikes,{p[0],p[1],p[2],p[3],p[4]},false);
     ffloat * x=(ffloat*) malloc(sizeof(ffloat)*40);
-    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &(*adata_ptr));
+    get_prices_for_levmar(&p[0], x, 5, 40, (void *) &adata);
     double opts[LM_OPTS_SZ], info[LM_INFO_SZ];
     opts[0]=LM_INIT_MU;
     // stopping thresholds for
@@ -501,13 +510,16 @@ void levmar_test(){
     opts[4]= LM_DIFF_DELTA; // finite difference if used
     int retval;
     p2[0]=p[0]+.2;p2[1]=p[1]+.2,p2[2]=p[2]+.2;p2[3]=p[3]+.2;p2[4]=p[4]+.2;
-    adata_ptr=get_adata(1.,expiries, strikes,{p2[0],p2[1],p2[2],p2[3],p2[4]},false);
-    retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &(*adata_ptr));
+    delete_adata(adata);
+    adata=get_adata(1.,expiries, strikes,{p2[0],p2[1],p2[2],p2[3],p2[4]},false);
+    retval=dlevmar_der(get_prices_for_levmar, get_jacobian_for_levmar, p2, x, 5, 40, 100, opts, info, NULL, NULL, (void*) &adata);
     double diff=0.;
     for(int i=0;i<5; i++) diff+=std::fabs(p[i]-p2[i]);
     std::cout<<"# iter: "<<retval<<"\tv_0: "<<p2[0]<<"\tv_m: "<<p2[1]<<"\trho: "<<p2[2]<<"\tkappa: "<<p2[3]<<"\tsigma: "<<p2[4]<<"\tinital error: "<<info[0]<<"\te: "<<info[1]<<"\tparams diff: "<<diff<<"\treason: "<<info[6]<<'\n';
     assert(diff<LEVMAR_TOLERANCE &&"Levmar test passed");
     std::cout<<"Levmar test passed"<<std::endl;
+    delete_adata(adata);
+    free(x);
 }
 
 #define SAMPLE_SIZE (1<<28)
@@ -548,8 +560,10 @@ void rng_test(){
     std::cout<<"emp_uniform_error: "<<std::fabs(emp_uniform-1./12.)<<"\tmean_uniform_error: "<<std::fabs(mean_uniform-.5)<<"\temp_gaussian_error: "<<std::fabs(emp_gaussian-1.)<<"\tmean_gaussian_error: "<<std::fabs(mean_gaussian-0.)<<"\ttime: "<<((double)end_time-start_time)/CLOCKS_PER_SEC<<"s"<<std::endl;
     assert(std::fabs(emp_gaussian-1.)<RNG_TOLERANCE&&std::fabs(mean_gaussian-0.)<RNG_TOLERANCE&&
             std::fabs(mean_uniform-.5)<RNG_TOLERANCE&&std::fabs(emp_uniform-1./12.)<RNG_TOLERANCE);
+    //delete_adata(adata_s);
 }
 void simulation_test(){
+    /*
     std::vector<ffloat> deltas={1,1/32,1/16,1/8,1/4,1/2,1};
     std::vector<ffloat> strikes={70.,100.,140.};
     std::vector<HParams> ps={{0.04,0.04,-0.9, 0.4,1.},
@@ -578,7 +592,7 @@ void simulation_test(){
             //TODO
             //for(int j;j<strikes.size();j++) std::cout<<"error: "<<results[j]<<std::endl;
         }
-    }
+    }*/
 }
 void db_test(){
     DB::ParamsDB params_db;

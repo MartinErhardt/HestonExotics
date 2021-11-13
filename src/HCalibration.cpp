@@ -113,6 +113,7 @@ HParams calibrate(const ffloat S,const std::list<options_chain>& market_data){
     HParams to_calib={p[0],p[1],p[2],p[3],p[4]};
     std::cout<<"# iter: "<<iter<<"\tv_0: "<<to_calib.v_0<<"\tv_m: "<<to_calib.v_m<<"\trho: "<<to_calib.rho<<"\tkappa: "<<to_calib.kappa<<"\tsigma: "<<to_calib.sigma<<"\tinital e: "<<info[0]<<"\te: "<<info[1]<<"\treason: "<<msg[info[6]-1]<<'\n';
     if(info[6]!=6.&&info[6]!=2) throw std::runtime_error("levmar failed! ");
+    free(x);
     return to_calib;
 }
 

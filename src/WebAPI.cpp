@@ -43,7 +43,7 @@ WebAPI::WebAPI(const std::string& access_code):token(access_code){
 
 void WebAPI::download_to_buf(const std::string& url){
     CURLcode res;
-    free(buf.buf);
+    if (buf.buf) free(buf.buf);
     buf.size_buf=0;
     buf.buf=NULL;
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
@@ -73,14 +73,14 @@ void WebAPI::parse_option_chain(options_chain& opt_chain,const char* vol_type, i
             &&(current_vol>=vol_n)
         )
         {
-            option * new_opt =new option();
-            new_opt->volume=current_vol;
-            new_opt->strike=static_cast<ffloat>(strike_obj.get_double());
-            new_opt->price=static_cast<ffloat>(price_obj.get_double());
-            new_opt->bid=static_cast<ffloat>(opt["bid"].get_double());
-            opt_chain.options.push_back(*new_opt);
-            opt_chain.min_strike=std::min(new_opt->strike, opt_chain.min_strike);
-            opt_chain.max_strike=std::max(new_opt->strike, opt_chain.max_strike);
+            option new_opt{};
+            new_opt.volume=current_vol;
+            new_opt.strike=static_cast<ffloat>(strike_obj.get_double());
+            new_opt.price=static_cast<ffloat>(price_obj.get_double());
+            new_opt.bid=static_cast<ffloat>(opt["bid"].get_double());
+            opt_chain.options.push_back(new_opt);
+            opt_chain.min_strike=std::min(new_opt.strike, opt_chain.min_strike);
+            opt_chain.max_strike=std::max(new_opt.strike, opt_chain.max_strike);
         }
     }
 }
@@ -103,7 +103,7 @@ std::list<options_chain> WebAPI::get_all_option_chains(const std::string& underl
         unsigned int cur_days_to_date=days_to_date(date);
         ffloat cur_time_to_date = static_cast<ffloat>(days_to_date(date))/trading_days;
         if (cur_time_to_date<=EXP_LB) continue;
-        options_chain& new_opt_chain=*(new options_chain(cur_days_to_date,cur_time_to_date));
+        options_chain new_opt_chain(cur_days_to_date,cur_time_to_date);
         std::cout<<"Download all options expiring on "<<date<<"...";
         download_to_buf(OPTIONS_CHAIN_URL(underlying,date));
         std::cout<<"Done\n";
@@ -123,4 +123,6 @@ WebAPI::~WebAPI()
     curl_easy_cleanup(curl);
     curl_slist_free_all(header_list);
     free(buf.buf);
+    //free(curl);
+    //free(header_list);
 }

@@ -47,8 +47,8 @@ underlying_data get_ddata(int argc, char* argv[], int* cur_arg,char**vol,int* vo
         *vol_n=std::stoi(argv[*cur_arg+3]);
         *cur_arg+=4;
     }catch(std::out_of_range const&){ throw SynopsisError();}
-    auto Getter=std::make_unique<WebInterface::WebAPI>(token);
-    return {Getter->get_stock_quote(underlying), Getter->get_all_option_chains(underlying,*vol,*vol_n)};
+    WebInterface::WebAPI Getter(token);
+    return {Getter.get_stock_quote(underlying), Getter.get_all_option_chains(underlying,*vol,*vol_n)};
 }
 unsigned int length(const std::list<options_chain>& all_chains){
     unsigned int ret_val=0;

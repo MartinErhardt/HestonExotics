@@ -24,12 +24,13 @@ else
 	CXX = g++
 	ifeq ($(DBG), true)
 	    FFLAGS= -std=f2008ts -fdefault-real-8
-	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Wextra -std=c++17 -g -fopenmp  -march=native $(MACROS)
+	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Wextra -std=c++17 -g -fopenmp -fsanitize=address  -march=native $(MACROS)
+	LDFLAGS = -lgfortran -lcurl -lsqlite3 -lfftw3 -fopenmp -flto -lblas -llapack -L./levmar-2.6 -llevmar -fsanitize=address #-lgcov --coverage 
 	else
 	    FFLAGS=  -std=f2008ts -fdefault-real-8 -flto
 	    CXXFLAGS= $(INCS) -Wpedantic -Wall -Wextra -std=c++17  -fopenmp -oFast  -march=native -ffloat-store $(OPTMACROS) -ffast-math -fno-rounding-math -fno-signaling-nans -fcx-limited-range -fno-math-errno -funsafe-math-optimizations -fassociative-math -freciprocal-math -ffinite-math-only -fno-signed-zeros -fno-trapping-math -fcx-fortran-rules $(MACROS) -flto #-fsingle-precision-constant -fprofile-generate;
+	LDFLAGS = -lgfortran -lcurl -lsqlite3 -lfftw3 -fopenmp -flto -lblas -llapack -L./levmar-2.6 -llevmar  #-lgcov --coverage
 	endif
-	LDFLAGS = -lgfortran -lcurl -lsqlite3 -lfftw3 -fopenmp -flto -lblas -llapack -L./levmar-2.6 -llevmar  #-lgcov --coverage 
 endif
 
 all: | bin_dirs hexo

@@ -42,6 +42,6 @@ ffloat* RNG::setup_g(){
     return buf_start_g;
 }
 RNG::~RNG(){
-    operator delete(buf_start_g, std::align_val_t{ALIGN});
-    operator delete(buf_start_u, std::align_val_t{ALIGN});
+    operator delete[](buf_start_g, std::align_val_t{ALIGN});
+    operator delete[](buf_start_u, std::align_val_t{ALIGN});
 }

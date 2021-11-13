@@ -72,6 +72,10 @@ SWIFT::SWIFT(const swift_parameters& init_params) : my_params(swift_parameters(i
     for(j=0;j<J;j++) density_coeffs[j]=(density_out[2*j+1][0]-1i*density_out[2*j+1][1])*sqrt_exp2_m/static_cast<ffloat>(J); //Why the sqrt_exp2_m/static_cast<ffloat>(J) factor? Also note the minus: We conjugate because we do a backwards transformation, but FFTW does a forward transformation so we read from the back using conjugate symmetry
     fftw_destroy_plan(payoff_plan); // does a fftw_free on input and output
     fftw_destroy_plan(density_plan);
+    fftw_free(density_in);          // ... so I thought until I ran address-sanitizer
+    fftw_free(density_out);
+    fftw_free(payoff_in);
+    fftw_free(payoff_out);
 }
 SWIFT::cache_entry * SWIFT::get_precached(const HDistribution& distr,const ffloat S, const options_chain& opts){
     cache_entry* precached=nullptr; 
