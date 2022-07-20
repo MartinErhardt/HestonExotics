@@ -17,6 +17,11 @@ levmar-2.6.tgz
 *.gcda
 *.orig
 *.rm
+*.swo
+*.swp
+compile
+depcomp
+.deps/
 shishua/
 html/
 latex/
