@@ -8,3 +8,15 @@
  #if (defined(_OPENMP))
  # ifdef LINSOLVERS_RETAIN_MEMORY
  #  ifdef _MSC_VER
+--- levmar-2.6/Makefile
++++ levmar-2.6/Makefile
+@@ -17,3 +17,3 @@
+ RANLIB=ranlib
+-LAPACKLIBS=-llapack -lblas -lf2c # comment this line if you are not using LAPACK.
++LAPACKLIBS= # comment this line if you are not using LAPACK.
+                                  # On systems with a FORTRAN (not f2c'ed) version of LAPACK, -lf2c is
+@@ -34,3 +34,3 @@
+ 
+-all: liblevmar.a lmdemo
++all: liblevmar.a
+

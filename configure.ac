@@ -16,7 +16,24 @@ AX_CHECK_COMPILE_FLAG([-std=c++17], [
 #AC_CHECK_LIB(blas, )
 #AC_CHECK_LIB(curl, )
 #AC_CHECK_LIB(eigen3, )
-#AC_CHECK_LIB(f2c, )
+
+# Check for lapack
+AC_CHECK_LIB(lapack, dgeqrf_, lapack_preinstalled=true, lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, dpotrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, dgetrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, dsytrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, dgemm_,                          , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, dgesvd_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, dpotf2s_,                        , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, sgeqrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, spotrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, sgetrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, ssytrf_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, sgemm_,                          , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, sgesvd_,                         , lapack_preinstalled=false)
+AC_CHECK_LIB(lapack, spotf2_,                         , lapack_preinstalled=false)
+AM_CONDITIONAL([NO_LAPACK], [test x$lapack_preinstalled = xfalse])
+
 # Check for curl
 AC_CHECK_LIB(curl, curl_easy_init, curl_preinstalled=true, curl_preinstalled=false)
 AC_CHECK_LIB(curl, curl_slist_append,                    , curl_preinstalled=false)
@@ -46,7 +63,8 @@ AC_CHECK_LIB(sqlite3, sqlite3_errmsg,                                , sqlite_pr
 AC_CHECK_LIB(sqlite3, sqlite3_finalize,                              , sqlite_preinstalled=false)
 AM_CONDITIONAL([NO_SQLITE], [test x$sqlite_preinstalled = xfalse])
 
-#AC_CHECK_HEADERS([eigen3/Eigen/Dense])
+AC_CHECK_HEADERS([eigen3/Eigen/Dense],eigen_preinstalled=true, eigen_preinstalled=false)
+AM_CONDITIONAL([NO_EIGEN], [test x$eigen_preinstalled = xfalse])
 
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

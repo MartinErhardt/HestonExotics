@@ -35,6 +35,10 @@ curl*
 fftw*
 sqlite*
 ssl*
+lapack*
+eigen3/
+*.tgz*
+*.tar.gz*
 missing
 depcomp
 autom4te.cache/
