@@ -1,5 +1,5 @@
 AC_INIT([hexo], [2022.14.6], [merhardt@rhrk.uni-kl.de])
-AM_INIT_AUTOMAKE([subdir-objects -Wpedantic -Wall -Wextra ])
+AM_INIT_AUTOMAKE([subdir-objects foreign -Wall])
 AC_ARG_ENABLE([debug],
 [  --enable-debug    Turn on debugging],
 [case "${enableval}" in
