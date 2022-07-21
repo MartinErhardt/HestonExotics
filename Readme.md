@@ -1,5 +1,5 @@
 
-![GCC](https://img.shields.io/static/v1?logo=github&label=GCC&message=build passing&color=Blue)
+![GCC](https://img.shields.io/static/v1?logo=github&label=GCC&message=build-passing&color=Blue)
 ![License](https://img.shields.io/static/v1?label=License&message=MPL-2.0&color=blue)
 ![docs](https://img.shields.io/static/v1?label=docs&message=doxygen&color=green)
 
@@ -7,25 +7,39 @@ hexo
 ===============================================
 Simple derivative pricing tool for educational purposes based on the Heston model
 ### Installation
+Just type
+```
+wget https://github.com/MartinErhardt/HestonExotics/releases/download/v0.1/hexo-2022.21.7.tar.gz &&
+  tar -xzf hexo-2022.21.7.tar.gz &&
+  cd hexo-2022.21.7 &&
+  ./configure &&
+  make deps all
+```
+The autoconf script detects dependencies and if necessary creates a makefile, that builds blas, curl, eigen3, fftw3, lapack, libcurl and sqlite3. This is fairly portable, but I do assume, that there is a version
+of openssl installed. A Fortran compiler is required as well.
+
 In order to generate a distributable tarball from head, type
 ```
 autoreconf --install &&
   ./configure &&
   make dist
 ```
-The autoconf script will detect dependencies and if necessary create a makefile, that builds blas, curl, eigen3, fftw3, lapack, libcurl and sqlite3.
 Documention is doxygen is available:
 ```
-$ make doc
+make doc
 /** installs documentation into doc/html/index.html*/
 ```
-### Usage examples
+### Usage
+
 Here are some simple usecases:
 ```
 $ ./hexo -c AMZN
-/** calibrates the Heston model to Amazon stock as underlying and stores the resulting parameters in ParamsDB.db*/
+/** calibrates the Heston model to Amazon stock as underlying 
+    and stores the resulting parameters in ParamsDB.db*/
 $ ./hexo -p asian all GOOG
-/** prices all available European Call options on Google stock as if they were arithmetic Asian call Options and prints the results to stdout*/
+/** prices all available European Call options on Google stock,
+    as if they were arithmetic Asian call Options
+    and prints the results to stdout*/
 $ ./hexo -t rng|distr|pricing|gradient|levmar|rng
 /** run tests*/
 ```
