@@ -31,6 +31,10 @@ levmar-2.6.tgz
 install-sh
 .dirstamp
 compile
+curl*
+fftw*
+sqlite*
+ssl*
 missing
 depcomp
 autom4te.cache/
